@@ -7,5 +7,6 @@ temp/
 yarn.lock
 /uploads
 /logs
+/dist
 
 .env

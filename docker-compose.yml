@@ -1,11 +1,12 @@
-version: '3'
+version: '3.7'
 services: 
     app:
-        build: ./docker/dockerfile
+        image: node:12-alpine
         ports:
             - '80:3000'
         depends_on: 
             - database
+        command: sh -c "cd /usr/app && npm install && npm run dev"
         volumes: 
             - ./app:/usr/app
             - ./app/node_modules:/usr/app/node_modules
