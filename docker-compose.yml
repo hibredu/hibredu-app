@@ -1,15 +1,15 @@
 version: '3.7'
 services: 
     app:
-        image: node:12-alpine
+        build: .
         ports:
             - '80:3000'
         depends_on: 
             - database
-        command: sh -c "cd /usr/app && npm install && npm run dev"
+        command: sh -c "cd /var/app/ && npm run dev"
         volumes: 
-            - ./app:/usr/app
-            - ./app/node_modules:/usr/app/node_modules
+            - ./app/src:/var/app/src
+            - ./app/node_modules:/var/app/node_modules
     database:
         restart: always
         image: mysql:5.7
