@@ -12,7 +12,11 @@ Interface de programação de aplicativo para o backend da aplicação Hibredu
 Para rodar o projeto basta rodar estes comandos:
 
 ``` shell
-npm run start
+# Acessa a pasta do projeto
+cd app
+
+# Executa em modo desenvolvedor
+npm run dev
 ```
 
 Para rodar com docker:
@@ -23,6 +27,7 @@ docker-compose up --build
 ## Estrutura de Pastas
 ``` shell
 └ app                           → Aplicação
+    └ __tests__                 → Arquivos de testes(unidade e integração)
     └ src                       → Estrutura dos arquivos da aplicação
         └ app                   → Regras de negócio
         └ infrastructure        → Tudo relacionado a infraestrutura do servidor
