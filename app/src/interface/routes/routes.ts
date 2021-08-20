@@ -1,8 +1,8 @@
 import { Router } from "express"
-import helloWorldRouter from "./helloWorld.routes"
+import studentRouter from "./student.routes"
 
 const router = Router()
 
-router.use("/hello", helloWorldRouter)
+router.use("/student", studentRouter)
 
 export default router
