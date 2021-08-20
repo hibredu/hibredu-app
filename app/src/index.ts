@@ -1,3 +1,6 @@
+require('dotenv').config()
+
+import './infrastructure/database'
 import app from './infrastructure/server/app'
 
 const port = 3000
