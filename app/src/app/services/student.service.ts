@@ -1,17 +1,15 @@
-import { getRepository, Repository } from "typeorm";
-import Student from "../entities/student.entity";
+import { getConnection, Repository } from "typeorm";
+import { Student } from "../entities/student.entity";
+
+const connection = getConnection()
 
 class StudentService {
 
     repository: Repository<Student>
 
-    constructor() {
-        (async () => {
-            this.repository = await getRepository(Student);
-        })();
-    }
-
     async getAll() {
+        this.repository = connection.getRepository(Student)
+
         const student = await this.repository.find({})
         return student
     }

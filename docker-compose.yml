@@ -1,20 +1,11 @@
 version: '3.7'
 services: 
-    app:
-        build: .
-        ports:
-            - '8080:8080'
-        depends_on: 
-            - database
-        command: sh -c "cd /var/app/ && npm run dev"
-        volumes: 
-            - ./app/src:/var/app/src
-            - ./app/node_modules:/var/app/node_modules
     database:
-        restart: always
+        container_name: database
         image: mysql:5.7
+        restart: always
         ports:
-            - "3307:3306"
+            - "3306:3306"
         environment:
             MYSQL_USER: 'user_hibredu'
             MYSQL_PASSWORD: '123456'
@@ -22,7 +13,23 @@ services:
             MYSQL_DATABASE: 'hibredu_db'
         volumes:
             - appdbdata:/var/lib/mysql
-            - ./docker/sql/recipesDb:/docker-entrypoint-initdb.d
+            - ./docker/sql/hibreduDB:/docker-entrypoint-initdb.d
+    app:
+        container_name: app
+        build: .
+        ports:
+            - '8080:8080'
+        depends_on: 
+            - database
+        environment:
+            - HOST_DB=database
+            - USERNAME_DB=user_hibredu
+            - PASSWORD_DB=123456
+            - DATABASE_DB=hibredu_db
+        command: sh -c "cd /var/app/ && npm run dev"
+        volumes: 
+            - ./app/src:/var/app/src
+            - ./app/node_modules:/var/app/node_modules
 volumes:
     appdbdata:
         driver: local

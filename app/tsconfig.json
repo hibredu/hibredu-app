@@ -1,14 +1,19 @@
 {
     "compilerOptions": {
         "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
         "rootDir": "src",
         "module": "commonjs",
         "esModuleInterop": true,
-        "target": "es6",
+        "target": "es2017",
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "dist"
     },
+    "typeRoots": [
+        "./@types",
+        "./node_modules/@types"
+    ],
     "exclude": [
         "node_modules",
         "**/*.spec.ts"
