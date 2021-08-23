@@ -1,13 +1,13 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
-export default class Student {
-    @PrimaryGeneratedColumn()
+@Entity('students')
+export class Student {
+    @PrimaryGeneratedColumn('increment')
     id: number;
 
-    @Column('name')
+    @Column()
     name: string;
 
-    @Column('email')
+    @Column()
     email: string;
 }

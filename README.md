@@ -5,6 +5,8 @@ Interface de programação de aplicativo para o backend da aplicação Hibredu
 ## Tecnologias 
 
 - NodeJS
+- TypeScript
+- Docker
 - MySQL
 
 ## Get Started
@@ -21,7 +23,7 @@ npm run dev
 
 Para rodar com docker:
 ``` shell
-docker-compose up --build
+sh ./start.sh
 ```
 
 ## Estrutura de Pastas

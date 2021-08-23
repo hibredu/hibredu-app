@@ -1,8 +1,9 @@
 require('dotenv').config()
 
-import './infrastructure/database'
+import 'reflect-metadata'
+import './infrastructure/database/connect'
 import app from './infrastructure/server/app'
 
-const port = 8080
+const PORT = 8080
 
-app.listen(port, () => console.log(`🔥 Server Started at http://localhost:${port} 🔥`))
+app.listen(PORT, () => console.log(`🔥 Server Started at http://localhost:${PORT} 🔥`))
