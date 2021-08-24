@@ -36,12 +36,13 @@ class AuthController {
     }
 
     async createUser(request: Request, response: Response) {
-        const { name, email, password } = request.body
+        const { name, email, password, phone } = request.body
 
         const teacher = new Teacher()
         teacher.name = name
         teacher.email = email
         teacher.password = password
+        teacher.phone = phone
 
         try {
             await authService.createTeacher(teacher)

@@ -1,12 +1,32 @@
+DROP TABLE IF EXISTS students;
+
 CREATE TABLE students (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE
+    email VARCHAR(255) UNIQUE,
+    created_at DATETIME NOT NULL default CURRENT_TIMESTAMP,
+    updated_at DATETIME
 );
+
+DROP TABLE IF EXISTS teachers;
 
 CREATE TABLE teachers (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
+    birthDay DATETIME,
+    phone VARCHAR(255),
+    school VARCHAR(255),
     email VARCHAR(255) UNIQUE,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    created_at DATETIME NOT NULL default CURRENT_TIMESTAMP,
+    updated_at DATETIME
+);
+
+DROP TABLE IF EXISTS classroom;
+
+CREATE TABLE classroom (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    created_at DATETIME NOT NULL default CURRENT_TIMESTAMP,
+    updated_at DATETIME
 );
