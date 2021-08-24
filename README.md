@@ -36,4 +36,5 @@ sh ./start.sh
         └ interface             → Arquivos que fazem comunicação com usuário ou outras aplicações (Controllers, Rotas)
 └ docker                        → Arquivos e pastas relacionadas ao Docker
     └ sql                       → Pastas com arquivos dump.sql utilizados para popular o banco de dados criado pelo docker
+└ docs                          → Documentação no Postman
  ```
