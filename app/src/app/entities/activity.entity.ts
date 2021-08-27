@@ -1,8 +1,8 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { ActivityToStudent } from "./activityToStudent.entity";
 
-@Entity('students')
-export class Student {
+@Entity('activities')
+export class Activity {
     @PrimaryGeneratedColumn('increment')
     id: number;
 
@@ -10,7 +10,13 @@ export class Student {
     name: string;
 
     @Column()
-    email: string;
+    subject: string;
+
+    @Column()
+    description: string;
+
+    @Column()
+    max_note: number;
 
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
     created_at: Date;
@@ -18,6 +24,6 @@ export class Student {
     @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
     updated_at: Date;
 
-    @OneToMany(() => ActivityToStudent, (activityToStudent) => activityToStudent.student, { eager: true })
+    @OneToMany(() => ActivityToStudent, (activityToStudent) => activityToStudent.activity)
     activitiesToStudents: ActivityToStudent[];
 }

@@ -5,7 +5,12 @@ import { createConnections } from 'typeorm'
     const username = process.env.USERNAME_DB
     const password = process.env.PASSWORD_DB
     const database = process.env.DATABASE_DB
-
+    
+    /* PARA USO LOCAL
+    const username = 'user_hibredu'
+    const password = '123456'
+    const database = 'hibredu_db'
+    */
     await createConnections([{
         name: 'default',
         type: "mysql",
