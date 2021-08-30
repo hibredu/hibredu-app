@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { Student } from '../../app/entities/student.entity'
 import StudentService from '../../app/services/student.service'
 
 class StudentController {
@@ -9,7 +10,7 @@ class StudentController {
 
     async findOne(request: Request, response: Response) {
         const { id } = request.params
-        let student
+        let student: Student
         
         try {
             student = await StudentService.getOne(parseInt(id))
@@ -18,6 +19,19 @@ class StudentController {
         }
 
         response.status(200).json(student)
+    }
+
+    async findDeliveryPercentage(request: Request, response: Response){
+        const { id } = request.params
+        let deliveryPercentage: number
+        
+        try {
+            deliveryPercentage = await StudentService.getDeliveryPercentage(parseInt(id))
+        } catch (error) {
+            response.status(500).json({ error: error.message })
+        }
+
+        response.status(200).json({ deliveryPercentage })
     }
 }
 
