@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS activities_students CASCADE;
 DROP TABLE IF EXISTS teachers CASCADE;
-DROP TABLE IF EXISTS classroom CASCADE;
 DROP TABLE IF EXISTS students CASCADE;
 DROP TABLE IF EXISTS activities CASCADE;
+DROP TABLE IF EXISTS classrooms CASCADE;
 
 CREATE TABLE teachers (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -16,7 +16,7 @@ CREATE TABLE teachers (
     updated_at DATETIME
 );
 
-CREATE TABLE classroom (
+CREATE TABLE classrooms (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     created_at DATETIME NOT NULL default CURRENT_TIMESTAMP,
@@ -27,8 +27,10 @@ CREATE TABLE students (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE,
+    id_classroom INTEGER NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME
+    updated_at DATETIME,
+    CONSTRAINT fk_id_classroom FOREIGN KEY (id_classroom) REFERENCES classrooms(id)
 );
 
 CREATE TABLE activities (
@@ -54,11 +56,17 @@ CREATE TABLE activities_students (
 
 /* INSERÇÕES DE TESTES */
 
-INSERT INTO students (name, email) VALUES ('Felipe', 'felipe@gmail.com');
-INSERT INTO students (name, email) VALUES ('Jean', 'jean@gmail.com');
-INSERT INTO students (name, email) VALUES ('Petillo', 'petillo@gmail.com');
-INSERT INTO students (name, email) VALUES ('Giovanna', 'giovanna@gmail.com');
-INSERT INTO students (name, email) VALUES ('Vinicius', 'vinicius@gmail.com');
+INSERT INTO classrooms (name) VALUES ('1o ano');
+INSERT INTO classrooms (name) VALUES ('2o ano');
+INSERT INTO classrooms (name) VALUES ('3o ano');
+INSERT INTO classrooms (name) VALUES ('4o ano');
+INSERT INTO classrooms (name) VALUES ('5o ano');
+
+INSERT INTO students (name, email, id_classroom) VALUES ('Felipe', 'felipe@gmail.com', 1);
+INSERT INTO students (name, email, id_classroom) VALUES ('Jean', 'jean@gmail.com', 1);
+INSERT INTO students (name, email, id_classroom) VALUES ('Petillo', 'petillo@gmail.com', 1);
+INSERT INTO students (name, email, id_classroom) VALUES ('Giovanna', 'giovanna@gmail.com', 1);
+INSERT INTO students (name, email, id_classroom) VALUES ('Vinicius', 'vinicius@gmail.com', 1);
 
 INSERT INTO activities (name, subject, max_note) VALUES ('Atividade1', 'Português', 10);
 INSERT INTO activities (name, subject, max_note) VALUES ('Atividade2', 'Matemática', 11);
@@ -68,7 +76,7 @@ INSERT INTO activities (name, subject, max_note) VALUES ('Atividade5', 'Espanhol
 
 INSERT INTO activities_students (id_student, id_activity, delivered) VALUES (1, 1, 0);
 INSERT INTO activities_students (id_student, id_activity, delivered) VALUES (1, 2, 1);
-INSERT INTO activities_students (id_student, id_activity, delivered) VALUES (2, 3, 0);
+INSERT INTO activities_students (id_student, id_activity, delivered) VALUES (2, 3, 1);
 INSERT INTO activities_students (id_student, id_activity, delivered) VALUES (3, 4, 0);
 INSERT INTO activities_students (id_student, id_activity, delivered) VALUES (4, 5, 0);
 
