@@ -1,58 +1,223 @@
+SET FOREIGN_KEY_CHECKS = 0;
+SET UNIQUE_CHECKS = 0;
+
 DROP TABLE IF EXISTS activities_students CASCADE;
+DROP TABLE IF EXISTS teachers_classrooms CASCADE;
 DROP TABLE IF EXISTS teachers CASCADE;
 DROP TABLE IF EXISTS students CASCADE;
 DROP TABLE IF EXISTS activities CASCADE;
 DROP TABLE IF EXISTS classrooms CASCADE;
+DROP TABLE IF EXISTS alerts CASCADE;
+DROP TABLE IF EXISTS attendance CASCADE;
+DROP TABLE IF EXISTS files CASCADE;
 
-CREATE TABLE teachers (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    birthDay DATETIME, -- Acho que não precisamos disso
-    phone VARCHAR(255),
-    school VARCHAR(255), -- Pode estar em várias escolas?
-    email VARCHAR(255) UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    created_at DATETIME NOT NULL default CURRENT_TIMESTAMP,
-    updated_at DATETIME
-);
+SET FOREIGN_KEY_CHECKS = 1;
+SET UNIQUE_CHECKS = 1;
 
-CREATE TABLE classrooms (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    created_at DATETIME NOT NULL default CURRENT_TIMESTAMP,
-    updated_at DATETIME
-);
-
-CREATE TABLE students (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE,
-    id_classroom INTEGER NOT NULL,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME,
-    CONSTRAINT fk_id_classroom FOREIGN KEY (id_classroom) REFERENCES classrooms(id)
-);
-
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE activities (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    id DOUBLE NOT NULL,
     name VARCHAR(255) NOT NULL,
-    subject VARCHAR(255) NOT NULL, -- Futuramente pode ser uma fk para a tabela de matérias
-    description TEXT,
-    max_note DECIMAL(10, 1) NOT NULL,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    subject VARCHAR(255) NOT NULL,
+    description LONGTEXT,
+    max_note DOUBLE NOT NULL,
+    teachers_id DOUBLE NOT NULL,
+    classrooms_id DOUBLE NOT NULL,
+    files_id INTEGER NOT NULL
+);
+
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE UNIQUE INDEX activities__idx ON activities (files_id ASC);
+
+ALTER TABLE
+    activities
+ADD
+    CONSTRAINT activities_pk PRIMARY KEY (
+        id,
+        classrooms_id
+    );
+
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE TABLE activities_students (
+    id DOUBLE NOT NULL,
+    delivered DOUBLE NOT NULL,
+    status VARCHAR(50),
+    grade DOUBLE,
+    students_id VARCHAR(30) NOT NULL,
+    activities_id DOUBLE NOT NULL,
+    activities_classrooms_id DOUBLE NOT NULL
+);
+
+ALTER TABLE
+    activities_students
+ADD
+    CONSTRAINT activities_students_pk PRIMARY KEY (id);
+
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE TABLE alerts (
+    id INTEGER NOT NULL,
+    value LONGBLOB NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME,
+    students_id VARCHAR(30) NOT NULL,
+    teachers_id DOUBLE NOT NULL
+);
+
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE TABLE attendance (
+    id INTEGER NOT NULL,
+    `date` DATETIME,
+    time VARCHAR(10),
+    students_id VARCHAR(30) NOT NULL,
+    files_id INTEGER NOT NULL
+);
+
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE UNIQUE INDEX attendance__idx ON attendance (files_id ASC);
+
+ALTER TABLE
+    attendance
+ADD
+    CONSTRAINT attendance_pk PRIMARY KEY (id);
+
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE TABLE classrooms (
+    id DOUBLE NOT NULL,
+    name VARCHAR(255),
+    created_at DATETIME NOT NULL,
     updated_at DATETIME
 );
 
-CREATE TABLE activities_students (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    id_student INTEGER NOT NULL,
-    id_activity INTEGER NOT NULL,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    delivered INTEGER NOT NULL,
-    updated_at DATETIME,
-    CONSTRAINT fk_id_student FOREIGN KEY (id_student) REFERENCES students(id),
-    CONSTRAINT fk_id_activity FOREIGN KEY (id_activity) REFERENCES activities(id)
+ALTER TABLE
+    classrooms
+ADD
+    CONSTRAINT classrooms_pk PRIMARY KEY (id);
+
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE TABLE files (
+    id INTEGER NOT NULL,
+    content LONGBLOB NOT NULL,
+    type VARCHAR(100) NOT NULL
 );
+
+ALTER TABLE
+    files
+ADD
+    CONSTRAINT files_pk PRIMARY KEY (id);
+
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE TABLE students (
+    id VARCHAR(30) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME,
+    classrooms_id DOUBLE NOT NULL
+);
+
+ALTER TABLE
+    students
+ADD
+    CONSTRAINT students_pk PRIMARY KEY (id);
+
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE TABLE teachers (
+    id DOUBLE NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    phone VARCHAR(255) NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME
+);
+
+ALTER TABLE
+    teachers
+ADD
+    CONSTRAINT teachers_pk PRIMARY KEY (id);
+
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE TABLE teachers_classrooms (
+    id DOUBLE NOT NULL,
+    created_at DATETIME NOT NULL,
+    teachers_id DOUBLE NOT NULL,
+    classrooms_id DOUBLE NOT NULL
+);
+
+ALTER TABLE
+    teachers_classrooms
+ADD
+    CONSTRAINT teachers_classrooms_pk PRIMARY KEY (id);
+
+ALTER TABLE
+    activities
+ADD
+    CONSTRAINT activities_classrooms_fk FOREIGN KEY (classrooms_id) REFERENCES classrooms (id);
+
+ALTER TABLE
+    activities
+ADD
+    CONSTRAINT activities_files_fk FOREIGN KEY (files_id) REFERENCES files (id);
+
+-- SQLINES DEMO *** ength exceeds maximum allowed length(30) 
+ALTER TABLE
+    activities_students
+ADD
+    CONSTRAINT activities_students_activities_fk FOREIGN KEY (
+        activities_id,
+        activities_classrooms_id
+    ) REFERENCES activities (
+        id,
+        classrooms_id
+    );
+
+-- SQLINES DEMO *** ength exceeds maximum allowed length(30) 
+ALTER TABLE
+    activities_students
+ADD
+    CONSTRAINT activities_students_students_fk FOREIGN KEY (students_id) REFERENCES students (id);
+
+ALTER TABLE
+    activities
+ADD
+    CONSTRAINT activities_teachers_fk FOREIGN KEY (teachers_id) REFERENCES teachers (id);
+
+ALTER TABLE
+    alerts
+ADD
+    CONSTRAINT alerts_students_fk FOREIGN KEY (students_id) REFERENCES students (id);
+
+ALTER TABLE
+    alerts
+ADD
+    CONSTRAINT alerts_teachers_fk FOREIGN KEY (teachers_id) REFERENCES teachers (id);
+
+ALTER TABLE
+    attendance
+ADD
+    CONSTRAINT attendance_files_fk FOREIGN KEY (files_id) REFERENCES files (id);
+
+ALTER TABLE
+    attendance
+ADD
+    CONSTRAINT attendance_students_fk FOREIGN KEY (students_id) REFERENCES students (id);
+
+ALTER TABLE
+    students
+ADD
+    CONSTRAINT students_classrooms_fk FOREIGN KEY (classrooms_id) REFERENCES classrooms (id);
+
+-- SQLINES DEMO *** ength exceeds maximum allowed length(30) 
+ALTER TABLE
+    teachers_classrooms
+ADD
+    CONSTRAINT teachers_classrooms_classrooms_fk FOREIGN KEY (classrooms_id) REFERENCES classrooms (id);
+
+-- SQLINES DEMO *** ength exceeds maximum allowed length(30) 
+ALTER TABLE
+    teachers_classrooms
+ADD
+    CONSTRAINT teachers_classrooms_teachers_fk FOREIGN KEY (teachers_id) REFERENCES teachers (id);
 
 /* INSERÇÕES DE TESTES */
 
@@ -81,5 +246,3 @@ INSERT INTO activities_students (id_student, id_activity, delivered) VALUES (3, 
 INSERT INTO activities_students (id_student, id_activity, delivered) VALUES (4, 5, 0);
 
 COMMIT;
-
-
