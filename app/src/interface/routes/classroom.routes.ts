@@ -3,6 +3,7 @@ import classroomController from "../controllers/classroom.controller";
 
 const classroomRouter = Router();
 
+classroomRouter.get("/:id", classroomController.getById);
 classroomRouter.get("/:id/delivery", classroomController.findDeliveryPercentage);
 
 export default classroomRouter;

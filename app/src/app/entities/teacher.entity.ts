@@ -1,8 +1,21 @@
-import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, getConnection, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 import bcryptjs from 'bcryptjs'
+import School from "./school.entity";
+
+export interface ITeacher {
+    id?: number;
+    name: string;
+    email: string;
+    password?: string;
+    phone?: string;
+    school_id?: number;
+    school?: School;
+    created_at?: Date;
+    updated_at?: Date;
+}
 
 @Entity('teachers')
-export class Teacher {
+export default class Teacher {
     @PrimaryGeneratedColumn('increment')
     id: number;
 
@@ -18,11 +31,9 @@ export class Teacher {
     @Column()
     phone: string;
 
-    @Column()
-    school: string;
-
-    @Column()
-    birthDay: Date;
+    @ManyToOne(() => School, school => school.teachers)
+    @JoinColumn({ name: 'schools_id' })
+    school: School;
 
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
     created_at: Date;

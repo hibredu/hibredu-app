@@ -1,10 +1,11 @@
 import { getConnection, Repository } from "typeorm";
 import { Classroom } from "../entities/classroom.entity";
+import { IStudent } from "../entities/student.entity";
 
 const connection = getConnection()
 
 class ClassroomService {
-    repository: Repository<Classroom> 
+    repository: Repository<Classroom>
 
     async getDeliveryPercentage(id: number) {
         this.repository = connection.getRepository(Classroom)
@@ -16,6 +17,21 @@ class ClassroomService {
         console.log(totalActivities);
         console.log(totalActivitiesDelivered);
         return (totalActivitiesDelivered / totalActivities) * 100;
+    }
+
+    async getAttendancePercentage(id: number) {
+        this.repository = connection.getRepository(Classroom)
+
+        const classroom = await this.repository.findOne(id)
+
+
+        return 0;
+    }
+
+    async getById(id: number) {
+        this.repository = connection.getRepository(Classroom)
+
+        return await this.repository.findOne(id)
     }
 }
 

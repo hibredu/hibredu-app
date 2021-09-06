@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { ActivityToStudent } from "./activityToStudent.entity";
+import ActivityToStudent from "./activityToStudent.entity";
 
 @Entity('activities')
 export class Activity {
