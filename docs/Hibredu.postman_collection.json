@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ee495a68-23b0-47a4-8980-49adab370325",
+		"_postman_id": "8c772f77-ff18-4810-be60-c0ebcaa95a08",
 		"name": "Hibredu",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,13 +9,13 @@
 			"name": "Teacher",
 			"item": [
 				{
-					"name": "Create User",
+					"name": "CREATE Teacher",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Jean Jacques\",\r\n    \"birthDay\": \"12/12/1980\",\r\n    \"email\": \"jean@hibredu.com.br\",\r\n    \"phone\": \"55-988-0808\",\r\n    \"password\": \"123456\",\r\n    \"school\": \"FIAP\",\r\n    \"classrooms\": [\r\n        {\r\n            \"id\": 1,\r\n            \"name\": \"3ºA\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"name\": \"Jean Jacques\",\r\n    \"email\": \"jean656@hibredu.com.br\",\r\n    \"phone\": \"55-988-0808\",\r\n    \"password\": \"123456\",\r\n    \"school_id\": 1,\r\n    \"classrooms\": [\r\n        {\r\n            \"id\": 1,\r\n            \"name\": \"3ºA\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -23,14 +23,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/new_user/",
+							"raw": "http://localhost:8080/teacher/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"new_user",
+								"teacher",
 								""
 							]
 						}
@@ -43,7 +43,7 @@
 			"name": "Auth",
 			"item": [
 				{
-					"name": "Get Token",
+					"name": "GET Token",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -77,7 +77,27 @@
 			"name": "Student",
 			"item": [
 				{
-					"name": "Delivery Percentage",
+					"name": "GET All Students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/student/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"student",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Delivery Percentage",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -96,6 +116,26 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GET Student by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/student/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"student",
+								""
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -103,12 +143,12 @@
 			"name": "Classroom",
 			"item": [
 				{
-					"name": "Delivery Percentage",
+					"name": "GET Classroom by ID",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/classroom/1/delivery",
+							"raw": "http://localhost:8080/classroom/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -116,8 +156,7 @@
 							"port": "8080",
 							"path": [
 								"classroom",
-								"1",
-								"delivery"
+								"1"
 							]
 						}
 					},
