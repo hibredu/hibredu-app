@@ -295,7 +295,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/attendance/class/1",
+							"raw": "http://localhost:8080/attendance/class/1?before=2021-09-07",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -305,6 +305,17 @@
 								"attendance",
 								"class",
 								"1"
+							],
+							"query": [
+								{
+									"key": "before",
+									"value": "2021-09-07"
+								},
+								{
+									"key": "after",
+									"value": null,
+									"disabled": true
+								}
 							]
 						}
 					},

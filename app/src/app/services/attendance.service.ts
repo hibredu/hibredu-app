@@ -26,14 +26,14 @@ class AttendanceService {
         return attendance
     }
 
-    async getByClass(classId: number) {
+    async getByClass(classId: number, options?: Map<String, any>) {
         this.repository = connection.getRepository(Attendance)
 
         const subject_classroom = await subject_classroomService.getByClass(classId)
         const owners_ids = subject_classroom.map(subject_classroom => subject_classroom.id);
 
         const attendance = await this.repository.find({
-            where: { owner_id: In(owners_ids) },
+            where: { owner_id: In(owners_ids), ...options },
             relations: ["attendanceStudents"]
         })
         return attendance
