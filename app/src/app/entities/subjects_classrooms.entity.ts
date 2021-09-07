@@ -24,11 +24,11 @@ export default class SubjectClassroom {
     @Column()
     teachers_id: number;
 
-    @ManyToOne(() => SchoolSubjects, school_subject => school_subject.subjects_classrooms, { eager: true })
+    @ManyToOne(() => SchoolSubjects, school_subject => school_subject.subjects_classrooms, { eager: true, onDelete: 'CASCADE' })
     @JoinColumn({ name: 'school_subjects_id' })
     school_subject: SchoolSubjects;
 
-    @ManyToOne(() => Classroom, clasroom => clasroom.subjects_classrooms, { eager: true })
+    @ManyToOne(() => Classroom, clasroom => clasroom.subjects_classrooms, { eager: true, onDelete: 'CASCADE' })
     @JoinColumn({ name: 'classrooms_id' })
     classroom: Classroom;
 
@@ -36,7 +36,7 @@ export default class SubjectClassroom {
     @JoinColumn({ name: 'teachers_id' })
     teacher: Teacher;
 
-    @OneToMany(() => Attendance, (subjects_classrooms) => subjects_classrooms.subject_classroom, { eager: false })
+    @OneToMany(() => Attendance, (subjects_classrooms) => subjects_classrooms.subject_classroom, { eager: false, onDelete: 'CASCADE' })
     attendances: Attendance[];
 
 }

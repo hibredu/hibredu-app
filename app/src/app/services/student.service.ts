@@ -55,7 +55,6 @@ class StudentService {
         }
 
         return (hitRate / hitRateTotal);
-
     }
 }
 

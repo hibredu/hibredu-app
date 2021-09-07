@@ -19,7 +19,7 @@ export default class Activity {
     @Column()
     max_note: number;
 
-    @ManyToOne(() => File, (file) => file.activities)
+    @ManyToOne(() => File, (file) => file.activities, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'files_id' })
     file: File
 

@@ -14,6 +14,6 @@ export default class SchoolSubjects {
     @Column()
     name: string;
 
-    @OneToMany(() => SubjectsClassrooms, (subjects_classrooms) => subjects_classrooms.school_subject)
+    @OneToMany(() => SubjectsClassrooms, (subjects_classrooms) => subjects_classrooms.school_subject, { onDelete: 'CASCADE' })
     subjects_classrooms: SubjectsClassrooms[];
 }

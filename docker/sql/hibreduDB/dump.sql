@@ -231,12 +231,12 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`alerts` (
   CONSTRAINT `fk_alerts_teachers1`
     FOREIGN KEY (`teachers_id`)
     REFERENCES `hibredu_db`.`teachers` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_alerts_students1`
     FOREIGN KEY (`students_id`)
     REFERENCES `hibredu_db`.`students` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
@@ -259,13 +259,13 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`attendances` (
   CONSTRAINT `fk_attendance_files1`
     FOREIGN KEY (`files_id`)
     REFERENCES `hibredu_db`.`files` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_attendances_subjects_classrooms1`
     FOREIGN KEY (`owner_id`)
     REFERENCES `hibredu_db`.`subjects_classrooms` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
@@ -283,13 +283,13 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`attendances_students` (
   CONSTRAINT `fk_attendance_has_students_attendance1`
     FOREIGN KEY (`attendances_id`)
     REFERENCES `hibredu_db`.`attendances` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_attendance_has_students_students1`
     FOREIGN KEY (`students_id`)
     REFERENCES `hibredu_db`.`students` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 

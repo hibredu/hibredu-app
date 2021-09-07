@@ -19,11 +19,11 @@ export default class AttendanceStudent {
     @Column()
     present: boolean;
 
-    @ManyToOne(() => Attendance, attendance => attendance.attendanceStudents, { eager: true })
+    @ManyToOne(() => Attendance, attendance => attendance.attendanceStudents, { eager: true, onDelete: 'CASCADE' })
     @JoinColumn({ name: 'attendances_id' })
     attendance: Attendance;
 
-    @ManyToOne(() => Student, student => student.attendanceStudents, { eager: true })
+    @ManyToOne(() => Student, student => student.attendanceStudents, { eager: true, onDelete: 'CASCADE' })
     @JoinColumn({ name: 'students_id' })
     student: Student;
 }

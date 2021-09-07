@@ -18,6 +18,10 @@ class SubjectClassroomService {
         this.repository = connection.getRepository(SubjectClassroom)
 
         const subjectClassroom = await this.repository.find({ where: { classrooms_id: classId } })
+
+        if (!subjectClassroom) {
+            throw new Error("Subject Classroom not found")
+        }
         return subjectClassroom
     }
 

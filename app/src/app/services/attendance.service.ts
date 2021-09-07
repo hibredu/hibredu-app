@@ -14,6 +14,18 @@ class AttendanceService {
         return attendance
     }
 
+    async getById(id: number, options?: any): Promise<Attendance> {
+        this.repository = connection.getRepository(Attendance)
+
+        const attendance = await this.repository.findOne(id, options)
+
+        if (!attendance) {
+            throw new Error("Attendance not found")
+        }
+
+        return attendance
+    }
+
     async getByClass(classId: number) {
         this.repository = connection.getRepository(Attendance)
 
@@ -25,6 +37,14 @@ class AttendanceService {
             relations: ["attendanceStudents"]
         })
         return attendance
+    }
+
+    async delete(id: number) {
+        this.repository = connection.getRepository(Attendance)
+
+        const attendance = await this.getById(id)
+
+        await this.repository.remove(attendance)
     }
 
 }
