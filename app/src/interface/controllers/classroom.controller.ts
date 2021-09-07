@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import alertService from '../../app/services/alert.service'
 import classroomService from '../../app/services/classroom.service'
 import { IClassroomResponse } from '../../app/shared/interfaces'
 
@@ -62,12 +63,13 @@ class ClassroomController {
     private async getMetrics(classroomId: number) {
         const deliveryPercentage = await classroomService.getDeliveryPercentage(classroomId)
         const attendancePercentage = await classroomService.getAttendancePercentage(classroomId)
+        const alerts = await (await alertService.getByClass(classroomId)).length
 
         return {
             deliveredActivities: attendancePercentage,
             deliveryPercentage: deliveryPercentage,
             hitRate: 0, // TODO: implement hit rate
-            alerts: 0 // TODO: implement alerts
+            alerts: alerts // TODO: implement alerts
         }
     }
 }
