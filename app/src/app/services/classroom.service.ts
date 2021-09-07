@@ -1,6 +1,7 @@
-import { getConnection, Repository } from "typeorm";
+import { getConnection, In, Repository } from "typeorm";
 import ActivityToStudent from "../entities/activityToStudent.entity";
 import { Classroom } from "../entities/classroom.entity";
+import subject_classroomService from "./subject_classroom.service";
 
 const connection = getConnection()
 
@@ -8,10 +9,18 @@ class ClassroomService {
 
     repository: Repository<Classroom>
 
-    async getAll() {
+    async getAll(teacherId) {
+        let classrooms_ids: number[] = []
+
         this.repository = connection.getRepository(Classroom)
 
-        const classrooms = await this.repository.find({ where: {}, relations: ["students"] })
+        const subject_classroom = await subject_classroomService.getByTeacher(teacherId)
+
+        for (let subject of subject_classroom) {
+            classrooms_ids.push(subject.classroom.id)
+        }
+
+        const classrooms = await this.repository.find({ where: { id: In(classrooms_ids) }, relations: ["students"] })
         return classrooms
     }
 
@@ -41,7 +50,6 @@ class ClassroomService {
         const students = classroom.students;
 
         for (let student of students) {
-            console.log(student)
             const activitiesToStudents = await repositoryActivities.find({ where: { student: student.id } })
             activities.push(...activitiesToStudents)
             activities_delived.push(...activitiesToStudents.filter((activity) => activity.delivered == true))
@@ -65,7 +73,6 @@ class ClassroomService {
         const students = classroom.students;
 
         for (let student of students) {
-            console.log(student)
             const activitiesToStudents = await repositoryActivities.find({ where: { student: student.id, delivered: true }, relations: ["activity"] })
 
             activities_delived.push(...activitiesToStudents)
