@@ -9,7 +9,8 @@ class ClassroomController {
         const classroomData = []
 
         try {
-            const classrooms = await classroomService.getAll()
+            const teacher_id = request.userId
+            const classrooms = await classroomService.getAll(teacher_id)
 
             for (const classroom of classrooms) {
                 const metrics = await this.getMetrics(classroom.id)

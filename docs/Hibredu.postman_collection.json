@@ -216,6 +216,9 @@
 			"item": [
 				{
 					"name": "GET All Classroom",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -229,6 +232,17 @@
 						},
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
 						"url": {
 							"raw": "http://localhost:8080/classroom/",
 							"protocol": "http",
@@ -295,7 +309,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/attendance/class/1?before=2021-09-07",
+							"raw": "http://localhost:8080/attendance/class/1?after=2021-09-01&before=2021-09-10",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -308,13 +322,14 @@
 							],
 							"query": [
 								{
-									"key": "before",
-									"value": "2021-09-07"
+									"key": "after",
+									"value": "2021-09-01",
+									"description": "Filtrar por chamadas depois desta data"
 								},
 								{
-									"key": "after",
-									"value": null,
-									"disabled": true
+									"key": "before",
+									"value": "2021-09-10",
+									"description": "Filtrar por chamadas antes desta data"
 								}
 							]
 						}

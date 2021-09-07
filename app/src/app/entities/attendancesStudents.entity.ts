@@ -1,13 +1,12 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import Attendance from "./attendance.entity";
-import File from "./file.entity";
 import Student from "./student.entity";
-import SubjectClassroom from "./subjects_classrooms.entity";
 
 export interface IAttendanceStudent {
-    id?: number;
-    content: string;
-    type?: string;
+    attendances_id?: number;
+    present?: boolean;
+    attendance?: Attendance;
+    student?: Student;
 }
 
 @Entity('attendances_students')
@@ -16,10 +15,13 @@ export default class AttendanceStudent {
     @PrimaryColumn()
     attendances_id: number;
 
+    @PrimaryColumn()
+    students_id: number;
+
     @Column()
     present: boolean;
 
-    @ManyToOne(() => Attendance, attendance => attendance.attendanceStudents, { eager: true, onDelete: 'CASCADE' })
+    @ManyToOne(() => Attendance, attendance => attendance.attendanceStudents, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'attendances_id' })
     attendance: Attendance;
 

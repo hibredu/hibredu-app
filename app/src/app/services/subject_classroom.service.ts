@@ -28,7 +28,10 @@ class SubjectClassroomService {
     async getByTeacher(teacherId: number) {
         this.repository = connection.getRepository(SubjectClassroom)
 
-        const subjectClassroom = await this.repository.find({ where: { teachers_id: teacherId } })
+        const subjectClassroom = await this.repository.find({
+            where: { teachers_id: teacherId },
+            relations: ["classroom", "school_subject", "teacher"]
+        })
         return subjectClassroom
     }
 
