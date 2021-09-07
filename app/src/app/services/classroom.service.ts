@@ -16,7 +16,7 @@ class ClassroomService {
     }
 
     async getDeliveredActivities(id: number) {
-        const activities = []
+        const activities: ActivityToStudent[] = []
 
         const repositoryActivities = connection.getRepository(ActivityToStudent)
         const classroom = await this.getById(id)
@@ -32,8 +32,8 @@ class ClassroomService {
     }
 
     async getDeliveryPercentage(id: number) {
-        const activities_delived = []
-        const activities = []
+        const activities_delived: ActivityToStudent[] = []
+        const activities: ActivityToStudent[] = []
 
         const repositoryActivities = connection.getRepository(ActivityToStudent)
         const classroom = await this.getById(id)
