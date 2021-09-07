@@ -26,7 +26,7 @@ export default class Alert {
     updated_at: Date;
 
     @Column()
-    teachers_id
+    teachers_id: number;
 
     @ManyToOne(() => Teacher, teacher => teacher.alerts)
     @JoinColumn({ name: 'teachers_id' })

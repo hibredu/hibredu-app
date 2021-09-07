@@ -220,7 +220,7 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`alerts` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `value` LONGBLOB NOT NULL,
+  `value` TEXT NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
   `teachers_id` BIGINT(20) NOT NULL,
@@ -409,6 +409,9 @@ INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 1, 1);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 1, 3);
 
+INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-06 01:53:36', 2, 1);
+INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno não entregou atividade','2021-09-08 01:53:36', 2, 1);
+INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno não entregou atividade','2021-09-09 01:53:36', 2, 1);
 INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 2, 2);
 INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 2, 3);
 INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 2, 5);

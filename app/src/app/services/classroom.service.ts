@@ -1,7 +1,6 @@
 import { getConnection, Repository } from "typeorm";
 import ActivityToStudent from "../entities/activityToStudent.entity";
 import { Classroom } from "../entities/classroom.entity";
-import attendanceService from "./attendance.service";
 
 const connection = getConnection()
 
@@ -17,7 +16,7 @@ class ClassroomService {
     }
 
     async getDeliveredActivities(id: number) {
-        const activities = []
+        const activities: ActivityToStudent[] = []
 
         const repositoryActivities = connection.getRepository(ActivityToStudent)
         const classroom = await this.getById(id)
@@ -25,7 +24,6 @@ class ClassroomService {
         const students = classroom.students;
 
         for (let student of students) {
-            console.log(student)
             const activitiesToStudents = await repositoryActivities.find({ where: { student: student.id, delivered: true } })
             activities.push(...activitiesToStudents)
         }
@@ -34,8 +32,8 @@ class ClassroomService {
     }
 
     async getDeliveryPercentage(id: number) {
-        const activities_delived = []
-        const activities = []
+        const activities_delived: ActivityToStudent[] = []
+        const activities: ActivityToStudent[] = []
 
         const repositoryActivities = connection.getRepository(ActivityToStudent)
         const classroom = await this.getById(id)
