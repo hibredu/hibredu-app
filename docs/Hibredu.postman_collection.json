@@ -15,13 +15,43 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Jean Jacques\",\r\n    \"email\": \"jean656@hibredu.com.br\",\r\n    \"phone\": \"55-988-0808\",\r\n    \"password\": \"123456\",\r\n    \"school_id\": 1,\r\n    \"classrooms\": [\r\n        {\r\n            \"id\": 1,\r\n            \"name\": \"3ºA\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"name\": \"Jean Jacques\",\r\n    \"email\": \"jean2@hibredu.com.br\",\r\n    \"phone\": \"55-988-0808\",\r\n    \"password\": \"12345678\",\r\n    \"school_id\": 1,\r\n    \"classrooms\": [\r\n        {\r\n            \"id\": 1,\r\n            \"name\": \"3ºA\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
+						"url": {
+							"raw": "http://localhost:8080/teacher/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"teacher",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET All Teachers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
 						"url": {
 							"raw": "http://localhost:8080/teacher/",
 							"protocol": "http",
@@ -44,12 +74,24 @@
 			"item": [
 				{
 					"name": "GET Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = pm.response.json()\r",
+									"pm.environment.set(\"token\", res.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"jean@hibredu.com.br\",\r\n    \"password\": \"123456\"\r\n}",
+							"raw": "{\r\n    \"email\": \"jean@hibredu.com.br\",\r\n    \"password\": \"12345678\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -97,8 +139,48 @@
 					"response": []
 				},
 				{
+					"name": "GET Student by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/student/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"student",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "GET Delivery Percentage",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -116,26 +198,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "GET Student by ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/student/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"student",
-								""
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -143,8 +205,48 @@
 			"name": "Classroom",
 			"item": [
 				{
+					"name": "GET All Classroom",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/classroom/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"classroom",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "GET Classroom by ID",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -156,6 +258,42 @@
 							"port": "8080",
 							"path": [
 								"classroom",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Attendance",
+			"item": [
+				{
+					"name": "GET Attendance Class",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/attendance/class/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"attendance",
+								"class",
 								"1"
 							]
 						}

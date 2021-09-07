@@ -275,6 +275,7 @@ DEFAULT CHARACTER SET = latin1;
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`attendances_students` ( 
   `attendances_id` BIGINT(20) NOT NULL,
   `students_id` VARCHAR(30) NOT NULL,
+  `present` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`attendances_id`, `students_id`),
   INDEX `fk_attendance_has_students_students1_idx` (`students_id` ASC) ,
   INDEX `fk_attendance_has_students_attendance1_idx` (`attendances_id` ASC) ,
@@ -363,5 +364,22 @@ INSERT INTO activities_students (students_id, activities_id, delivered) VALUES (
 INSERT INTO activities_students (students_id, activities_id, delivered) VALUES (2, 3, 1);
 INSERT INTO activities_students (students_id, activities_id, delivered) VALUES (3, 4, 0);
 INSERT INTO activities_students (students_id, activities_id, delivered) VALUES (4, 5, 0);
+
+INSERT INTO files (content, type) VALUES ('https://www.youtube.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube2.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube3.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube4.com/','image');
+
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Teste de Descrição', '2021-09-07 01:53:36', 1, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Teste de Descrição 2', '2021-09-07 01:53:36', 2, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Teste de Descrição 2', '2021-09-07 01:53:36', 3, 1);
+
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 1, 1);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 1, 2);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 0, 3);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (2, 0, 1);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (2, 0, 2);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 1, 1);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 1, 3);
 
 COMMIT;

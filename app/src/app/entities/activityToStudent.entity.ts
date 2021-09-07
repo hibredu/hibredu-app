@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Activity } from "./activity.entity";
+import Activity from "./activity.entity";
 import Student from "./student.entity";
 
 @Entity('activities_students')

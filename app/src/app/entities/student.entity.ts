@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import ActivityToStudent from "./activityToStudent.entity";
+import AttendanceStudent from "./attendancesStudents.entity";
 import { Classroom } from "./classroom.entity";
 
 export interface IStudent {
@@ -36,4 +37,7 @@ export default class Student {
 
     @OneToMany(() => ActivityToStudent, (activityToStudent) => activityToStudent.student, { eager: false })
     activitiesToStudents: ActivityToStudent[];
+
+    @OneToMany(() => AttendanceStudent, (attendance_student) => attendance_student.student)
+    attendanceStudents: AttendanceStudent[];
 }

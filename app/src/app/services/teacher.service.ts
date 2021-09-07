@@ -56,7 +56,7 @@ class TeacherService {
 
         for (let index = 0; index < teacher.subjects_classrooms.length; index++) {
             const subjects_classrooms = teacher.subjects_classrooms[index];
-            classes.push(subjects_classrooms.classroom as unknown as Classroom);
+            classes.push(subjects_classrooms.classroom);
         }
 
         return classes;

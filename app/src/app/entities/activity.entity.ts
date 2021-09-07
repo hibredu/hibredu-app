@@ -1,8 +1,9 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import ActivityToStudent from "./activityToStudent.entity";
+import File from "./file.entity";
 
 @Entity('activities')
-export class Activity {
+export default class Activity {
     @PrimaryGeneratedColumn('increment')
     id: number;
 
@@ -17,6 +18,10 @@ export class Activity {
 
     @Column()
     max_note: number;
+
+    @ManyToOne(() => File, (file) => file.activities)
+    @JoinColumn({ name: 'files_id' })
+    file: File
 
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
     created_at: Date;

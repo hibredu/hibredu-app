@@ -5,12 +5,25 @@ import { IClassroomResponse } from '../../app/shared/interfaces'
 class ClassroomController {
 
     async getAll(request: Request, response: Response) {
+        const classroomData = []
+
         try {
             const classrooms = await classroomService.getAll()
-            response.status(200).json(classrooms)
+
+            for (const classroom of classrooms) {
+                const metrics = await this.getMetrics(classroom.id)
+
+                classroomData.push({
+                    id: classroom.id,
+                    name: classroom.name,
+                    metrics
+                })
+            }
+
+            response.status(200).json(classroomData)
         } catch (error) {
             response.status(500).json({ error: error.message })
-        }   
+        }
     }
 
     async findDeliveryPercentage(request: Request, response: Response) {
@@ -28,30 +41,34 @@ class ClassroomController {
 
     async getById(request: Request, response: Response) {
         const { id } = request.params
-        let attendancePercentage: number
-        let deliveryPercentage: number
         let classroomData: IClassroomResponse
 
         try {
             const classroom = await classroomService.getById(parseInt(id));
-            deliveryPercentage = await classroomService.getDeliveryPercentage(parseInt(id))
-            attendancePercentage = await classroomService.getAttendancePercentage(parseInt(id))
+            const metrics = await this.getMetrics(classroom.id);
 
             classroomData = {
                 id: classroom.id,
                 name: classroom.name,
-                metrics: {
-                    deliveredActivities: attendancePercentage,
-                    deliveryPercentage: deliveryPercentage,
-                    hitRate: 0, // TODO: implement hit rate
-                    alerts: 0 // TODO: implement alerts
-                }
+                metrics
             }
         } catch (error) {
             response.status(500).json({ error: error.message })
         }
 
         response.status(200).json(classroomData)
+    }
+
+    private async getMetrics(classroomId: number) {
+        const deliveryPercentage = await classroomService.getDeliveryPercentage(classroomId)
+        const attendancePercentage = await classroomService.getAttendancePercentage(classroomId)
+
+        return {
+            deliveredActivities: attendancePercentage,
+            deliveryPercentage: deliveryPercentage,
+            hitRate: 0, // TODO: implement hit rate
+            alerts: 0 // TODO: implement alerts
+        }
     }
 }
 
