@@ -7,6 +7,13 @@ const connection = getConnection()
 class ClassroomService {
     repository: Repository<Classroom>
 
+    async getAll() {
+        this.repository = connection.getRepository(Classroom)
+
+        const classrooms = await this.repository.find({ relations: ["students"] })
+        return classrooms
+    }
+
     async getDeliveryPercentage(id: number) {
         this.repository = connection.getRepository(Classroom)
 

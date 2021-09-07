@@ -3,6 +3,18 @@ import { ITeacher } from '../../app/entities/teacher.entity'
 import teacherService from '../../app/services/teacher.service'
 
 class TeacherController {
+
+    async getAll(request: Request, response: Response) {
+        try {
+            const teachers = await teacherService.getAll()
+            return response.status(200).json(teachers)
+        } catch (error) {
+            return response.status(500).json({
+                message: error.message
+            })
+        }
+    }
+
     async create(request: Request, response: Response) {
         const { name, email, password, phone, school_id } = request.body
 

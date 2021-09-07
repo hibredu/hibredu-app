@@ -8,12 +8,12 @@
         "target": "es2017",
         "moduleResolution": "node",
         "sourceMap": true,
-        "outDir": "dist"
+        "outDir": "dist",
+        "typeRoots": [
+            "./@types",
+            "./node_modules/@types"
+        ],
     },
-    "typeRoots": [
-        "./@types",
-        "./node_modules/@types"
-    ],
     "exclude": [
         "node_modules",
         "**/*.spec.ts"

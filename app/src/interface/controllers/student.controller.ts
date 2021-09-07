@@ -3,8 +3,10 @@ import Student from '../../app/entities/student.entity'
 import StudentService from '../../app/services/student.service'
 
 class StudentController {
-    async getAll(_: Request, response: Response) {
-        const allStudents = await StudentService.getAll()
+    async getAll(request: Request, response: Response) {
+        const teacherID = request.userId
+
+        const allStudents = await StudentService.getAll(teacherID)
         response.status(200).json(allStudents)
     }
 
@@ -13,7 +15,7 @@ class StudentController {
         let student: Student
 
         try {
-            student = await StudentService.getOne(parseInt(id))
+            student = await StudentService.getById(parseInt(id))
         } catch (error) {
             response.status(500).json({ error: error.message })
         }

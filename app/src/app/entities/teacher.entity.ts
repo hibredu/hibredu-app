@@ -1,6 +1,7 @@
-import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, getConnection, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, getConnection, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 import bcryptjs from 'bcryptjs'
 import School from "./school.entity";
+import SubjectsClassrooms from "./subjects_classrooms.entity";
 
 export interface ITeacher {
     id?: number;
@@ -34,6 +35,9 @@ export default class Teacher {
     @ManyToOne(() => School, school => school.teachers)
     @JoinColumn({ name: 'schools_id' })
     school: School;
+
+    @OneToMany(() => SubjectsClassrooms, (subjects_classrooms) => subjects_classrooms.teacher, { eager: true })
+    subjects_classrooms: SubjectsClassrooms[];
 
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
     created_at: Date;

@@ -3,6 +3,16 @@ import classroomService from '../../app/services/classroom.service'
 import { IClassroomResponse } from '../../app/shared/interfaces'
 
 class ClassroomController {
+
+    async getAll(request: Request, response: Response) {
+        try {
+            const classrooms = await classroomService.getAll()
+            response.status(200).json(classrooms)
+        } catch (error) {
+            response.status(500).json({ error: error.message })
+        }   
+    }
+
     async findDeliveryPercentage(request: Request, response: Response) {
         const { id } = request.params
         let deliveryPercentage: number

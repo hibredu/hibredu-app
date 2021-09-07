@@ -4,6 +4,7 @@ import teacherController from "../controllers/teacher.controller";
 const teacherRouter = Router();
 
 teacherRouter.post('/', teacherController.create)
+teacherRouter.get('/', teacherController.getAll)
 
 export default teacherRouter;
 
