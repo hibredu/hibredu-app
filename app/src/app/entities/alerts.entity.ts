@@ -1,20 +1,23 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import Activity from "./activity.entity";
 import Student from "./student.entity";
+import Teacher from "./teacher.entity";
 
-@Entity('activities_students')
-export default class ActivityToStudent {
+export interface IAlert {
+    id?: number;
+    value: string;
+    created_at?: Date;
+    updated_at?: Date;
+    teacher?: Teacher;
+    student?: Student;
+}
+
+@Entity('alerts')
+export default class Alert {
     @PrimaryGeneratedColumn('increment')
     id: number;
 
     @Column()
-    delivered: boolean;
-
-    @Column()
-    status: string;
-
-    @Column()
-    grade: number;
+    value: string;
 
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
     created_at: Date;
@@ -22,11 +25,14 @@ export default class ActivityToStudent {
     @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
     updated_at: Date;
 
-    @ManyToOne(() => Activity, (activity) => activity.activitiesToStudents)
-    @JoinColumn({ name: 'activities_id' })
-    activity: Activity;
+    @Column()
+    teachers_id
 
-    @ManyToOne(() => Student, (student) => student.activitiesToStudents)
+    @ManyToOne(() => Teacher, teacher => teacher.alerts)
+    @JoinColumn({ name: 'teachers_id' })
+    teacher: Teacher;
+
+    @ManyToOne(() => Student, (student) => student.alerts)
     @JoinColumn({ name: 'students_id' })
-    student: Student;
+    student: Student
 }

@@ -148,6 +148,7 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`activities` (
   `date` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `max_note` DOUBLE NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME DEFAULT NULL,
   `files_id` INT(11) NULL,
   `owner_id` BIGINT(20) NOT NULL,
   INDEX `activities_files_fk` (`files_id` ASC) ,
@@ -332,6 +333,9 @@ INSERT INTO school_subjects (name) values('Geografia');
 INSERT INTO teachers (name, email, password, phone, schools_id) VALUES ('Jean Jacques', 'jean@hibredu.com.br', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581190', 1);
 INSERT INTO teachers (name, email, password, phone, schools_id) VALUES ('Felipe Toscano', 'felipe@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581192', 1);
 INSERT INTO teachers (name, email, password, phone, schools_id) VALUES ('Vinicius Mota', 'vinicius@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581193', 2);
+INSERT INTO teachers (name, email, password, phone, schools_id) VALUES ('Gabriel Petillo', 'gspetillo@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195456783', 2);
+INSERT INTO teachers (name, email, password, phone, schools_id) VALUES ('Giovanna Godoy', 'giovanna@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195456783', 1);
+INSERT INTO teachers (name, email, password, phone, schools_id) VALUES ('Patricia', 'patricia@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195456783', 1);
 
 INSERT INTO classrooms (name) VALUES ('3A-2021');
 INSERT INTO classrooms (name) VALUES ('3B-2021');
@@ -342,6 +346,7 @@ INSERT INTO classrooms (name) VALUES ('5B-2021');
 INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id) VALUES(1, 1, 2);
 INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id) VALUES(2, 2, 2);
 INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id) VALUES(2, 2, 3);
+INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id) VALUES(3, 2, 4);
 INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id) VALUES(2, 1, 3);
 
 INSERT INTO students (id, name, email, classrooms_id) VALUES (1, 'Felipe', 'felipe@gmail.com', 1);
@@ -353,24 +358,37 @@ INSERT INTO students (id, name, email, classrooms_id) VALUES (6, 'Gustavo', 'gus
 INSERT INTO students (id, name, email, classrooms_id) VALUES (7, 'Guilherme', 'guilherme@gmail.com', 2);
 INSERT INTO students (id, name, email, classrooms_id) VALUES (8, 'Thiago', 'thiago@gmail.com', 2);
 INSERT INTO students (id, name, email, classrooms_id) VALUES (9, 'Isadora', 'isadora@gmail.com', 2);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (10, 'Naruto', 'naruto@gmail.com', 2);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (11, 'Bruna', 'bruna@gmail.com', 2);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (12, 'Luana', 'luana@gmail.com', 2);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (13, 'Evelyn', 'evelyn@gmail.com', 2);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (14, 'Bruno', 'bruno@gmail.com', 2);
 
 INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade1', 'Português', 10, 1);
-INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade2', 'Matemática', 11, 1);
-INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade3', 'Inglês', 4.5, 1);
-INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade4', 'Artes', 12, 1);
+INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade2', 'Matemática', 10, 1);
+INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade3', 'Inglês', 10, 1);
+INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade4', 'Artes', 10, 1);
 INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade5', 'Espanhol', 10, 1);
 INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade6', 'Português', 10, 1);
-INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade7', 'Matemática', 11, 1);
-INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade8', 'Inglês', 4.5, 1);
-INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade9', 'Artes', 12, 1);
-INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade10', 'Espanhol', 10, 1);
-INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade11', 'Inglês', 10, 1);
+INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade7', 'Matemática', 10, 2);
+INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade8', 'Inglês', 10, 2);
+INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade9', 'Artes', 10, 2);
+INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade10', 'Espanhol', 10, 2);
+INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade11', 'Inglês', 10, 2);
+INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade12', 'Inglês', 10, 2);
+INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade13', 'Inglês', 10, 1);
 
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (1, 1, 0, 'não entregue', 10);
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (1, 1, 0, 'não entregue', 0);
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (1, 2, 1, 'entregue', 10);
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (1, 3, 1, 'entregue', 5);
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (1, 4, 0, 'não entregue', 0);
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (1, 5, 0, 'não entregue', 0);
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (1, 6, 0, 'não entregue', 0);
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (2, 3, 1, 'entregue', 9);
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (3, 4, 0, 'não entregue', 8.5);
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (4, 5, 0, 'não entregue', 10);
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (2, 3, 1, 'entregue', 4);
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (2, 3, 0, 'entregue', 0);
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (3, 4, 0, 'não entregue', 0);
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (4, 5, 0, 'não entregue', 0);
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (5, 3, 1, 'entregue', 10);
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (3, 3, 1, 'entregue', 10);
 
@@ -390,5 +408,15 @@ INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (2, 0, 2);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 1, 1);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 1, 3);
+
+INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 2, 2);
+INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 2, 3);
+INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 2, 5);
+INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa a tempos','2021-09-07 01:53:36', 2, 4);
+INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 3, 2);
+INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 4, 2);
+INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 5, 2);
+INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 6, 2);
+
 
 COMMIT;

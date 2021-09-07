@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import ActivityToStudent from "./activityToStudent.entity";
+import Alert from "./alerts.entity";
 import AttendanceStudent from "./attendancesStudents.entity";
 import { Classroom } from "./classroom.entity";
 
@@ -40,4 +41,7 @@ export default class Student {
 
     @OneToMany(() => AttendanceStudent, (attendance_student) => attendance_student.student)
     attendanceStudents: AttendanceStudent[];
+
+    @OneToMany(() => Alert, (alert) => alert.student, { eager: false })
+    alerts: Alert[];
 }
