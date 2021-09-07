@@ -1,28 +1,84 @@
 import { getConnection, Repository } from "typeorm";
+import ActivityToStudent from "../entities/activityToStudent.entity";
 import { Classroom } from "../entities/classroom.entity";
 import attendanceService from "./attendance.service";
 
 const connection = getConnection()
 
 class ClassroomService {
+
     repository: Repository<Classroom>
 
     async getAll() {
         this.repository = connection.getRepository(Classroom)
 
-        const classrooms = await this.repository.find({ where: {},relations: ["students"] })
+        const classrooms = await this.repository.find({ where: {}, relations: ["students"] })
         return classrooms
     }
 
-    async getDeliveryPercentage(id: number) {
+    async getDeliveredActivities(id: number) {
+        const activities = []
+
+        const repositoryActivities = connection.getRepository(ActivityToStudent)
         const classroom = await this.getById(id)
 
         const students = classroom.students;
-        const totalActivities = students.filter((student) => student.activitiesToStudents).length;
-        const totalActivitiesDelivered = students.filter((student) => student.activitiesToStudents?.filter((activity) => activity.delivered == 1).length).length;
-        console.log(totalActivities);
-        console.log(totalActivitiesDelivered);
-        return (totalActivitiesDelivered / totalActivities) * 100;
+
+        for (let student of students) {
+            console.log(student)
+            const activitiesToStudents = await repositoryActivities.find({ where: { student: student.id, delivered: true } })
+            activities.push(...activitiesToStudents)
+        }
+
+        return activities;
+    }
+
+    async getDeliveryPercentage(id: number) {
+        const activities_delived = []
+        const activities = []
+
+        const repositoryActivities = connection.getRepository(ActivityToStudent)
+        const classroom = await this.getById(id)
+
+        const students = classroom.students;
+
+        for (let student of students) {
+            console.log(student)
+            const activitiesToStudents = await repositoryActivities.find({ where: { student: student.id } })
+            activities.push(...activitiesToStudents)
+            activities_delived.push(...activitiesToStudents.filter((activity) => activity.delivered == true))
+        }
+
+
+        const totalActivities = activities.length;
+        const totalActivitiesDelivered = activities_delived.length;
+
+        return (totalActivitiesDelivered / totalActivities);
+    }
+
+    async getHitRate(id: number) {
+        const activities_delived: ActivityToStudent[] = []
+        let hitRate = 0
+        let hitRateTotal = 0
+
+        const repositoryActivities = connection.getRepository(ActivityToStudent)
+        const classroom = await this.getById(id)
+
+        const students = classroom.students;
+
+        for (let student of students) {
+            console.log(student)
+            const activitiesToStudents = await repositoryActivities.find({ where: { student: student.id, delivered: true }, relations: ["activity"] })
+
+            activities_delived.push(...activitiesToStudents)
+        }
+
+        for (let activity of activities_delived) {
+            hitRateTotal += activity.activity.max_note
+            hitRate += activity.grade
+        }
+
+        return (hitRate / hitRateTotal);
     }
 
     async getAttendancePercentage(id: number) {

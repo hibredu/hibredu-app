@@ -8,7 +8,7 @@ export default class ActivityToStudent {
     id: number;
 
     @Column()
-    delivered: number;
+    delivered: boolean;
 
     @Column()
     status: string;
