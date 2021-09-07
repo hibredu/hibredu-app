@@ -26,8 +26,8 @@ class StudentService {
         this.repository = connection.getRepository(Student)
 
         const student = await this.repository.findOne(id);
-        const totalActivities = student.activitiesToStudents.length;
-        const totalActivitiesDelivered = student.activitiesToStudents.filter((activity) => activity.delivered == 1).length;
+        const totalActivities = student.activitiesToStudents?.length;
+        const totalActivitiesDelivered = student.activitiesToStudents?.filter((activity) => activity.delivered == 1).length;
         return (totalActivitiesDelivered / totalActivities) * 100;
     }
 }

@@ -325,6 +325,8 @@ INSERT INTO schools (name) values('ETEC II');
 INSERT INTO school_subjects (name) values('Matemática');
 INSERT INTO school_subjects (name) values('Português');
 INSERT INTO school_subjects (name) values('História');
+INSERT INTO school_subjects (name) values('Música');
+INSERT INTO school_subjects (name) values('Química');
 INSERT INTO school_subjects (name) values('Geografia');
 
 INSERT INTO teachers (name, email, password, phone, schools_id) VALUES ('Jean Jacques', 'jean@hibredu.com.br', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581190', 1);
@@ -339,6 +341,8 @@ INSERT INTO classrooms (name) VALUES ('5B-2021');
 
 INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id) VALUES(1, 1, 2);
 INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id) VALUES(2, 2, 2);
+INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id) VALUES(2, 2, 3);
+INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id) VALUES(2, 1, 3);
 
 INSERT INTO students (id, name, email, classrooms_id) VALUES (1, 'Felipe', 'felipe@gmail.com', 1);
 INSERT INTO students (id, name, email, classrooms_id) VALUES (2, 'Jean', 'jean@gmail.com', 1);
@@ -347,6 +351,8 @@ INSERT INTO students (id, name, email, classrooms_id) VALUES (4, 'Giovanna', 'gi
 INSERT INTO students (id, name, email, classrooms_id) VALUES (5, 'Vinicius', 'vinicius@gmail.com', 1);
 INSERT INTO students (id, name, email, classrooms_id) VALUES (6, 'Gustavo', 'gustavo@gmail.com', 2);
 INSERT INTO students (id, name, email, classrooms_id) VALUES (7, 'Guilherme', 'guilherme@gmail.com', 2);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (8, 'Thiago', 'thiago@gmail.com', 2);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (9, 'Isadora', 'isadora@gmail.com', 2);
 
 INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade1', 'Português', 10, 1);
 INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade2', 'Matemática', 11, 1);
@@ -358,12 +364,15 @@ INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade7',
 INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade8', 'Inglês', 4.5, 1);
 INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade9', 'Artes', 12, 1);
 INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade10', 'Espanhol', 10, 1);
+INSERT INTO activities (name, subject, max_note, owner_id) VALUES ('Atividade11', 'Inglês', 10, 1);
 
-INSERT INTO activities_students (students_id, activities_id, delivered) VALUES (1, 1, 0);
-INSERT INTO activities_students (students_id, activities_id, delivered) VALUES (1, 2, 1);
-INSERT INTO activities_students (students_id, activities_id, delivered) VALUES (2, 3, 1);
-INSERT INTO activities_students (students_id, activities_id, delivered) VALUES (3, 4, 0);
-INSERT INTO activities_students (students_id, activities_id, delivered) VALUES (4, 5, 0);
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (1, 1, 0, 'não entregue', 10);
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (1, 2, 1, 'entregue', 10);
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (2, 3, 1, 'entregue', 9);
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (3, 4, 0, 'não entregue', 8.5);
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (4, 5, 0, 'não entregue', 10);
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (5, 3, 1, 'entregue', 10);
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade) VALUES (3, 3, 1, 'entregue', 10);
 
 INSERT INTO files (content, type) VALUES ('https://www.youtube.com/','image');
 INSERT INTO files (content, type) VALUES ('https://www.youtube2.com/','image');
