@@ -1,14 +1,14 @@
 import { Request, Response } from 'express'
 import Student from '../../app/entities/student.entity'
+import alertService from '../../app/services/alert.service'
 import studentService from '../../app/services/student.service'
-import StudentService from '../../app/services/student.service'
 
 class StudentController {
     async getAll(request: Request, response: Response) {
         const teacherID = request.userId
         const studentsData = []
 
-        const allStudents = await StudentService.getAll(teacherID)
+        const allStudents = await studentService.getAll(teacherID)
 
         for (const student of allStudents) {
             const metrics = await this.getMetrics(student.id)
@@ -29,13 +29,14 @@ class StudentController {
         let studentData: any
 
         try {
-            student = await StudentService.getById(parseInt(id))
+            student = await studentService.getById(parseInt(id))
             const metrics = await this.getMetrics(student.id);
 
             studentData = {
                 id: student.id,
                 name: student.name,
                 activities: student.activitiesToStudents,
+                alerts: student.alerts,
                 metrics
             }
         } catch (error) {
@@ -50,7 +51,7 @@ class StudentController {
         let deliveryPercentage: number
 
         try {
-            deliveryPercentage = await StudentService.getDeliveryPercentage(parseInt(id))
+            deliveryPercentage = await studentService.getDeliveryPercentage(parseInt(id))
         } catch (error) {
             response.status(500).json({ error: error.message })
         }
@@ -59,13 +60,16 @@ class StudentController {
     }
 
     private async getMetrics(studentId: number) {
+        const deliveredActivities = await studentService.getDeliveredActivities(studentId)
         const deliveryPercentage = await studentService.getDeliveryPercentage(studentId)
+        const hitRate = await studentService.getHitRate(studentId)
+        const alerts = await (await alertService.getByStudent(studentId)).length
 
         return {
-            deliveredActivities: 0,// TODO: implement delivered activities
+            deliveredActivities: deliveredActivities,
             deliveryPercentage: deliveryPercentage,
-            hitRate: 0, // TODO: implement hit rate
-            alerts: 0 // TODO: implement alerts
+            hitRate: hitRate,
+            alerts: alerts
         }
     }
 }

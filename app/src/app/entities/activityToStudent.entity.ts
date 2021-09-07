@@ -22,7 +22,10 @@ export default class ActivityToStudent {
     @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
     updated_at: Date;
 
-    @ManyToOne(() => Activity, (activity) => activity.activitiesToStudents)
+    @Column()
+    activities_id: number;
+
+    @ManyToOne(() => Activity, (activity) => activity.activitiesToStudents, { eager: true })
     @JoinColumn({ name: 'activities_id' })
     activity: Activity;
 

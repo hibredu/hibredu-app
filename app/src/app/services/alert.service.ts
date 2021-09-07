@@ -29,6 +29,14 @@ class AlertService {
         return alerts
     }
 
+    async getByStudent(studentId: number) {
+        this.repository = connection.getRepository(Alert)
+
+        const alerts: Alert[] = await this.repository.find({ where: { student: studentId } })
+
+        return alerts
+    }
+
 }
 
 export default new AlertService()
