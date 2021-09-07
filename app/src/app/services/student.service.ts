@@ -1,22 +1,25 @@
-import { getConnection, Repository } from "typeorm";
-import { Student } from "../entities/student.entity";
+import { getConnection, In, Repository } from "typeorm";
+import Student from "../entities/student.entity";
+import teacherService from "./teacher.service";
 
 const connection = getConnection()
 
 class StudentService {
-    repository: Repository<Student> 
+    repository: Repository<Student>
 
-    async getAll() {
+    async getAll(teacherID) {
         this.repository = connection.getRepository(Student)
 
-        const student = await this.repository.find({})
-        return student
+        const classes = await teacherService.getClassesByTeacher(teacherID);
+
+        const students = await this.repository.find({ where: { classroom: In(classes) } });
+        return students
     }
 
-    async getOne(id: number) {
+    async getById(id: number) {
         this.repository = connection.getRepository(Student)
 
-        return await this.repository.findOne(id);
+        return await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"] });
     }
 
     async getDeliveryPercentage(id: number) {
