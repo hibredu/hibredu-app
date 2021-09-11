@@ -1,0 +1,2 @@
+config:set PROJECT_PATH=app
+web: ts-node src/index.ts
