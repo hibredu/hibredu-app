@@ -1,2 +1,2 @@
-config:set PROJECT_PATH=app
+web: npm start --prefix app
 web: ts-node src/index.ts

@@ -1,0 +1,11 @@
+{
+  "name": "hibredu-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/hibredu/hibredu-app.git",
+  "author": "jjeanjacques10 <jjean.jacques10@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "npm install --prefix app"
+  }
+}
