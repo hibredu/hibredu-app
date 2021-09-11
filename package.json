@@ -6,6 +6,7 @@
   "author": "jjeanjacques10 <jjean.jacques10@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "postinstall": "npm install --prefix app"
+    "postinstall": "npm install --prefix app",
+    "start": "ts-node app/src/index.ts"
   }
 }
