@@ -16,8 +16,7 @@ import logger from '../../loggerPino';
         password: password,
         database: database,
         entities: [
-            __dirname + '../../app/entities/*.entity.{.js,.ts}',
-            "src/app/entities/*.entity{.js,.ts}"
+            `${__dirname}/../../**/*.entity.{ts,js}`
         ],
         migrations: ["src/database/migration/*{.js,.ts}"],
         synchronize: false
