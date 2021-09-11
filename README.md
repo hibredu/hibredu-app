@@ -38,3 +38,7 @@ sh ./start.sh
     └ sql                       → Pastas com arquivos dump.sql utilizados para popular o banco de dados criado pelo docker
 └ docs                          → Documentação no Postman
  ```
+
+ ## Documentação
+
+ Você pode encontrar as Collections na pasta [docs](./docs), lá também se encontra o Enviroment para se trabalhar com a autenticação
