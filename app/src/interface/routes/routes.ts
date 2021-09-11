@@ -4,12 +4,14 @@ import alertRouter from "./alerts.routes"
 import attendanceRouter from "./attendance.routes"
 import authRouter from "./auth.routes"
 import classroomRouter from "./classroom.routes"
+import schoolRouter from "./school.routes"
 import studentRouter from "./student.routes"
 import teacherRouter from "./teacher.routes"
 
 const router = Router()
 
 router.use("/", authRouter)
+router.use("/school", schoolRouter)
 
 router.use(authMiddleware);
 

@@ -309,7 +309,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/attendance/class/1?after=2021-09-01&before=2021-09-10",
+							"raw": "http://localhost:8080/attendance/class/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -324,12 +324,14 @@
 								{
 									"key": "after",
 									"value": "2021-09-01",
-									"description": "Filtrar por chamadas depois desta data"
+									"description": "Filtrar por chamadas depois desta data",
+									"disabled": true
 								},
 								{
 									"key": "before",
 									"value": "2021-09-10",
-									"description": "Filtrar por chamadas antes desta data"
+									"description": "Filtrar por chamadas antes desta data",
+									"disabled": true
 								}
 							]
 						}
@@ -458,6 +460,40 @@
 								"alert",
 								"student",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "School",
+			"item": [
+				{
+					"name": "GET Schools",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/school",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"school"
 							]
 						}
 					},
