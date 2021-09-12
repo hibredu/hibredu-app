@@ -1,4 +1,5 @@
 import { createConnections } from 'typeorm'
+import logger from '../../loggerPino';
 
 (async () => {
     const host = process.env.HOST_DB || 'localhost'
@@ -15,11 +16,10 @@ import { createConnections } from 'typeorm'
         password: password,
         database: database,
         entities: [
-            __dirname + '../../app/entities/*.entity.{.js,.ts}',
-            "src/app/entities/*.entity{.js,.ts}"
+            `${__dirname}/../../**/*.entity.{ts,js}`
         ],
         migrations: ["src/database/migration/*{.js,.ts}"],
         synchronize: false
-    }]).then(() => console.log('📦 Success Connected Database!'))
-        .catch((error) => console.log("Unable to connect to the database" + error));
+    }]).then(() => logger.info('📦 Success Connected Database!'))
+        .catch((error) => logger.error("Unable to connect to the database" + error));
 })();
