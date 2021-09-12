@@ -98,6 +98,11 @@ class ClassroomService {
         this.repository = connection.getRepository(Classroom)
         return await this.repository.findOne({ where: { id }, relations: ["students"] })
     }
+
+    async getBySchool(schoolId: number): Promise<Classroom[]> {
+        this.repository = connection.getRepository(Classroom)
+        return await this.repository.find({ where: { school: schoolId } })
+    }
 }
 
 export default new ClassroomService()

@@ -30,7 +30,7 @@ class SubjectClassroomService {
 
         const subjectClassroom = await this.repository.find({
             where: { teachers_id: teacherId },
-            relations: ["classroom", "school_subject", "teacher"]
+            relations: ["classroom", "school_subject", "school", "teacher"]
         })
         return subjectClassroom
     }
