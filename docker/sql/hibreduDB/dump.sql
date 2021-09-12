@@ -114,10 +114,11 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`subjects_classrooms` (
   `school_subjects_id` BIGINT(20) NOT NULL,
   `classrooms_id` BIGINT(20) NOT NULL,
   `teachers_id` BIGINT(20) NOT NULL,
-  INDEX `id_subjects_classrooms_idx` (`id` ASC) ,
-  INDEX `fk_school_subjects_has_classrooms_classrooms1_idx` (`classrooms_id` ASC) ,
-  INDEX `fk_school_subjects_has_classrooms_school_subjects1_idx` (`school_subjects_id` ASC) ,
-  INDEX `fk_subjects_classrooms_teachers1_idx` (`teachers_id` ASC) ,
+  `schools_id` BIGINT(20) NULL,
+  INDEX `id_subjects_classrooms_idx` (`id` ASC),
+  INDEX `fk_school_subjects_has_classrooms_classrooms1_idx` (`classrooms_id` ASC),
+  INDEX `fk_subjects_classrooms_teachers1_idx` (`teachers_id` ASC),
+  INDEX `fk_subjects_classrooms_schools1_idx` (`schools_id` ASC),
   CONSTRAINT `fk_school_subjects_has_classrooms_school_subjects1`
     FOREIGN KEY (`school_subjects_id`)
     REFERENCES `hibredu_db`.`school_subjects` (`id`)
@@ -131,6 +132,11 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`subjects_classrooms` (
   CONSTRAINT `fk_subjects_classrooms_teachers1`
     FOREIGN KEY (`teachers_id`)
     REFERENCES `hibredu_db`.`teachers` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_subjects_classrooms_schools1`
+    FOREIGN KEY (`schools_id`)
+    REFERENCES `hibredu_db`.`schools` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -345,12 +351,12 @@ INSERT INTO classrooms (name) VALUES ('3B-2020');
 INSERT INTO classrooms (name) VALUES ('5A-2021');
 INSERT INTO classrooms (name) VALUES ('5B-2021');
 
-INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id) VALUES(1, 1, 2);
-INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id) VALUES(2, 2, 2);
-INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id) VALUES(2, 2, 3);
-INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id) VALUES(3, 2, 4);
-INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id) VALUES(2, 1, 3);
-INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id) VALUES(2, 2, 3);
+INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(1, 1, 2, 1);
+INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(1, 2, 2, 1);
+INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(2, 2, 3, 1);
+INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(3, 2, 4, 1);
+INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(4, 1, 3, 1);
+INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(4, 2, 3, 1);
 
 INSERT INTO students (id, name, email, classrooms_id) VALUES (1, 'Felipe', 'felipe@gmail.com', 1);
 INSERT INTO students (id, name, email, classrooms_id) VALUES (2, 'Jean', 'jean@gmail.com', 1);

@@ -23,12 +23,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/teacher/",
-							"protocol": "http",
+							"raw": "{{url_base}}/teacher/",
 							"host": [
-								"localhost"
+								"{{url_base}}"
 							],
-							"port": "8080",
 							"path": [
 								"teacher",
 								""
@@ -53,12 +51,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/teacher/",
-							"protocol": "http",
+							"raw": "{{url_base}}/teacher/",
 							"host": [
-								"localhost"
+								"{{url_base}}"
 							],
-							"port": "8080",
 							"path": [
 								"teacher",
 								""
@@ -99,12 +95,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/auth/",
-							"protocol": "http",
+							"raw": "{{url_base}}/auth/",
 							"host": [
-								"localhost"
+								"{{url_base}}"
 							],
-							"port": "8080",
 							"path": [
 								"auth",
 								""
@@ -134,12 +128,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/student/",
-							"protocol": "http",
+							"raw": "{{url_base}}/student/",
 							"host": [
-								"localhost"
+								"{{url_base}}"
 							],
-							"port": "8080",
 							"path": [
 								"student",
 								""
@@ -164,12 +156,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/student/1",
-							"protocol": "http",
+							"raw": "{{url_base}}/student/1",
 							"host": [
-								"localhost"
+								"{{url_base}}"
 							],
-							"port": "8080",
 							"path": [
 								"student",
 								"1"
@@ -194,12 +184,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/student/4/delivery",
-							"protocol": "http",
+							"raw": "{{url_base}}/student/4/delivery",
 							"host": [
-								"localhost"
+								"{{url_base}}"
 							],
-							"port": "8080",
 							"path": [
 								"student",
 								"4",
@@ -244,12 +232,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8080/classroom/",
-							"protocol": "http",
+							"raw": "{{url_base}}/classroom/",
 							"host": [
-								"localhost"
+								"{{url_base}}"
 							],
-							"port": "8080",
 							"path": [
 								"classroom",
 								""
@@ -274,12 +260,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/classroom/1",
-							"protocol": "http",
+							"raw": "{{url_base}}/classroom/1",
 							"host": [
-								"localhost"
+								"{{url_base}}"
 							],
-							"port": "8080",
 							"path": [
 								"classroom",
 								"1"
@@ -309,12 +293,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/attendance/class/1",
-							"protocol": "http",
+							"raw": "{{url_base}}/attendance/class/1",
 							"host": [
-								"localhost"
+								"{{url_base}}"
 							],
-							"port": "8080",
 							"path": [
 								"attendance",
 								"class",
@@ -354,12 +336,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/attendance/1",
-							"protocol": "http",
+							"raw": "{{url_base}}/attendance/1",
 							"host": [
-								"localhost"
+								"{{url_base}}"
 							],
-							"port": "8080",
 							"path": [
 								"attendance",
 								"1"
@@ -384,12 +364,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/attendance/2",
-							"protocol": "http",
+							"raw": "{{url_base}}/attendance/2",
 							"host": [
-								"localhost"
+								"{{url_base}}"
 							],
-							"port": "8080",
 							"path": [
 								"attendance",
 								"2"
@@ -419,12 +397,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/alert/class/1",
-							"protocol": "http",
+							"raw": "{{url_base}}/alert/class/1",
 							"host": [
-								"localhost"
+								"{{url_base}}"
 							],
-							"port": "8080",
 							"path": [
 								"alert",
 								"class",
@@ -450,12 +426,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/alert/student/1",
-							"protocol": "http",
+							"raw": "{{url_base}}/alert/student/1",
 							"host": [
-								"localhost"
+								"{{url_base}}"
 							],
-							"port": "8080",
 							"path": [
 								"alert",
 								"student",
@@ -473,25 +447,13 @@
 				{
 					"name": "GET Schools",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/school",
-							"protocol": "http",
+							"raw": "{{url_base}}/school",
 							"host": [
-								"localhost"
+								"{{url_base}}"
 							],
-							"port": "8080",
 							"path": [
 								"school"
 							]

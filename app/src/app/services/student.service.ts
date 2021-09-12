@@ -41,7 +41,6 @@ class StudentService {
     }
 
     async getHitRate(id: number) {
-
         let hitRate = 0
         let hitRateTotal = 0
 
