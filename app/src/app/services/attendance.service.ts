@@ -51,10 +51,10 @@ class AttendanceService {
     async insert(teacherId: string, attendance: any) {
         this.repository = connection.getRepository(Attendance)
 
-        const attendanceRegister = new Attendance()
+        const attendanceRegister = new Attendance() 
         attendanceRegister.date = attendance.date
         attendanceRegister.description = attendance.description
-        attendanceRegister.class_subject = attendance.class_subject //TODO: O TIPO DE DADO É REALMENTE BLOB?
+        attendanceRegister.class_subject = attendance.class_subject
         attendanceRegister.file = await fileService.getFile(attendance.file_id)
         attendanceRegister.owner_id = parseInt(teacherId)
 
