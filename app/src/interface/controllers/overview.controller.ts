@@ -19,6 +19,22 @@ class OverviewController {
             alerts: alerts
         })
     }
+
+    async getAttendance(request: Request, response: Response) {
+        const teacherId = parseInt(request.userId)
+
+        const attendances = await overviewService.getAttendancesByTeacher(teacherId)
+
+        response.status(200).json(attendances)
+    }
+
+    async getActivities(request: Request, response: Response) {
+        const teacherId = parseInt(request.userId)
+
+        const activities = await overviewService.getActivitiesByTeacher(teacherId)
+
+        response.status(200).json(activities)
+    }
 }
 
 

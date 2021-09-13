@@ -1,4 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import Activity from "./activity.entity";
 import Attendance from "./attendance.entity";
 import { Classroom } from "./classroom.entity";
 import School from "./school.entity";
@@ -47,4 +48,6 @@ export default class SubjectClassroom {
     @OneToMany(() => Attendance, (subjects_classrooms) => subjects_classrooms.subject_classroom, { eager: false, onDelete: 'CASCADE' })
     attendances: Attendance[];
 
+    @OneToMany(() => Activity, (subjects_classrooms) => subjects_classrooms.subject_classroom, { eager: false, onDelete: 'CASCADE' })
+    activities: Activity[];
 }
