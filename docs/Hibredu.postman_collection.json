@@ -9,6 +9,34 @@
 			"name": "Teacher",
 			"item": [
 				{
+					"name": "GET All Teachers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/teacher/",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"teacher",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "CREATE Teacher",
 					"request": {
 						"method": "POST",
@@ -36,7 +64,7 @@
 					"response": []
 				},
 				{
-					"name": "GET All Teachers",
+					"name": "UPDATE Teacher",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -48,16 +76,25 @@
 								}
 							]
 						},
-						"method": "GET",
+						"method": "PATCH",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Jean Jacques12312312\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{url_base}}/teacher/",
+							"raw": "{{url_base}}/teacher/2",
 							"host": [
 								"{{url_base}}"
 							],
 							"path": [
 								"teacher",
-								""
+								"2"
 							]
 						}
 					},
