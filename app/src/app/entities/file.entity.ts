@@ -5,7 +5,7 @@ import { Buffer } from 'exceljs'
 
 export interface IFile {
     id?: number;
-    content: Buffer;
+    content: string;
     type?: string;
 }
 
@@ -15,7 +15,7 @@ export default class File {
     id: number;
 
     @Column({type: "longblob"})
-    content: Buffer;
+    content: string;
 
     @Column()
     type: string;

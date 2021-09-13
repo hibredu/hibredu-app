@@ -1,9 +1,10 @@
 import { Router } from "express";
 import attendanceController from "../controllers/attendance.controller";
 import multer from "multer";
+import { multerConfig } from "../../infrastructure/middleware/multer.middleware";
 
 const attendanceRouter = Router();
-const upload = multer({ storage: multer.memoryStorage() })
+const upload = multer(multerConfig)
 
 attendanceRouter.get('/:id', attendanceController.getById)
 attendanceRouter.delete('/:id', attendanceController.delete)

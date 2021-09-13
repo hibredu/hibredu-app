@@ -12,7 +12,7 @@ class FileService {
         this.repository = connection.getRepository(File)
 
         const fileRegister = new File()
-        fileRegister.content = file.buffer
+        fileRegister.content = file.path
         fileRegister.type = file.mimetype
 
         await this.repository.insert(fileRegister)
@@ -45,27 +45,25 @@ class FileService {
         this.repository = getRepository(File)
 
         const file = await this.repository.findOne(fileId)
-
         const workbook = new exceljs.Workbook()
-        const excelFile = await workbook.xlsx.load(file.content)
-        const worksheet = excelFile.getWorksheet(1)
 
-        //Definindo nomes dos headers
-        const row = worksheet.getRow(1)
-        columns.forEach((column) => {
-            for (var _i = 1; _i <= columns.length; _i++){
-                let cell = row.getCell(_i)
-                if(cell.value === column.field_name) {
-                    cell.value = column.final_field
-                    break;
-                }   
-            }
-        })
-        row.commit()
-
-        file.content = await workbook.xlsx.writeBuffer()
-
-        await this.repository.save(file)
+        if(file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+            let worksheet = await workbook.xlsx.readFile(file.content)
+            //Definindo nomes dos headers
+            const row = worksheet.getWorksheet(1).getRow(1)
+            columns.forEach((column) => {
+                console.log(column.field_name)
+                for (var _i = 1; _i <= columns.length; _i++){
+                    let cell = row.getCell(_i)
+                    if(cell.value === column.field_name) {
+                        cell.value = column.final_field
+                        break;
+                    }   
+                }
+            })
+            row.commit()
+            await workbook.xlsx.writeFile(file.content)
+        }
     }
 
     async _getColumnNames(file: Express.Multer.File) {
@@ -99,8 +97,26 @@ class FileService {
 
     async _getWorksheet(file: Express.Multer.File){
         const workbook = new exceljs.Workbook()
-        const excelFile = await workbook.xlsx.load(file.buffer)
-        return excelFile.getWorksheet(1)
+
+        if(file.mimetype === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+            const fileWorkbook = await workbook.xlsx.readFile(file.path)
+            return fileWorkbook.getWorksheet(1)
+        }
+        else {
+            return null
+        }
+    }
+
+    async _getWorksheetFromDatabase(file: File){
+        const workbook = new exceljs.Workbook()
+
+        if(file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+            const fileWorkbook = await workbook.xlsx.readFile(file.content.toString())
+            return fileWorkbook.getWorksheet(1)
+        }
+        else {
+            return null
+        }
     }
 }
 
