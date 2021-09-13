@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { Between, LessThanOrEqual, MoreThanOrEqual } from 'typeorm'
 import attendanceService from '../../app/services/attendance.service'
-import fileService from '../../app/services/fileService'
+import fileService from '../../app/services/file.service'
 import cleanDate from '../../app/shared/utils/cleanData'
 
 class AttendanceController {
@@ -75,10 +75,11 @@ class AttendanceController {
     }
 
     async insertAttendance(request: Request, response: Response){
+        const teacherId = request.userId
         const body = request.body
         try {
             await fileService.configureColumns(body.file_id, body.columns)
-            var attendanceId = await attendanceService.insert(body)
+            var attendanceId = await attendanceService.insert(teacherId, body)
             return response.status(201).json({
                 attendance_id: attendanceId
             })

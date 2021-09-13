@@ -14,6 +14,6 @@ export default function getSuggestionName(column: string) {
     }
     else 
     {
-        return ""
+        return "-"
     }
 }

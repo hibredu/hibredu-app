@@ -1,6 +1,6 @@
 import { getConnection, In, Repository } from "typeorm";
 import Attendance from "../entities/attendance.entity";
-import fileService from "./fileService";
+import fileService from "./file.service";
 import subject_classroomService from "./subject_classroom.service";
 
 const connection = getConnection()
@@ -48,7 +48,7 @@ class AttendanceService {
         await this.repository.remove(attendance)
     }
 
-    async insert(attendance: any) {
+    async insert(teacherId: string, attendance: any) {
         this.repository = connection.getRepository(Attendance)
 
         const attendanceRegister = new Attendance()
@@ -56,7 +56,7 @@ class AttendanceService {
         attendanceRegister.description = attendance.description
         attendanceRegister.class_subject = attendance.class_subject //TODO: O TIPO DE DADO É REALMENTE BLOB?
         attendanceRegister.file = await fileService.getFile(attendance.file_id)
-        attendanceRegister.owner_id = 1 //TODO: DESCOBRIR COMO PEGAR ID DO PROFESSOR
+        attendanceRegister.owner_id = parseInt(teacherId)
 
         await this.repository.save(attendanceRegister)
         

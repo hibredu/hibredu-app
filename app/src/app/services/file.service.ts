@@ -41,10 +41,7 @@ class FileService {
         return columns
     }
 
-    async configureColumns(fileId: number, columns: any[]){
-        //TODO: RECEBER COLUNAS POR INDICE
-        //TODO: ADICIONAR LINHA NA PRIMEIRA POSIÇÃO, NÃO ULTIMA
-        
+    async configureColumns(fileId: number, columns: any[]){        
         this.repository = getRepository(File)
 
         const file = await this.repository.findOne(fileId)
@@ -53,13 +50,20 @@ class FileService {
         const excelFile = await workbook.xlsx.load(file.content)
         const worksheet = excelFile.getWorksheet(1)
 
-        //workbook.xlsx.writeFile("testeAntes.xlsx")
-
-        worksheet.addRow(columns.map((column => column.final_field))).commit()
+        //Definindo nomes dos headers
+        const row = worksheet.getRow(1)
+        columns.forEach((column) => {
+            for (var _i = 1; _i <= columns.length; _i++){
+                let cell = row.getCell(_i)
+                if(cell.value === column.field_name) {
+                    cell.value = column.final_field
+                    break;
+                }   
+            }
+        })
+        row.commit()
 
         file.content = await workbook.xlsx.writeBuffer()
-
-        //workbook.xlsx.writeFile("testeDepois.xlsx")
 
         await this.repository.save(file)
     }
