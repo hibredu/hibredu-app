@@ -19,6 +19,11 @@ class FileService {
 
         return fileRegister.id
     }
+
+    async getFile(id: number){
+        this.repository = connection.getRepository(File)
+        return await this.repository.findOne(id)
+    }
     
     async getColumns(file: Express.Multer.File){
         const columnNames = await this._getColumnNames(file)
@@ -34,6 +39,12 @@ class FileService {
             columns.push(column)
         }
         return columns
+    }
+
+    async configureColumns(fileId: number, columns: string[]){
+        const file = await this.repository.findOne(fileId)
+        const worksheet = await this._getWorksheetBuffer(file.content)
+        //TODO: INSERIR CONFIGURAÇÃO DE COLUNAS NA PLANILHA
     }
 
     async _getColumnNames(file: Express.Multer.File) {
@@ -66,6 +77,12 @@ class FileService {
     }
 
     async _getWorksheet(file: Express.Multer.File){
+        const workbook = new exceljs.Workbook()
+        const excelFile = await workbook.xlsx.load(file.buffer)
+        return excelFile.getWorksheet(1)
+    }
+
+    async _getWorksheetBuffer(file: Buffer){
         const workbook = new exceljs.Workbook()
         const excelFile = await workbook.xlsx.load(file.buffer)
         return excelFile.getWorksheet(1)

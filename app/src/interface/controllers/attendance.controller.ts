@@ -73,6 +73,21 @@ class AttendanceController {
             response.status(500).json({ error: error.message })
         }
     }
+
+    async sendAttendances(request: Request, response: Response){
+        const body = request.body
+
+        try {
+            var attendanceId = await attendanceService.insert(body)
+            return response.status(201).json({
+                attendance_id: attendanceId
+            })
+        } catch(error) {
+            response.status(500).json({ error: error.message })
+        }
+
+        return response.status(200)
+    }
 }
 
 export default new AttendanceController()
