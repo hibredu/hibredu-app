@@ -4,7 +4,7 @@ import Attendance from "./attendance.entity";
 
 export interface IFile {
     id?: number;
-    content: string;
+    content: Buffer;
     type?: string;
 }
 
@@ -13,8 +13,8 @@ export default class File {
     @PrimaryGeneratedColumn('increment')
     id: number;
 
-    @Column()
-    content: string;
+    @Column({type: "longblob"})
+    content: Buffer;
 
     @Column()
     type: string;
