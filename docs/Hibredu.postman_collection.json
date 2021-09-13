@@ -399,12 +399,7 @@
 									"type": "file",
 									"src": "/C:/Users/Felipe/Desktop/meetingAttendanceList (633).xlsx"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{url_base}}/attendance/spreadsheet",
@@ -436,7 +431,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"classroom\": 1,\r\n    \"class_subject\": 1,\r\n    \"description\": \"Aula sobre APIs\",\r\n    \"datetime\": \"2018-01-01\",\r\n    \"file_id\": 10,\r\n    \"columns\": [\r\n        {\r\n            \"field_name\": \"Nome Completo\",\r\n            \"final_field\": \"Nome\"\r\n        },\r\n        {\r\n            \"field_name\": \"Atividade\",\r\n            \"final_field\": \"Atividade\"\r\n        },\r\n        {\r\n            \"field_name\": \"Data e hora\",\r\n            \"final_field\": \"Controle de horário\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"classroom\": 1,\r\n    \"class_subject\": \"Botânica\",\r\n    \"description\": \"Aula sobre APIs\",\r\n    \"datetime\": \"2018-01-01\",\r\n    \"file_id\": 7,\r\n    \"columns\": [\r\n        {\r\n            \"field_name\": \"Data e hora\",\r\n            \"final_field\": \"Controle de horário\"\r\n        },\r\n        {\r\n            \"field_name\": \"Atividade\",\r\n            \"final_field\": \"Atividade\"\r\n        },\r\n        {\r\n            \"field_name\": \"Nome Completo\",\r\n            \"final_field\": \"Nome\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
