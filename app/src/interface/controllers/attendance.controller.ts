@@ -74,10 +74,10 @@ class AttendanceController {
         }
     }
 
-    async sendAttendances(request: Request, response: Response){
+    async insertAttendance(request: Request, response: Response){
         const body = request.body
-
         try {
+            await fileService.configureColumns(body.file_id, body.columns)
             var attendanceId = await attendanceService.insert(body)
             return response.status(201).json({
                 attendance_id: attendanceId

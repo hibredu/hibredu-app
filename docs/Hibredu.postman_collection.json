@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8c772f77-ff18-4810-be60-c0ebcaa95a08",
+		"_postman_id": "0d73eee2-9251-44f4-997d-086975ae29bd",
 		"name": "Hibredu",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -371,6 +371,85 @@
 							"path": [
 								"attendance",
 								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Send Spreadsheet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "attendance",
+									"type": "file",
+									"src": "/C:/Users/Felipe/Desktop/meetingAttendanceList (633).xlsx"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}/attendance/spreadsheet",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"attendance",
+								"spreadsheet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Send Attendances",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"classroom\": 1,\r\n    \"class_subject\": 1,\r\n    \"description\": \"Aula sobre APIs\",\r\n    \"datetime\": \"2018-01-01\",\r\n    \"file_id\": 10,\r\n    \"columns\": [\r\n        {\r\n            \"field_name\": \"Nome Completo\",\r\n            \"final_field\": \"Nome\"\r\n        },\r\n        {\r\n            \"field_name\": \"Atividade\",\r\n            \"final_field\": \"Atividade\"\r\n        },\r\n        {\r\n            \"field_name\": \"Data e hora\",\r\n            \"final_field\": \"Controle de horário\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}/attendance",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"attendance"
 							]
 						}
 					},

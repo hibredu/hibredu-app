@@ -1,4 +1,4 @@
-import { getConnection, Repository } from "typeorm"
+import { getConnection, getRepository, Repository } from "typeorm"
 import File from "../entities/file.entity";
 import suggestionNames from "../shared/utils/suggestionNames";
 import exceljs from 'exceljs';
@@ -41,10 +41,27 @@ class FileService {
         return columns
     }
 
-    async configureColumns(fileId: number, columns: string[]){
+    async configureColumns(fileId: number, columns: any[]){
+        //TODO: RECEBER COLUNAS POR INDICE
+        //TODO: ADICIONAR LINHA NA PRIMEIRA POSIÇÃO, NÃO ULTIMA
+        
+        this.repository = getRepository(File)
+
         const file = await this.repository.findOne(fileId)
-        const worksheet = await this._getWorksheetBuffer(file.content)
-        //TODO: INSERIR CONFIGURAÇÃO DE COLUNAS NA PLANILHA
+
+        const workbook = new exceljs.Workbook()
+        const excelFile = await workbook.xlsx.load(file.content)
+        const worksheet = excelFile.getWorksheet(1)
+
+        //workbook.xlsx.writeFile("testeAntes.xlsx")
+
+        worksheet.addRow(columns.map((column => column.final_field))).commit()
+
+        file.content = await workbook.xlsx.writeBuffer()
+
+        //workbook.xlsx.writeFile("testeDepois.xlsx")
+
+        await this.repository.save(file)
     }
 
     async _getColumnNames(file: Express.Multer.File) {
@@ -77,12 +94,6 @@ class FileService {
     }
 
     async _getWorksheet(file: Express.Multer.File){
-        const workbook = new exceljs.Workbook()
-        const excelFile = await workbook.xlsx.load(file.buffer)
-        return excelFile.getWorksheet(1)
-    }
-
-    async _getWorksheetBuffer(file: Buffer){
         const workbook = new exceljs.Workbook()
         const excelFile = await workbook.xlsx.load(file.buffer)
         return excelFile.getWorksheet(1)

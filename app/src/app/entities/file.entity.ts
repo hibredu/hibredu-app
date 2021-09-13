@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import Activity from "./activity.entity";
 import Attendance from "./attendance.entity";
+import { Buffer } from 'exceljs'
 
 export interface IFile {
     id?: number;

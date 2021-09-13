@@ -54,7 +54,7 @@ class AttendanceService {
         const attendanceRegister = new Attendance()
         attendanceRegister.date = attendance.date
         attendanceRegister.description = attendance.description
-        attendanceRegister.class_subject = attendance.class_subject //TODO: ARRUMAR SCRIPT DO BANCO DE DADOS. ESTÁ SALVANDO COMO BLOB
+        attendanceRegister.class_subject = attendance.class_subject //TODO: O TIPO DE DADO É REALMENTE BLOB?
         attendanceRegister.file = await fileService.getFile(attendance.file_id)
         attendanceRegister.owner_id = 1 //TODO: DESCOBRIR COMO PEGAR ID DO PROFESSOR
 
