@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import ActivityToStudent from "./activityToStudent.entity";
 import File from "./file.entity";
+import SubjectClassroom from "./subjects_classrooms.entity";
 
 @Entity('activities')
 export default class Activity {
@@ -18,6 +19,13 @@ export default class Activity {
 
     @Column()
     max_note: number;
+
+    @Column()
+    owner_id?: number;
+
+    @ManyToOne(() => SubjectClassroom, subject_classroom => subject_classroom.activities, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'owner_id' })
+    subject_classroom: SubjectClassroom;
 
     @ManyToOne(() => File, (file) => file.activities, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'files_id' })
