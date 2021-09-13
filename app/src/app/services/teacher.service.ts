@@ -61,6 +61,20 @@ class TeacherService {
 
         return classes;
     }
+
+    async update(id: number, teacher: ITeacher): Promise<Teacher> {
+        this.repository = connection.getRepository(Teacher)
+
+        let userExists = await this.repository.findOne({
+            where: { id }
+        })
+
+        if (!userExists) {
+            throw new Error("user not found");
+        }
+
+        return await this.repository.save({ id: userExists.id, ...teacher })
+    }
 }
 
 export default new TeacherService()
