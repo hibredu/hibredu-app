@@ -1,7 +1,7 @@
 import { getConnection, getRepository, Repository } from "typeorm"
 import File from "../entities/file.entity";
 import suggestionNames from "../shared/utils/suggestionNames";
-import exceljs, { Cell, Row, Workbook, Worksheet } from 'exceljs';
+import exceljs, { Cell, CellValue, Row, Workbook, Worksheet } from 'exceljs';
 
 const connection = getConnection()
 
@@ -31,9 +31,9 @@ class FileService {
     }
     
     async getColumns(file: Express.Multer.File): Promise<any[]> {
-        const columnNames: string[] = await this.getColumnNames(file)
-        const columnExamples: string[] = await this.getColumnExamples(file)
-        const columnSuggestions: string[] = await this.getColumnSuggestions(file)
+        const columnNames: CellValue[] = await this.getColumnNames(file)
+        const columnExamples: CellValue[] = await this.getColumnExamples(file)
+        const columnSuggestions: CellValue[] = await this.getColumnSuggestions(file)
 
         let columns: any[] = []
         for (var _i = 0; _i < columnNames.length; _i++) {
@@ -70,31 +70,31 @@ class FileService {
         }
     }
 
-    async getColumnNames(file: Express.Multer.File) : Promise<string[]> {
+    async getColumnNames(file: Express.Multer.File) : Promise<CellValue[]> {
         const worksheet: Worksheet = await this.getWorksheet(file)
-        let columnNames: string[] = []
+        let columnNames: CellValue[] = []
         worksheet.getRow(1).eachCell((cell) => {
             if(cell.value != null){
-                columnNames.push(cell.value.toString())
+                columnNames.push(cell.value)
             }
         })      
         return columnNames
     }
 
-    async getColumnExamples(file: Express.Multer.File) : Promise<string[]> {
+    async getColumnExamples(file: Express.Multer.File) : Promise<CellValue[]> {
         const worksheet: Worksheet = await this.getWorksheet(file)
-        let columnExamples: string[] = []
+        let columnExamples: CellValue[] = []
         worksheet.getRow(2).eachCell((cell) => {
-            columnExamples.push(cell.value.toString())
+            columnExamples.push(cell.value)
         })      
         return columnExamples
     }
 
-    async getColumnSuggestions(file: Express.Multer.File): Promise<string[]> {
-        const columnNames: string[] = await this.getColumnNames(file)
-        let columnSuggestions: string[] = []
+    async getColumnSuggestions(file: Express.Multer.File): Promise<CellValue[]> {
+        const columnNames: CellValue[] = await this.getColumnNames(file)
+        let columnSuggestions: CellValue[] = []
         columnNames.forEach((columnName) => {
-            columnSuggestions.push(suggestionNames(columnName))
+            columnSuggestions.push(suggestionNames(columnName.toString()))
         })
         return columnSuggestions
     }
