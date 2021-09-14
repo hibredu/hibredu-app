@@ -60,11 +60,11 @@ class AttendanceController {
     }
 
     async sendSpreadsheet(request: Request, response: Response) {
-        const file = request.file
+        const file: Express.Multer.File = request.file
 
         try {
-            const columns = await fileService.getColumns(file)
-            const fileId = await fileService.saveFile(file);
+            const columns: any[] = await fileService.getColumns(file)
+            const fileId: number = await fileService.saveFile(file);
             return response.status(201).json({
                 file_id: fileId,
                 columns: columns
@@ -75,19 +75,17 @@ class AttendanceController {
     }
 
     async insertAttendance(request: Request, response: Response){
-        const teacherId = request.userId
-        const body = request.body
+        const teacherId: string = request.userId
+        const body: any = request.body
         try {
             await fileService.configureColumns(body.file_id, body.columns)
-            var attendanceId = await attendanceService.insert(teacherId, body)
+            var attendanceId: number = await attendanceService.insert(teacherId, body)
             return response.status(201).json({
                 attendance_id: attendanceId
             })
         } catch(error) {
             response.status(500).json({ error: error.message })
         }
-
-        return response.status(200)
     }
 }
 

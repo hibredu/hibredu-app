@@ -1,14 +1,19 @@
 import { getConnection, getRepository, Repository } from "typeorm"
 import File from "../entities/file.entity";
 import suggestionNames from "../shared/utils/suggestionNames";
-import exceljs from 'exceljs';
+import exceljs, { Cell, Row, Workbook, Worksheet } from 'exceljs';
 
 const connection = getConnection()
 
 class FileService {
     repository: Repository<File>
+    xlsxType: string
 
-    async saveFile(file: Express.Multer.File){
+    constructor() {
+        this.xlsxType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    }
+
+    async saveFile(file: Express.Multer.File): Promise<number> {
         this.repository = connection.getRepository(File)
 
         const fileRegister = new File()
@@ -20,18 +25,19 @@ class FileService {
         return fileRegister.id
     }
 
-    async getFile(id: number){
+    async getFile(id: number): Promise<File> {
         this.repository = connection.getRepository(File)
         return await this.repository.findOne(id)
     }
     
-    async getColumns(file: Express.Multer.File){
-        const columnNames = await this._getColumnNames(file)
-        const columnExamples = await this._getColumnExamples(file)
-        const columnSuggestions = await this._getColumnSuggestions(file)
-        let columns = []
+    async getColumns(file: Express.Multer.File): Promise<any[]> {
+        const columnNames: string[] = await this.getColumnNames(file)
+        const columnExamples: string[] = await this.getColumnExamples(file)
+        const columnSuggestions: string[] = await this.getColumnSuggestions(file)
+
+        let columns: any[] = []
         for (var _i = 0; _i < columnNames.length; _i++) {
-            let column = [{
+            let column: any = [{
                 field_name: columnNames[_i],
                 example: columnExamples[_i],
                 suggestion: columnSuggestions[_i]
@@ -41,20 +47,18 @@ class FileService {
         return columns
     }
 
-    async configureColumns(fileId: number, columns: any[]){        
+    async configureColumns(fileId: number, columns: any[]) : Promise<void> {        
         this.repository = getRepository(File)
 
-        const file = await this.repository.findOne(fileId)
-        const workbook = new exceljs.Workbook()
+        const file: File = await this.repository.findOne(fileId)
 
-        if(file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
-            let worksheet = await workbook.xlsx.readFile(file.content)
+        if(file.type === this.xlsxType) {
+            let workbook: Workbook = await new exceljs.Workbook().xlsx.readFile(file.content)
             //Definindo nomes dos headers
-            const row = worksheet.getWorksheet(1).getRow(1)
+            const row: Row = workbook.getWorksheet(1).getRow(1)
             columns.forEach((column) => {
-                console.log(column.field_name)
                 for (var _i = 1; _i <= columns.length; _i++){
-                    let cell = row.getCell(_i)
+                    let cell: Cell = row.getCell(_i)
                     if(cell.value === column.field_name) {
                         cell.value = column.final_field
                         break;
@@ -66,56 +70,46 @@ class FileService {
         }
     }
 
-    async _getColumnNames(file: Express.Multer.File) {
-        const worksheet = await this._getWorksheet(file)
-        let columnNames = []
+    async getColumnNames(file: Express.Multer.File) : Promise<string[]> {
+        const worksheet: Worksheet = await this.getWorksheet(file)
+        let columnNames: string[] = []
         worksheet.getRow(1).eachCell((cell) => {
             if(cell.value != null){
-                columnNames.push(cell.value)
+                columnNames.push(cell.value.toString())
             }
         })      
         return columnNames
     }
 
-    async _getColumnExamples(file: Express.Multer.File){
-        const worksheet = await this._getWorksheet(file)
-        let columnExamples = []
+    async getColumnExamples(file: Express.Multer.File) : Promise<string[]> {
+        const worksheet: Worksheet = await this.getWorksheet(file)
+        let columnExamples: string[] = []
         worksheet.getRow(2).eachCell((cell) => {
-            columnExamples.push(cell.value)
+            columnExamples.push(cell.value.toString())
         })      
         return columnExamples
     }
 
-    async _getColumnSuggestions(file: Express.Multer.File){
-        const columnNames = await this._getColumnNames(file)
-        let columnSuggestions = []
+    async getColumnSuggestions(file: Express.Multer.File): Promise<string[]> {
+        const columnNames: string[] = await this.getColumnNames(file)
+        let columnSuggestions: string[] = []
         columnNames.forEach((columnName) => {
             columnSuggestions.push(suggestionNames(columnName))
         })
         return columnSuggestions
     }
 
-    async _getWorksheet(file: Express.Multer.File){
-        const workbook = new exceljs.Workbook()
-
-        if(file.mimetype === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
-            const fileWorkbook = await workbook.xlsx.readFile(file.path)
+    async getWorksheet(file: Express.Multer.File) : Promise<Worksheet> {
+        if(file.mimetype === this.xlsxType) {
+            const fileWorkbook: Workbook = await new exceljs.Workbook().xlsx.readFile(file.path)
             return fileWorkbook.getWorksheet(1)
-        }
-        else {
-            return null
         }
     }
 
-    async _getWorksheetFromDatabase(file: File){
-        const workbook = new exceljs.Workbook()
-
-        if(file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
-            const fileWorkbook = await workbook.xlsx.readFile(file.content.toString())
+    async getWorksheetFromDatabase(file: File) : Promise<Worksheet> {
+        if(file.type === this.xlsxType) {
+            const fileWorkbook = await new exceljs.Workbook().xlsx.readFile(file.content.toString())
             return fileWorkbook.getWorksheet(1)
-        }
-        else {
-            return null
         }
     }
 }

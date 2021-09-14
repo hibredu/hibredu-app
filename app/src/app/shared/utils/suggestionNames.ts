@@ -1,5 +1,5 @@
-export default function getSuggestionName(column: string) {
-    const columnLowerCase = column.toLowerCase()
+export default function getSuggestionName(column: string) : string {
+    const columnLowerCase: string = column.toLowerCase()
     if(columnLowerCase.includes("nome"))
     {
         return "Nome"
