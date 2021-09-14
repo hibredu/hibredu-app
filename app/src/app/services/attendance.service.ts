@@ -1,5 +1,6 @@
 import { getConnection, In, Repository } from "typeorm";
 import Attendance from "../entities/attendance.entity";
+import fileService from "./file.service";
 import subject_classroomService from "./subject_classroom.service";
 
 const connection = getConnection()
@@ -45,6 +46,21 @@ class AttendanceService {
         const attendance = await this.getById(id)
 
         await this.repository.remove(attendance)
+    }
+
+    async insert(teacherId: string, attendance: any) {
+        this.repository = connection.getRepository(Attendance)
+
+        const attendanceRegister = new Attendance() 
+        attendanceRegister.date = attendance.date
+        attendanceRegister.description = attendance.description
+        attendanceRegister.class_subject = attendance.class_subject
+        attendanceRegister.file = await fileService.getFile(attendance.file_id)
+        attendanceRegister.owner_id = parseInt(teacherId)
+
+        await this.repository.save(attendanceRegister)
+        
+        return attendanceRegister.id
     }
 
 }

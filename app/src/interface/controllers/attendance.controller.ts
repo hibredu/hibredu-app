@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { Between, LessThanOrEqual, MoreThanOrEqual } from 'typeorm'
 import attendanceService from '../../app/services/attendance.service'
+import fileService from '../../app/services/file.service'
 import cleanDate from '../../app/shared/utils/cleanData'
 
 class AttendanceController {
@@ -58,6 +59,34 @@ class AttendanceController {
         }
     }
 
+    async sendSpreadsheet(request: Request, response: Response) {
+        const file: Express.Multer.File = request.file
+
+        try {
+            const columns: any[] = await fileService.getColumns(file)
+            const fileId: number = await fileService.saveFile(file);
+            return response.status(201).json({
+                file_id: fileId,
+                columns: columns
+            })
+        } catch(error) {
+            response.status(500).json({ error: error.message })
+        }
+    }
+
+    async insertAttendance(request: Request, response: Response){
+        const teacherId: string = request.userId
+        const body: any = request.body
+        try {
+            await fileService.configureColumns(body.file_id, body.columns)
+            var attendanceId: number = await attendanceService.insert(teacherId, body)
+            return response.status(201).json({
+                attendance_id: attendanceId
+            })
+        } catch(error) {
+            response.status(500).json({ error: error.message })
+        }
+    }
 }
 
 export default new AttendanceController()
