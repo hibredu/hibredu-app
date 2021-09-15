@@ -52,7 +52,8 @@ class ClassroomController {
             classroomData = {
                 id: classroom.id,
                 name: classroom.name,
-                metrics
+                metrics,
+                students: classroom.students
             }
         } catch (error) {
             response.status(500).json({ error: error.message })

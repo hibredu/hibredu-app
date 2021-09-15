@@ -43,7 +43,7 @@ USE `hibredu_db` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`files` (
   `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `content` LONGBLOB NOT NULL,
+  `content` TEXT NOT NULL,
   `type` VARCHAR(100) NOT NULL
 ) ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
@@ -413,36 +413,45 @@ INSERT INTO files (content, type) VALUES ('https://www.youtube3.com/','image');
 INSERT INTO files (content, type) VALUES ('https://www.youtube4.com/','image');
 INSERT INTO files (content, type) VALUES ('https://www.youtube5.com/','image');
 INSERT INTO files (content, type) VALUES ('https://www.youtube6.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube7.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube8.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube9.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube10.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube11.com/','image');
 
 INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Teste de Descrição de chamada 1', '2021-09-06 01:53:36', 1, 1);
 INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Teste de Descrição de chamada 2', '2021-09-05 01:53:36', 2, 2);
 INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Teste de Descrição de chamada 3', '2021-09-06 01:53:36', 3, 3);
 INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Teste de Descrição de chamada 4', '2021-09-07 01:53:36', 4, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Teste de Descrição de chamada 4', '2021-09-08 01:53:36', 5, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Teste de Descrição de chamada 4', '2021-09-09 01:53:36', 6, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Teste de Descrição de chamada 5', '2021-09-08 01:53:36', 5, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Teste de Descrição de chamada 6', '2021-09-09 01:53:36', 6, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Teste de Descrição de chamada 7', '2021-09-09 01:53:36', 7, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Teste de Descrição de chamada 8', '2021-09-09 01:53:36', 8, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Teste de Descrição de chamada 9', '2021-09-09 01:53:36', 9, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Teste de Descrição de chamada 10', '2021-09-09 01:53:36', 10, 1);
 
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 1, 1);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 1, 2);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 0, 3);
-INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 1, 4);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 0, 4);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 1, 5);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 1, 6);
-INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 1, 7);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 0, 7);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 1, 8);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (2, 0, 1);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (2, 0, 2);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (2, 0, 3);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (2, 1, 4);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (2, 1, 5);
-INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (2, 1, 6);
-INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (2, 1, 7);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (2, 0, 6);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (2, 0, 7);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (2, 1, 8);
-INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 1, 1);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 0, 1);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 1, 2);
-INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 1, 3);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 0, 3);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 1, 4);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 1, 5);
-INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 1, 6);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 0, 6);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 1, 7);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (3, 1, 8);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (4, 1, 1);
@@ -453,6 +462,46 @@ INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (4, 1, 6);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (4, 1, 7);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (4, 1, 8);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (5, 1, 1);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (5, 0, 2);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (5, 0, 3);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (5, 1, 4);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (5, 1, 5);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (5, 0, 6);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (5, 1, 7);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (5, 1, 8);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (6, 1, 1);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (6, 1, 2);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (6, 0, 3);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (6, 0, 4);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (6, 0, 5);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (6, 0, 6);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (6, 0, 7);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (6, 1, 8);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (7, 1, 1);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (7, 0, 2);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (7, 0, 3);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (7, 1, 4);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (7, 1, 5);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (7, 1, 6);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (7, 1, 7);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (7, 1, 8);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (8, 1, 1);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (8, 1, 2);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (8, 0, 3);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (8, 1, 4);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (8, 1, 5);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (8, 1, 6);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (8, 1, 7);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (8, 1, 8);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (9, 1, 1);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (9, 1, 2);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (9, 0, 3);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (9, 1, 4);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (9, 1, 5);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (9, 1, 6);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (9, 1, 7);
+INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (9, 1, 8);
 
 INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-06 01:53:36', 2, 1);
 INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno não entregou atividade','2021-09-08 01:53:36', 2, 1);

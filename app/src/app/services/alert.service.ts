@@ -37,6 +37,14 @@ class AlertService {
         return alerts
     }
 
+    async getByTeacher(teacherId: number) {
+        this.repository = connection.getRepository(Alert)
+
+        const alerts: Alert[] = await this.repository.find({ where: { teachers_id: teacherId } })
+
+        return alerts
+    }
+
 }
 
 export default new AlertService()

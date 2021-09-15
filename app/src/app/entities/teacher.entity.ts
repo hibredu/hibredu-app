@@ -14,6 +14,8 @@ export interface ITeacher {
     school?: School;
     created_at?: Date;
     updated_at?: Date;
+    subjects_classrooms?: SubjectsClassrooms[];
+    alerts?: Alert[];
 }
 
 @Entity('teachers')

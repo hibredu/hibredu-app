@@ -1,3 +1,5 @@
+import Student from "../entities/student.entity";
+
 export interface IClassroomResponse {
     id: number,
     name: string,
@@ -6,5 +8,6 @@ export interface IClassroomResponse {
         deliveryPercentage: number,
         hitRate: number,
         alerts: number
-    }
+    },
+    students: Student[]
 }
