@@ -735,13 +735,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url_base}}/overview/classroom",
+							"raw": "{{url_base}}/overview/attendance/activities",
 							"host": [
 								"{{url_base}}"
 							],
 							"path": [
 								"overview",
-								"classroom"
+								"attendance",
+								"activities"
 							]
 						}
 					},
