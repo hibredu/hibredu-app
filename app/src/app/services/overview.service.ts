@@ -9,6 +9,12 @@ import subject_classroomService from "./subject_classroom.service";
 
 const connection = getConnection()
 
+interface IAttendanceDelivery {
+    delivered: number,
+    present: number,
+    date: Date
+}
+
 class OverviewService {
     repository: Repository<Classroom>
 
@@ -92,6 +98,81 @@ class OverviewService {
         }
 
         return activities
+    }
+
+    async getAttendanceActivitiesByTeacher(teacherId: number) {
+        let activities: Activity[] = []
+        const RepositoryActivity = connection.getRepository(Activity)
+
+        const subject_classrooms = await subject_classroomService.getByTeacher(teacherId)
+
+        for (const subject_classroom of subject_classrooms) {
+            activities.push(...await RepositoryActivity.find({ relations: ["file", "activitiesToStudents"], where: { owner_id: subject_classroom.id, type: "attendance" } }))
+        }
+
+        return activities
+    }
+
+    async getAttendanceByTeacher(teacherId: number) {
+        let attendances: Attendance[] = []
+        const RepositoryAttendance = connection.getRepository(Attendance)
+
+        const subject_classrooms = await subject_classroomService.getByTeacher(teacherId)
+
+        for (const subject_classroom of subject_classrooms) {
+            attendances.push(...await RepositoryAttendance.find({ relations: ["file", "attendanceStudents"], where: { owner_id: subject_classroom.id } }))
+        }
+
+        return attendances
+    }
+
+    async getAttendanceActivities(deliveredActivities: ActivityToStudent[], attendance: Attendance[]) {
+        let attendance_delivered: IAttendanceDelivery[] = []
+
+        const groupedActivities = deliveredActivities.reduce((r, a) => {
+            const date = a.created_at.toISOString().substring(0, 10)
+            r[date] = r[date] || { delivered: 0, present: 0, date: a.created_at.toISOString().substring(0, 10) };
+            if (a.delivered) {
+                r[date].delivered += 1
+            }
+            return r;
+        }, Object.create(null));
+
+        const groupedAttendance = attendance.reduce((r, a) => {
+            const date = a.created_at.toISOString().substring(0, 10)
+            r[date] = r[date] || { delivered: 0, present: 0, date: a.created_at.toISOString().substring(0, 10) };
+            r[date].present += a.attendanceStudents.filter(a => a.present == true).length;
+            return r;
+        }, Object.create(null));
+
+        // Merge the two groups
+        for (let key in groupedActivities) {
+            if (groupedAttendance[key]) {
+                attendance_delivered.push({
+                    date: groupedActivities[key].date,
+                    delivered: groupedActivities[key].delivered,
+                    present: groupedAttendance[key].present
+                })
+            } else {
+                attendance_delivered.push({
+                    date: groupedActivities[key].date,
+                    delivered: groupedActivities[key].delivered,
+                    present: 0
+                })
+            }
+        }
+
+        for (let key in groupedAttendance) {
+            if (!groupedActivities[key]) {
+                attendance_delivered.push({
+                    date: groupedAttendance[key].date,
+                    delivered: 0,
+                    present: groupedAttendance[key].present
+                })
+            }
+        }
+
+        return attendance_delivered
     }
 }
 

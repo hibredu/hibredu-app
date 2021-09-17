@@ -7,5 +7,6 @@ overviewRouter.get("/classroom", overviewController.getClassroom.bind(overviewCo
 overviewRouter.get("/attendance", overviewController.getAttendance.bind(overviewController));
 overviewRouter.get("/activities", overviewController.getActivities.bind(overviewController));
 overviewRouter.get("/alerts", overviewController.getAlerts.bind(overviewController));
+overviewRouter.get("/attendance/activities", overviewController.getAttendanceActivities.bind(overviewController));
 
 export default overviewRouter;

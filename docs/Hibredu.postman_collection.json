@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0d73eee2-9251-44f4-997d-086975ae29bd",
+		"_postman_id": "dea12699-e950-42bd-8b09-ad1637d26ac7",
 		"name": "Hibredu",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -665,6 +665,62 @@
 				},
 				{
 					"name": "GET Overview Classroom",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/overview/classroom",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"overview",
+								"classroom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Overview Alerts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/overview/classroom",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"overview",
+								"classroom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Overview Attendance Activities",
 					"request": {
 						"auth": {
 							"type": "bearer",
