@@ -35,6 +35,14 @@ class OverviewController {
 
         response.status(200).json(activities)
     }
+
+    async getAlerts(request: Request, response: Response) {
+        const teacherId = parseInt(request.userId)
+
+        const alerts = await alertService.getByTeacher(teacherId)
+
+        response.status(200).json(alerts)
+    }
 }
 
 
