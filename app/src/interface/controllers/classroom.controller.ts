@@ -65,15 +65,14 @@ class ClassroomController {
     private async getMetrics(classroomId: number) {
         const deliveredActivities = await (await classroomService.getDeliveredActivities(classroomId)).length
         const deliveryPercentage = await classroomService.getDeliveryPercentage(classroomId)
-        //const attendancePercentage = await classroomService.getAttendancePercentage(classroomId)
         const hitRate = await classroomService.getHitRate(classroomId)
         const alerts = await (await alertService.getByClass(classroomId)).length
 
         return {
-            deliveredActivities: deliveredActivities,
-            deliveryPercentage: deliveryPercentage,
-            hitRate: hitRate,
-            alerts: alerts
+            deliveredActivities: deliveredActivities || 0,
+            deliveryPercentage: deliveryPercentage || 0,
+            hitRate: hitRate || 0,
+            alerts: alerts || 0
         }
     }
 }
