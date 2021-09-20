@@ -1,6 +1,5 @@
 import { getConnection, In, Repository } from "typeorm";
 import Student from "../entities/student.entity";
-import fileService from "./file.service";
 import teacherService from "./teacher.service";
 
 const connection = getConnection()
@@ -21,12 +20,6 @@ class StudentService {
         this.repository = connection.getRepository(Student)
 
         return await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents", "alerts"] });
-    }
-
-    async getByClass(id: number) {
-        this.repository = connection.getRepository(Student)
-
-        return await this.repository.find({ where: { classrooms_id: id } });
     }
 
     async getDeliveryPercentage(id: number) {
@@ -61,21 +54,6 @@ class StudentService {
         }
 
         return (hitRate / hitRateTotal);
-    }
-
-    async insertIfNotExists(fileId: number, classroomId: number) {
-        this.repository = connection.getRepository(Student);
-
-        const studentNames: string[] = await fileService.getStudentNames(fileId);
-        studentNames.forEach(async (studentName) => {
-            const studentRegistry: Student = await this.repository.findOne({ where: { classrooms_id: classroomId, name: studentName }})
-            if(studentRegistry == undefined) {
-                const student = new Student()
-                student.name = studentName;
-                student.classrooms_id = classroomId;
-                await this.repository.insert(student)
-            }
-        });
     }
 }
 
