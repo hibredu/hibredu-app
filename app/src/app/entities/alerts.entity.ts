@@ -19,6 +19,9 @@ export default class Alert {
     @Column()
     value: string;
 
+    @Column()
+    level: string;
+
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
     created_at: Date;
 

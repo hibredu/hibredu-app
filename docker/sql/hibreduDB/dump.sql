@@ -227,6 +227,7 @@ DEFAULT CHARACTER SET = latin1;
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`alerts` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `value` TEXT NOT NULL,
+  `level` VARCHAR(50) NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
   `teachers_id` BIGINT(20) NOT NULL,
@@ -418,7 +419,7 @@ INSERT INTO students (id, name, email, classrooms_id) VALUES (57, "Daleyne Souza
 INSERT INTO students (id, name, email, classrooms_id) VALUES (58, "Dalila Souza", "rm98518@hibredu.school.com.br", 2);
 INSERT INTO students (id, name, email, classrooms_id) VALUES (59, "Danilo de Oliveira", "rm98522@hibredu.school.com.br", 2);
 
-INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Atividade1', 'Português', 10, 1, '2021-09-01 01:00:00');
+INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Atividade 1', 'Português', 10, 1, '2021-09-01 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação Trimestral', 'Matemática', 10, 1, '2021-09-02 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação Trimestral', 'Inglês', 10, 1, '2021-09-03 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação de Reforço', 'Artes', 10, 2, '2021-09-04 01:00:00');
@@ -433,10 +434,10 @@ INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação complementar', 'Inglês', 10, 2, '2021-09-12 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação complementar', 'Matemática', 10, 1, '2021-09-12 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação Trimestral', 'Matemática', 10, 1, '2021-09-12 01:00:00');
-INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Atividade16', 'Português', 10, 1, '2021-09-13 01:00:00');
+INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Atividade 16', 'Português', 10, 1, '2021-09-13 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação Trimestral', 'Português', 10, 1, '2021-09-14 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação Trimestral', 'Português', 10, 1, '2021-09-14 01:00:00');
-INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Atividade1', 'Português', 10, 2, '2021-09-01 01:00:00');
+INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Atividade 1', 'Português', 10, 2, '2021-09-01 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação Trimestral', 'Matemática', 10, 2, '2021-09-02 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação Trimestral', 'Inglês', 10, 2, '2021-09-03 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação de Reforço', 'Artes', 10, 2, '2021-09-04 01:00:00');
@@ -717,17 +718,17 @@ INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (11, 1, 11);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (11, 1, 12);
 
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-06 01:53:36', 2, 1);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno não entregou atividade','2021-09-08 01:53:36', 2, 1);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno não entregou atividade','2021-09-09 01:53:36', 2, 1);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 2, 2);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso','2021-09-07 01:53:36', 2, 3);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 2, 5);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa a tempos','2021-09-07 01:53:36', 2, 4);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso','2021-09-07 01:53:36', 3, 2);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 4, 2);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso','2021-09-07 01:53:36', 5, 2);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 6, 2);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso','2021-09-07 01:53:36', 7, 1);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa', 'red', '2021-09-06 01:53:36', 2, 1);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno não entregou atividade', 'red', '2021-09-08 01:53:36', 2, 1);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno não entregou atividade', 'yellow', '2021-09-09 01:53:36', 2, 1);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa', 'yellow', '2021-09-07 01:53:36', 2, 2);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso', 'red', '2021-09-07 01:53:36', 2, 3);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa', 'yellow', '2021-09-07 01:53:36', 2, 5);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa a tempos', 'yellow', '2021-09-07 01:53:36', 2, 4);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso', 'red', '2021-09-07 01:53:36', 3, 2);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa', 'green', '2021-09-07 01:53:36', 4, 2);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso', 'green', '2021-09-07 01:53:36', 5, 2);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa', 'yellow', '2021-09-07 01:53:36', 6, 2);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso', 'yellow', '2021-09-07 01:53:36', 7, 1);
 
 COMMIT;
