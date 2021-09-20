@@ -4,6 +4,7 @@ import Student from "./student.entity";
 
 @Entity('activities_students')
 export default class ActivityToStudent {
+    [x: string]: any;
     @PrimaryGeneratedColumn('increment')
     id: number;
 

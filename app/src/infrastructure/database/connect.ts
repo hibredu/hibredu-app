@@ -6,12 +6,13 @@ import logger from '../../loggerPino';
     const username = process.env.USERNAME_DB
     const password = process.env.PASSWORD_DB
     const database = process.env.DATABASE_DB
+    const port_db = process.env.PORT_DB ? parseInt(process.env.PORT_DB) : 3306
 
     await createConnections([{
         name: 'default',
         type: "mysql",
         host: host,
-        port: 3306,
+        port: port_db,
         username: username,
         password: password,
         database: database,

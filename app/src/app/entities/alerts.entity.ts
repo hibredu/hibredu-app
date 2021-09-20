@@ -32,7 +32,7 @@ export default class Alert {
     @JoinColumn({ name: 'teachers_id' })
     teacher: Teacher;
 
-    @ManyToOne(() => Student, (student) => student.alerts)
+    @ManyToOne(() => Student, (student) => student.alerts, { eager: true })
     @JoinColumn({ name: 'students_id' })
     student: Student
 }
