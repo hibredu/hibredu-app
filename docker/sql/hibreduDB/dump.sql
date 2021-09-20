@@ -175,13 +175,12 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`students`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`students` (
-  `id` VARCHAR(30) NOT NULL,
+  `id` BIGINT(20) AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(255) NOT NULL,
-  `email` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
   `classrooms_id` BIGINT(20) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
   INDEX `fk_students_classrooms1_idx` (`classrooms_id` ASC) ,
   CONSTRAINT `fk_students_classrooms1`
     FOREIGN KEY (`classrooms_id`)
@@ -202,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`activities_students` (
   `grade` DOUBLE NULL DEFAULT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
-  `students_id` VARCHAR(30) NOT NULL,
+  `students_id` BIGINT(20) NOT NULL,
   `activities_id` BIGINT(20) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_activities_students_students1_idx` (`students_id` ASC) ,
@@ -230,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`alerts` (
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
   `teachers_id` BIGINT(20) NOT NULL,
-  `students_id` VARCHAR(30) NOT NULL,
+  `students_id` BIGINT(20) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_alerts_teachers1_idx` (`teachers_id` ASC) ,
   INDEX `fk_alerts_students1_idx` (`students_id` ASC) ,
@@ -257,11 +256,13 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`attendances` (
   `description` VARCHAR(255) NULL DEFAULT NULL,
   `class_subject` VARCHAR(255) NULL DEFAULT NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `classroom_id` BIGINT(20) NOT NULL,
   `files_id` INT(11) NOT NULL,
   `owner_id` BIGINT(20) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_attendance_files1_idx` (`files_id` ASC) ,
   INDEX `fk_attendances_subjects_classrooms1_idx` (`owner_id` ASC) ,
+  INDEX `fk_attendance_classrooms_idx` (`classroom_id` ASC) ,
   CONSTRAINT `fk_attendance_files1`
     FOREIGN KEY (`files_id`)
     REFERENCES `hibredu_db`.`files` (`id`)
@@ -270,6 +271,11 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`attendances` (
   CONSTRAINT `fk_attendances_subjects_classrooms1`
     FOREIGN KEY (`owner_id`)
     REFERENCES `hibredu_db`.`subjects_classrooms` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_attendance_classrooms_idx`
+    FOREIGN KEY (`classroom_id`)
+    REFERENCES `hibredu_db`.`classrooms` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -281,7 +287,7 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`attendances_students` ( 
   `attendances_id` BIGINT(20) NOT NULL,
-  `students_id` VARCHAR(30) NOT NULL,
+  `students_id` BIGINT(20) NOT NULL,
   `present` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`attendances_id`, `students_id`),
   INDEX `fk_attendance_has_students_students1_idx` (`students_id` ASC) ,
@@ -560,30 +566,17 @@ INSERT INTO files (content, type) VALUES ('https://www.youtube8.com/','image');
 INSERT INTO files (content, type) VALUES ('https://www.youtube9.com/','image');
 INSERT INTO files (content, type) VALUES ('https://www.youtube10.com/','image');
 INSERT INTO files (content, type) VALUES ('https://www.youtube11.com/','image');
-INSERT INTO files (content, type) VALUES ('https://www.youtube12.com/','image');
-INSERT INTO files (content, type) VALUES ('https://www.youtube13.com/','image');
-INSERT INTO files (content, type) VALUES ('https://www.youtube14.com/','image');
-INSERT INTO files (content, type) VALUES ('https://www.youtube15.com/','image');
-INSERT INTO files (content, type) VALUES ('https://www.youtube16.com/','image');
-INSERT INTO files (content, type) VALUES ('https://www.youtube17.com/','image');
-INSERT INTO files (content, type) VALUES ('https://www.youtube18.com/','image');
-INSERT INTO files (content, type) VALUES ('https://www.youtube19.com/','image');
-INSERT INTO files (content, type) VALUES ('https://www.youtube20.com/','image');
 
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 1', '2021-09-01 01:53:36', 1, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 2', '2021-09-02 01:53:36', 2, 2);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 3', '2021-09-03 01:53:36', 3, 3);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 4', '2021-09-04 01:53:36', 4, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 5', '2021-09-05 01:53:36', 5, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 6', '2021-09-06 01:53:36', 6, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 7', '2021-09-07 01:53:36', 7, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 8', '2021-09-08 01:53:36', 8, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 9', '2021-09-09 01:53:36', 9, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 10', '2021-09-10 01:53:36', 10, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 11', '2021-09-11 01:53:36', 11, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 12', '2021-09-12 01:53:36', 12, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 13', '2021-09-13 01:53:36', 13, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 14', '2021-09-14 01:53:36', 14, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 1', '2021-09-06 01:53:36', 1, 1, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 2', '2021-09-05 01:53:36', 2, 2, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 3', '2021-09-06 01:53:36', 3, 3, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 4', '2021-09-07 01:53:36', 4, 1, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 5', '2021-09-08 01:53:36', 5, 1, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 6', '2021-09-09 01:53:36', 6, 1, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 7', '2021-09-09 01:53:36', 7, 1, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 8', '2021-09-09 01:53:36', 8, 1, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 9', '2021-09-09 01:53:36', 9, 1, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 10', '2021-09-09 01:53:36', 10, 1, 1);
 
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 1, 1);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 1, 2);

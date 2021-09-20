@@ -8,7 +8,7 @@ export interface IStudent {
     id: number;
     name: string;
     lastName: string;
-    email: string;
+    email?: string;
     password: string;
     created_at: Date;
     updated_at: Date;
@@ -23,8 +23,11 @@ export default class Student {
     @Column()
     name: string;
 
+    @Column({default: null})
+    email?: string;
+
     @Column()
-    email: string;
+    classrooms_id: number;
 
     @ManyToOne(() => Classroom, (classroom) => classroom.students)
     @JoinColumn({ name: 'classrooms_id' })
