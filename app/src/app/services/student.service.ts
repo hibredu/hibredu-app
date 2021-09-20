@@ -63,7 +63,7 @@ class StudentService {
         return (hitRate / hitRateTotal);
     }
 
-    async insertIfNotExists(fileId: number, classroomId: number) : Promise<void> {
+    async insertIfNotExists(fileId: number, classroomId: number) {
         this.repository = connection.getRepository(Student);
 
         const studentNames: string[] = await fileService.getStudentNames(fileId);
