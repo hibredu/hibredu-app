@@ -175,7 +175,7 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`students`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`students` (
-  `id` VARCHAR(30) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`activities_students` (
   `grade` DOUBLE NULL DEFAULT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
-  `students_id` VARCHAR(30) NOT NULL,
+  `students_id` BIGINT(20) NOT NULL,
   `activities_id` BIGINT(20) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_activities_students_students1_idx` (`students_id` ASC) ,
@@ -231,7 +231,7 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`alerts` (
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
   `teachers_id` BIGINT(20) NOT NULL,
-  `students_id` VARCHAR(30) NOT NULL,
+  `students_id` BIGINT(20) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_alerts_teachers1_idx` (`teachers_id` ASC) ,
   INDEX `fk_alerts_students1_idx` (`students_id` ASC) ,
@@ -282,7 +282,7 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`attendances_students` ( 
   `attendances_id` BIGINT(20) NOT NULL,
-  `students_id` VARCHAR(30) NOT NULL,
+  `students_id` BIGINT(20) NOT NULL,
   `present` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`attendances_id`, `students_id`),
   INDEX `fk_attendance_has_students_students1_idx` (`students_id` ASC) ,
@@ -314,6 +314,48 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`hibredu_rewards` (
   CONSTRAINT `fk_hibredu_rewards_teachers1`
     FOREIGN KEY (`teachers_id`)
     REFERENCES `hibredu_db`.`teachers` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `hibredu_db`.`questions`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hibredu_db`.`questions` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `activities_id` BIGINT NOT NULL,
+  `description` TEXT NULL,
+  `total_points` INT NULL DEFAULT 10,
+  INDEX `fk_questions_activities1_idx` (`activities_id` ASC),
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_questions_activities1`
+    FOREIGN KEY (`activities_id`)
+    REFERENCES `hibredu_db`.`activities` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `hibredu_db`.`questions_student`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hibredu_db`.`questions_student` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `points` INT NULL DEFAULT 0,
+  `response` TEXT NULL,
+  `activities_students_id` DOUBLE NOT NULL,
+  `questions_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_questions_student_activities_students1_idx` (`activities_students_id` ASC),
+  INDEX `fk_questions_student_questions1_idx` (`questions_id` ASC),
+  CONSTRAINT `fk_questions_student_activities_students1`
+    FOREIGN KEY (`activities_students_id`)
+    REFERENCES `hibredu_db`.`activities_students` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_questions_student_questions1`
+    FOREIGN KEY (`questions_id`)
+    REFERENCES `hibredu_db`.`questions` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -418,6 +460,12 @@ INSERT INTO students (id, name, email, classrooms_id) VALUES (56, "Davi Souza", 
 INSERT INTO students (id, name, email, classrooms_id) VALUES (57, "Daleyne Souza", "rm98617@hibredu.school.com.br", 2);
 INSERT INTO students (id, name, email, classrooms_id) VALUES (58, "Dalila Souza", "rm98518@hibredu.school.com.br", 2);
 INSERT INTO students (id, name, email, classrooms_id) VALUES (59, "Danilo de Oliveira", "rm98522@hibredu.school.com.br", 2);
+
+INSERT INTO students (id, name, email, classrooms_id) VALUES (60, "Eduardo Souza", "rm101020@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (61, "Eduardo de Oliveira", "rm101030@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (62, "Eduardo Barros", "rm101040@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (63, "Bruna Castro", "rm101050@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (64, "Bruna Souza", "rm101060@hibredu.school.com.br", 3);
 
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Atividade 1', 'Português', 10, 1, '2021-09-01 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação Trimestral', 'Matemática', 10, 1, '2021-09-02 01:00:00');
@@ -549,6 +597,29 @@ INSERT INTO activities_students (students_id, activities_id, delivered, status, 
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (9, 11, 1, 'entregue', 6, '2021-09-11 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (9, 12, 1, 'entregue', 6, '2021-09-12 01:00:00');
 
+
+INSERT INTO questions (activities_id, description) VALUES (1, 'Qual o nome do seu primeiro animal de estimação?');
+INSERT INTO questions (activities_id, description) VALUES (1, 'Quais seus filmes favoritos?');
+INSERT INTO questions (activities_id, description) VALUES (1, 'Quantas moléculas tem um ácido?');
+INSERT INTO questions (activities_id, description) VALUES (1, 'Há muitas receitinhas caseiras para limpeza na internet misturando vinagre com bicarbonato de sódio. Dentre os reagentes e produtos envolvidos nessa reação de neutralização do vinagre com bicarbonato de sódio, qual é o nome do reagente?');
+INSERT INTO questions (activities_id, description) VALUES (1, 'Dentre as reações abordadas no estudo das funções orgânicas, aquela que está diretamente relacionada à produção de essências artificiais que são os chamados aromas, utilizados pela indústria alimentícia, é a:');
+INSERT INTO questions (activities_id, description) VALUES (1, 'Qual o nome do filme mais famoso do cinema?');
+INSERT INTO questions (activities_id, description) VALUES (1, 'Quantos elementos químicos existem na tabela periódica?');
+
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (1, 'Cachorro', 1, 1);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (1, 'batman, superman, homem de ferro', 1, 2);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (1, '2', 1, 3);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (1, 'Sódio', 1, 4);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (1, 'Bicarbonato de sódio', 1, 5);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (1, 'Neutralização', 1, 6);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (1, 'Batman', 1, 7);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (2, 'Cachorro', 1, 1);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (2, 'batman, superman, homem de ferro', 1, 2);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (2, '2', 1, 3);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (2, 'Sódio', 1, 4);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (2, 'Bicarbonato de sódio', 1, 5);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (2, 'Neutralização', 1, 6);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (2, 'Batman', 1, 7);
 
 INSERT INTO files (content, type) VALUES ('https://www.youtube.com/','image');
 INSERT INTO files (content, type) VALUES ('https://www.youtube2.com/','image');
@@ -732,3 +803,11 @@ INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES (
 INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso', 'yellow', '2021-09-07 01:53:36', 7, 1);
 
 COMMIT;
+
+
+
+
+
+
+
+
