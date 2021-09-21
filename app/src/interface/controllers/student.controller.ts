@@ -67,10 +67,10 @@ class StudentController {
         const alerts = await (await alertService.getByStudent(studentId)).length
 
         return {
-            deliveredActivities: deliveredActivities,
-            deliveryPercentage: deliveryPercentage,
-            hitRate: hitRate,
-            alerts: alerts
+            deliveredActivities: deliveredActivities || 0,
+            deliveryPercentage: deliveryPercentage || 0,
+            hitRate: hitRate || 0,
+            alerts: alerts || 0
         }
     }
 }
