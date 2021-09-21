@@ -42,7 +42,7 @@ USE `hibredu_db` ;
 -- Table `hibredu_db`.`files`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`files` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `content` TEXT NOT NULL,
   `type` VARCHAR(100) NOT NULL
 ) ENGINE = InnoDB
@@ -53,7 +53,7 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`school_subjects`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`school_subjects` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(200) NULL
 ) ENGINE = InnoDB;
 
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`school_subjects` (
 -- Table `hibredu_db`.`classrooms`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`classrooms` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NULL DEFAULT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
@@ -76,7 +76,7 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`schools`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`schools` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(150) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -86,14 +86,14 @@ ENGINE = InnoDB;
 -- Table `hibredu_db`.`teachers`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`teachers` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `phone` VARCHAR(255) NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
-  `schools_id` BIGINT(20) NOT NULL,
+  `schools_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_teachers_schools1_idx` (`schools_id` ASC) ,
   CONSTRAINT `fk_teachers_schools1`
@@ -110,11 +110,11 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`subjects_classrooms`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`subjects_classrooms` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `school_subjects_id` BIGINT(20) NOT NULL,
-  `classrooms_id` BIGINT(20) NOT NULL,
-  `teachers_id` BIGINT(20) NOT NULL,
-  `schools_id` BIGINT(20) NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `school_subjects_id` BIGINT NOT NULL,
+  `classrooms_id` BIGINT NOT NULL,
+  `teachers_id` BIGINT NOT NULL,
+  `schools_id` BIGINT NULL,
   INDEX `id_subjects_classrooms_idx` (`id` ASC),
   INDEX `fk_school_subjects_has_classrooms_classrooms1_idx` (`classrooms_id` ASC),
   INDEX `fk_subjects_classrooms_teachers1_idx` (`teachers_id` ASC),
@@ -147,7 +147,7 @@ ENGINE = InnoDB;
 -- Table `hibredu_db`.`activities`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`activities` (
-  `id` BIGINT(20) AUTO_INCREMENT PRIMARY KEY,
+  `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(255) NOT NULL,
   `subject` VARCHAR(255) NULL,
   `description` LONGTEXT NULL DEFAULT NULL,
@@ -155,8 +155,8 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`activities` (
   `max_note` DOUBLE NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT NULL,
-  `files_id` INT(11) NULL,
-  `owner_id` BIGINT(20) NOT NULL,
+  `files_id` INT NULL,
+  `owner_id` BIGINT NOT NULL,
   INDEX `activities_files_fk` (`files_id` ASC) ,
   INDEX `fk_activities_subjects_classrooms1_idx` (`owner_id` ASC) ,
   CONSTRAINT `activities_files_fk`
@@ -175,12 +175,12 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`students`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`students` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
-  `classrooms_id` BIGINT(20) NULL DEFAULT NULL,
+  `classrooms_id` BIGINT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_students_classrooms1_idx` (`classrooms_id` ASC) ,
   CONSTRAINT `fk_students_classrooms1`
@@ -202,8 +202,8 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`activities_students` (
   `grade` DOUBLE NULL DEFAULT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
-  `students_id` BIGINT(20) NOT NULL,
-  `activities_id` BIGINT(20) NOT NULL,
+  `students_id` BIGINT NOT NULL,
+  `activities_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_activities_students_students1_idx` (`students_id` ASC) ,
   INDEX `fk_activities_students_activities1_idx` (`activities_id` ASC) ,
@@ -225,13 +225,13 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`alerts`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`alerts` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `value` TEXT NOT NULL,
   `level` VARCHAR(50) NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
-  `teachers_id` BIGINT(20) NOT NULL,
-  `students_id` BIGINT(20) NOT NULL,
+  `teachers_id` BIGINT NOT NULL,
+  `students_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_alerts_teachers1_idx` (`teachers_id` ASC) ,
   INDEX `fk_alerts_students1_idx` (`students_id` ASC) ,
@@ -253,13 +253,13 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`attendances`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`attendances` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `description` VARCHAR(255) NULL DEFAULT NULL,
   `class_subject` VARCHAR(255) NULL DEFAULT NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `files_id` INT(11) NOT NULL,
-  `owner_id` BIGINT(20) NOT NULL,
+  `files_id` INT NOT NULL,
+  `owner_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_attendance_files1_idx` (`files_id` ASC) ,
   INDEX `fk_attendances_subjects_classrooms1_idx` (`owner_id` ASC) ,
@@ -281,8 +281,8 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`attendances_students`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`attendances_students` ( 
-  `attendances_id` BIGINT(20) NOT NULL,
-  `students_id` BIGINT(20) NOT NULL,
+  `attendances_id` BIGINT NOT NULL,
+  `students_id` BIGINT NOT NULL,
   `present` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`attendances_id`, `students_id`),
   INDEX `fk_attendance_has_students_students1_idx` (`students_id` ASC) ,
@@ -305,10 +305,10 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`hibredu_rewards`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`hibredu_rewards` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `point` DECIMAL NULL,
   `date` DATETIME DEFAULT CURRENT_TIMESTAMP,
-  `teachers_id` BIGINT(20) NOT NULL,
+  `teachers_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_hibredu_rewards_teachers1_idx` (`teachers_id` ASC) ,
   CONSTRAINT `fk_hibredu_rewards_teachers1`
