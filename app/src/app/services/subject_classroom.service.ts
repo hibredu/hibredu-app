@@ -42,6 +42,15 @@ class SubjectClassroomService {
         return subjectClassroom
     }
 
+    getSubjectByClass(classId: number) {
+        this.repository = connection.getRepository(SubjectClassroom)
+
+        return this.repository.find({
+            where: { classrooms_id: classId },
+            relations: ["school_subject"]
+        })
+    }
+
 }
 
 export default new SubjectClassroomService()

@@ -16,6 +16,7 @@ class StudentController {
             studentsData.push({
                 id: student.id,
                 name: student.name,
+                subjects: student.subjects.map(subject => subject.school_subject),
                 metrics
             })
         }

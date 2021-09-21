@@ -26,6 +26,9 @@ export default class Student {
     @Column()
     email: string;
 
+    @Column()
+    classrooms_id: number;
+
     @ManyToOne(() => Classroom, (classroom) => classroom.students)
     @JoinColumn({ name: 'classrooms_id' })
     classroom: Classroom;
