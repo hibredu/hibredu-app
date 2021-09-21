@@ -9,6 +9,8 @@ class StudentController {
         const studentsData = []
 
         const allStudents = await studentService.getAll(teacherID)
+        console.log("========================= All Students =========================")
+        console.log(allStudents)
 
         for (const student of allStudents) {
             const metrics = await this.getMetrics(student.id)
@@ -16,6 +18,7 @@ class StudentController {
             studentsData.push({
                 id: student.id,
                 name: student.name,
+                subjects: student.subjects.map(subject => subject.school_subject),
                 metrics
             })
         }
@@ -66,10 +69,10 @@ class StudentController {
         const alerts = await (await alertService.getByStudent(studentId)).length
 
         return {
-            deliveredActivities: deliveredActivities,
-            deliveryPercentage: deliveryPercentage,
-            hitRate: hitRate,
-            alerts: alerts
+            deliveredActivities: deliveredActivities || 0,
+            deliveryPercentage: deliveryPercentage || 0,
+            hitRate: hitRate || 0,
+            alerts: alerts || 0
         }
     }
 }

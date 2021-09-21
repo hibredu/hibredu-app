@@ -8,7 +8,7 @@ export interface IStudent {
     id: number;
     name: string;
     lastName: string;
-    email?: string;
+    email: string;
     password: string;
     created_at: Date;
     updated_at: Date;
@@ -23,8 +23,8 @@ export default class Student {
     @Column()
     name: string;
 
-    @Column({default: null})
-    email?: string;
+    @Column()
+    email: string;
 
     @Column()
     classrooms_id: number;

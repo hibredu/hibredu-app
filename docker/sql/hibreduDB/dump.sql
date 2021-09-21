@@ -42,7 +42,7 @@ USE `hibredu_db` ;
 -- Table `hibredu_db`.`files`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`files` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `content` TEXT NOT NULL,
   `type` VARCHAR(100) NOT NULL
 ) ENGINE = InnoDB
@@ -53,7 +53,7 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`school_subjects`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`school_subjects` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(200) NULL
 ) ENGINE = InnoDB;
 
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`school_subjects` (
 -- Table `hibredu_db`.`classrooms`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`classrooms` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NULL DEFAULT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
@@ -76,7 +76,7 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`schools`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`schools` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(150) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -86,14 +86,14 @@ ENGINE = InnoDB;
 -- Table `hibredu_db`.`teachers`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`teachers` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `phone` VARCHAR(255) NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
-  `schools_id` BIGINT(20) NOT NULL,
+  `schools_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_teachers_schools1_idx` (`schools_id` ASC) ,
   CONSTRAINT `fk_teachers_schools1`
@@ -110,11 +110,11 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`subjects_classrooms`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`subjects_classrooms` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `school_subjects_id` BIGINT(20) NOT NULL,
-  `classrooms_id` BIGINT(20) NOT NULL,
-  `teachers_id` BIGINT(20) NOT NULL,
-  `schools_id` BIGINT(20) NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `school_subjects_id` BIGINT NOT NULL,
+  `classrooms_id` BIGINT NOT NULL,
+  `teachers_id` BIGINT NOT NULL,
+  `schools_id` BIGINT NULL,
   INDEX `id_subjects_classrooms_idx` (`id` ASC),
   INDEX `fk_school_subjects_has_classrooms_classrooms1_idx` (`classrooms_id` ASC),
   INDEX `fk_subjects_classrooms_teachers1_idx` (`teachers_id` ASC),
@@ -147,7 +147,7 @@ ENGINE = InnoDB;
 -- Table `hibredu_db`.`activities`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`activities` (
-  `id` BIGINT(20) AUTO_INCREMENT PRIMARY KEY,
+  `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(255) NOT NULL,
   `subject` VARCHAR(255) NULL,
   `description` LONGTEXT NULL DEFAULT NULL,
@@ -155,8 +155,8 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`activities` (
   `max_note` DOUBLE NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT NULL,
-  `files_id` INT(11) NULL,
-  `owner_id` BIGINT(20) NOT NULL,
+  `files_id` INT NULL,
+  `owner_id` BIGINT NOT NULL,
   INDEX `activities_files_fk` (`files_id` ASC) ,
   INDEX `fk_activities_subjects_classrooms1_idx` (`owner_id` ASC) ,
   CONSTRAINT `activities_files_fk`
@@ -175,12 +175,13 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`students`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`students` (
-  `id` BIGINT(20) AUTO_INCREMENT PRIMARY KEY,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
-  `email` VARCHAR(255) NULL,
+  `email` VARCHAR(255) NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
-  `classrooms_id` BIGINT(20) NULL DEFAULT NULL,
+  `classrooms_id` BIGINT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
   INDEX `fk_students_classrooms1_idx` (`classrooms_id` ASC) ,
   CONSTRAINT `fk_students_classrooms1`
     FOREIGN KEY (`classrooms_id`)
@@ -201,8 +202,8 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`activities_students` (
   `grade` DOUBLE NULL DEFAULT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
-  `students_id` BIGINT(20) NOT NULL,
-  `activities_id` BIGINT(20) NOT NULL,
+  `students_id` BIGINT NOT NULL,
+  `activities_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_activities_students_students1_idx` (`students_id` ASC) ,
   INDEX `fk_activities_students_activities1_idx` (`activities_id` ASC) ,
@@ -224,12 +225,13 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`alerts`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`alerts` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `value` TEXT NOT NULL,
+  `level` VARCHAR(50) NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT NULL,
-  `teachers_id` BIGINT(20) NOT NULL,
-  `students_id` BIGINT(20) NOT NULL,
+  `teachers_id` BIGINT NOT NULL,
+  `students_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_alerts_teachers1_idx` (`teachers_id` ASC) ,
   INDEX `fk_alerts_students1_idx` (`students_id` ASC) ,
@@ -251,18 +253,16 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`attendances`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`attendances` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `description` VARCHAR(255) NULL DEFAULT NULL,
   `class_subject` VARCHAR(255) NULL DEFAULT NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `classroom_id` BIGINT(20) NOT NULL,
-  `files_id` INT(11) NOT NULL,
-  `owner_id` BIGINT(20) NOT NULL,
+  `files_id` INT NOT NULL,
+  `owner_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_attendance_files1_idx` (`files_id` ASC) ,
   INDEX `fk_attendances_subjects_classrooms1_idx` (`owner_id` ASC) ,
-  INDEX `fk_attendance_classrooms_idx` (`classroom_id` ASC) ,
   CONSTRAINT `fk_attendance_files1`
     FOREIGN KEY (`files_id`)
     REFERENCES `hibredu_db`.`files` (`id`)
@@ -271,11 +271,6 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`attendances` (
   CONSTRAINT `fk_attendances_subjects_classrooms1`
     FOREIGN KEY (`owner_id`)
     REFERENCES `hibredu_db`.`subjects_classrooms` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_attendance_classrooms_idx`
-    FOREIGN KEY (`classroom_id`)
-    REFERENCES `hibredu_db`.`classrooms` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -286,8 +281,8 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`attendances_students`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`attendances_students` ( 
-  `attendances_id` BIGINT(20) NOT NULL,
-  `students_id` BIGINT(20) NOT NULL,
+  `attendances_id` BIGINT NOT NULL,
+  `students_id` BIGINT NOT NULL,
   `present` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`attendances_id`, `students_id`),
   INDEX `fk_attendance_has_students_students1_idx` (`students_id` ASC) ,
@@ -310,15 +305,57 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `hibredu_db`.`hibredu_rewards`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hibredu_db`.`hibredu_rewards` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `point` DECIMAL NULL,
   `date` DATETIME DEFAULT CURRENT_TIMESTAMP,
-  `teachers_id` BIGINT(20) NOT NULL,
+  `teachers_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_hibredu_rewards_teachers1_idx` (`teachers_id` ASC) ,
   CONSTRAINT `fk_hibredu_rewards_teachers1`
     FOREIGN KEY (`teachers_id`)
     REFERENCES `hibredu_db`.`teachers` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `hibredu_db`.`questions`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hibredu_db`.`questions` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `activities_id` BIGINT NOT NULL,
+  `description` TEXT NULL,
+  `total_points` INT NULL DEFAULT 10,
+  INDEX `fk_questions_activities1_idx` (`activities_id` ASC),
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_questions_activities1`
+    FOREIGN KEY (`activities_id`)
+    REFERENCES `hibredu_db`.`activities` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `hibredu_db`.`questions_student`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hibredu_db`.`questions_student` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `points` INT NULL DEFAULT 0,
+  `response` TEXT NULL,
+  `activities_students_id` DOUBLE NOT NULL,
+  `questions_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_questions_student_activities_students1_idx` (`activities_students_id` ASC),
+  INDEX `fk_questions_student_questions1_idx` (`questions_id` ASC),
+  CONSTRAINT `fk_questions_student_activities_students1`
+    FOREIGN KEY (`activities_students_id`)
+    REFERENCES `hibredu_db`.`activities_students` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_questions_student_questions1`
+    FOREIGN KEY (`questions_id`)
+    REFERENCES `hibredu_db`.`questions` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -343,7 +380,7 @@ INSERT INTO school_subjects (name) values('Música');
 INSERT INTO school_subjects (name) values('Química');
 INSERT INTO school_subjects (name) values('Geografia');
 
-INSERT INTO teachers (name, email, password, phone, schools_id) VALUES ('Jean Jacques', 'jean@hibredu.com.br', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581190', 1);
+INSERT INTO teachers (id, name, email, password, phone, schools_id) VALUES (2, 'Jean Jacques', 'jean@hibredu.com.br', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581190', 1);
 INSERT INTO teachers (name, email, password, phone, schools_id) VALUES ('Felipe Toscano', 'felipe@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581192', 1);
 INSERT INTO teachers (name, email, password, phone, schools_id) VALUES ('Vinicius Mota', 'vinicius@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581193', 2);
 INSERT INTO teachers (name, email, password, phone, schools_id) VALUES ('Gabriel Petillo', 'gspetillo@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195456783', 2);
@@ -424,7 +461,17 @@ INSERT INTO students (id, name, email, classrooms_id) VALUES (57, "Daleyne Souza
 INSERT INTO students (id, name, email, classrooms_id) VALUES (58, "Dalila Souza", "rm98518@hibredu.school.com.br", 2);
 INSERT INTO students (id, name, email, classrooms_id) VALUES (59, "Danilo de Oliveira", "rm98522@hibredu.school.com.br", 2);
 
-INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Atividade1', 'Português', 10, 1, '2021-09-01 01:00:00');
+INSERT INTO students (id, name, email, classrooms_id) VALUES (60, "Ricardo e Souza", "rm101020@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (61, "Iara de Oliveira", "rm101030@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (62, "Eduardo Barros", "rm101040@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (63, "Davi Castro", "rm101050@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (64, "Bruna Souza", "rm101060@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (65, "Bruno Gonçalves", "rm101070@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (66, "Thiago de Gonçalves", "rm101080@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (67, "Guilherme de Gonçalves", "rm101090@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (68, "João de Gonçalves", "rm101010@hibredu.school.com.br", 3);
+
+INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Atividade 1', 'Português', 10, 1, '2021-09-01 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação Trimestral', 'Matemática', 10, 1, '2021-09-02 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação Trimestral', 'Inglês', 10, 1, '2021-09-03 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação de Reforço', 'Artes', 10, 2, '2021-09-04 01:00:00');
@@ -439,10 +486,10 @@ INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação complementar', 'Inglês', 10, 2, '2021-09-12 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação complementar', 'Matemática', 10, 1, '2021-09-12 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação Trimestral', 'Matemática', 10, 1, '2021-09-12 01:00:00');
-INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Atividade16', 'Português', 10, 1, '2021-09-13 01:00:00');
+INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Atividade 16', 'Português', 10, 1, '2021-09-13 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação Trimestral', 'Português', 10, 1, '2021-09-14 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação Trimestral', 'Português', 10, 1, '2021-09-14 01:00:00');
-INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Atividade1', 'Português', 10, 2, '2021-09-01 01:00:00');
+INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Atividade 1', 'Português', 10, 2, '2021-09-01 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação Trimestral', 'Matemática', 10, 2, '2021-09-02 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação Trimestral', 'Inglês', 10, 2, '2021-09-03 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação de Reforço', 'Artes', 10, 2, '2021-09-04 01:00:00');
@@ -555,6 +602,29 @@ INSERT INTO activities_students (students_id, activities_id, delivered, status, 
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (9, 12, 1, 'entregue', 6, '2021-09-12 01:00:00');
 
 
+INSERT INTO questions (activities_id, description) VALUES (1, 'Qual o nome do seu primeiro animal de estimação?');
+INSERT INTO questions (activities_id, description) VALUES (1, 'Quais seus filmes favoritos?');
+INSERT INTO questions (activities_id, description) VALUES (1, 'Quantas moléculas tem um ácido?');
+INSERT INTO questions (activities_id, description) VALUES (1, 'Há muitas receitinhas caseiras para limpeza na internet misturando vinagre com bicarbonato de sódio. Dentre os reagentes e produtos envolvidos nessa reação de neutralização do vinagre com bicarbonato de sódio, qual é o nome do reagente?');
+INSERT INTO questions (activities_id, description) VALUES (1, 'Dentre as reações abordadas no estudo das funções orgânicas, aquela que está diretamente relacionada à produção de essências artificiais que são os chamados aromas, utilizados pela indústria alimentícia, é a:');
+INSERT INTO questions (activities_id, description) VALUES (1, 'Qual o nome do filme mais famoso do cinema?');
+INSERT INTO questions (activities_id, description) VALUES (1, 'Quantos elementos químicos existem na tabela periódica?');
+
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (1, 'Cachorro', 1, 1);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (1, 'batman, superman, homem de ferro', 1, 2);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (1, '2', 1, 3);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (1, 'Sódio', 1, 4);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (1, 'Bicarbonato de sódio', 1, 5);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (1, 'Neutralização', 1, 6);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (1, 'Batman', 1, 7);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (2, 'Cachorro', 1, 1);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (2, 'batman, superman, homem de ferro', 1, 2);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (2, '2', 1, 3);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (2, 'Sódio', 1, 4);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (2, 'Bicarbonato de sódio', 1, 5);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (2, 'Neutralização', 1, 6);
+INSERT INTO questions_student (points, response, activities_students_id, questions_id) VALUES (2, 'Batman', 1, 7);
+
 INSERT INTO files (content, type) VALUES ('https://www.youtube.com/','image');
 INSERT INTO files (content, type) VALUES ('https://www.youtube2.com/','image');
 INSERT INTO files (content, type) VALUES ('https://www.youtube3.com/','image');
@@ -566,17 +636,27 @@ INSERT INTO files (content, type) VALUES ('https://www.youtube8.com/','image');
 INSERT INTO files (content, type) VALUES ('https://www.youtube9.com/','image');
 INSERT INTO files (content, type) VALUES ('https://www.youtube10.com/','image');
 INSERT INTO files (content, type) VALUES ('https://www.youtube11.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube12.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube13.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube14.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube15.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube16.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube17.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube18.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube19.com/','image');
+INSERT INTO files (content, type) VALUES ('https://www.youtube20.com/','image');
 
-INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 1', '2021-09-06 01:53:36', 1, 1, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 2', '2021-09-05 01:53:36', 2, 2, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 3', '2021-09-06 01:53:36', 3, 3, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 4', '2021-09-07 01:53:36', 4, 1, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 5', '2021-09-08 01:53:36', 5, 1, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 6', '2021-09-09 01:53:36', 6, 1, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 7', '2021-09-09 01:53:36', 7, 1, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 8', '2021-09-09 01:53:36', 8, 1, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 9', '2021-09-09 01:53:36', 9, 1, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id, classroom_id) VALUES ('Teste de Descrição de chamada 10', '2021-09-09 01:53:36', 10, 1, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 1', '2021-09-01 01:53:36', 1, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 2', '2021-09-02 01:53:36', 2, 2);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 3', '2021-09-03 01:53:36', 3, 3);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 4', '2021-09-04 01:53:36', 4, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 5', '2021-09-05 01:53:36', 5, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 6', '2021-09-06 01:53:36', 6, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 7', '2021-09-07 01:53:36', 7, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 8', '2021-09-08 01:53:36', 8, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 9', '2021-09-09 01:53:36', 9, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 10', '2021-09-10 01:53:36', 10, 1);
+INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 11', '2021-09-11 01:53:36', 11, 1);
 
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 1, 1);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 1, 2);
@@ -710,17 +790,25 @@ INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (11, 1, 11);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (11, 1, 12);
 
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-06 01:53:36', 2, 1);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno não entregou atividade','2021-09-08 01:53:36', 2, 1);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno não entregou atividade','2021-09-09 01:53:36', 2, 1);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 2, 2);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso','2021-09-07 01:53:36', 2, 3);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 2, 5);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa a tempos','2021-09-07 01:53:36', 2, 4);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso','2021-09-07 01:53:36', 3, 2);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 4, 2);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso','2021-09-07 01:53:36', 5, 2);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa','2021-09-07 01:53:36', 6, 2);
-INSERT INTO alerts (value, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso','2021-09-07 01:53:36', 7, 1);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa', 'red', '2021-09-06 01:53:36', 2, 1);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno não entregou atividade', 'red', '2021-09-08 01:53:36', 2, 1);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno não entregou atividade', 'yellow', '2021-09-09 01:53:36', 2, 1);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa', 'yellow', '2021-09-07 01:53:36', 2, 2);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso', 'red', '2021-09-07 01:53:36', 2, 3);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa', 'yellow', '2021-09-07 01:53:36', 2, 5);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa a tempos', 'yellow', '2021-09-07 01:53:36', 2, 4);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso', 'red', '2021-09-07 01:53:36', 3, 2);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa', 'green', '2021-09-07 01:53:36', 4, 2);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso', 'green', '2021-09-07 01:53:36', 5, 2);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa', 'yellow', '2021-09-07 01:53:36', 6, 2);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso', 'yellow', '2021-09-07 01:53:36', 7, 1);
 
 COMMIT;
+
+
+
+
+
+
+
+
