@@ -461,11 +461,15 @@ INSERT INTO students (id, name, email, classrooms_id) VALUES (57, "Daleyne Souza
 INSERT INTO students (id, name, email, classrooms_id) VALUES (58, "Dalila Souza", "rm98518@hibredu.school.com.br", 2);
 INSERT INTO students (id, name, email, classrooms_id) VALUES (59, "Danilo de Oliveira", "rm98522@hibredu.school.com.br", 2);
 
-INSERT INTO students (id, name, email, classrooms_id) VALUES (60, "Eduardo Souza", "rm101020@hibredu.school.com.br", 3);
-INSERT INTO students (id, name, email, classrooms_id) VALUES (61, "Eduardo de Oliveira", "rm101030@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (60, "Ricardo e Souza", "rm101020@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (61, "Iara de Oliveira", "rm101030@hibredu.school.com.br", 3);
 INSERT INTO students (id, name, email, classrooms_id) VALUES (62, "Eduardo Barros", "rm101040@hibredu.school.com.br", 3);
-INSERT INTO students (id, name, email, classrooms_id) VALUES (63, "Bruna Castro", "rm101050@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (63, "Davi Castro", "rm101050@hibredu.school.com.br", 3);
 INSERT INTO students (id, name, email, classrooms_id) VALUES (64, "Bruna Souza", "rm101060@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (65, "Bruno Gonçalves", "rm101070@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (66, "Thiago de Gonçalves", "rm101080@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (67, "Guilherme de Gonçalves", "rm101090@hibredu.school.com.br", 3);
+INSERT INTO students (id, name, email, classrooms_id) VALUES (68, "João de Gonçalves", "rm101010@hibredu.school.com.br", 3);
 
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Atividade 1', 'Português', 10, 1, '2021-09-01 01:00:00');
 INSERT INTO activities (name, subject, max_note, owner_id, created_at) VALUES ('Avaliação Trimestral', 'Matemática', 10, 1, '2021-09-02 01:00:00');
@@ -653,9 +657,6 @@ INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('C
 INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 9', '2021-09-09 01:53:36', 9, 1);
 INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 10', '2021-09-10 01:53:36', 10, 1);
 INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 11', '2021-09-11 01:53:36', 11, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 12', '2021-09-12 01:53:36', 12, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 13', '2021-09-13 01:53:36', 13, 1);
-INSERT INTO attendances (description, created_at, files_id, owner_id) VALUES ('Chamada registrada 14', '2021-09-14 01:53:36', 14, 1);
 
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 1, 1);
 INSERT INTO attendances_students (attendances_id, present, students_id) VALUES (1, 1, 2);
