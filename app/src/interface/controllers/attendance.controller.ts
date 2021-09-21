@@ -1,7 +1,9 @@
 import { Request, Response } from 'express'
 import { Between, LessThanOrEqual, MoreThanOrEqual } from 'typeorm'
 import attendanceService from '../../app/services/attendance.service'
+import attendanceStudentsService from '../../app/services/attendance_students.service'
 import fileService from '../../app/services/file.service'
+import studentService from '../../app/services/student.service'
 import cleanDate from '../../app/shared/utils/cleanData'
 
 class AttendanceController {
@@ -63,8 +65,8 @@ class AttendanceController {
         const file: Express.Multer.File = request.file
 
         try {
-            const columns: any[] = await fileService.getColumns(file)
-            const fileId: number = await fileService.saveFile(file);
+            const fileId: number = await fileService.insertFile(file)
+            const columns: any[] = await fileService.getColumnsInfo(fileId)
             return response.status(201).json({
                 file_id: fileId,
                 columns: columns
@@ -78,11 +80,11 @@ class AttendanceController {
         const teacherId: string = request.userId
         const body: any = request.body
         try {
-            await fileService.configureColumns(body.file_id, body.columns)
-            var attendanceId: number = await attendanceService.insert(teacherId, body)
-            return response.status(201).json({
-                attendance_id: attendanceId
-            })
+            await fileService.normalizeHeaders(body.file_id, body.columns)
+            const attendanceId: number = await attendanceService.insert(teacherId, body)
+            await studentService.insertIfNotExists(body.file_id, body.classroom_id);
+            await attendanceStudentsService.insert(attendanceId);            
+            return response.status(201).json()
         } catch(error) {
             response.status(500).json({ error: error.message })
         }

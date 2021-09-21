@@ -11,10 +11,6 @@ class SubjectClassroomService {
         this.repository = connection.getRepository(SubjectClassroom)
 
         const subjectClassroom = await this.repository.find({})
-
-        if (!subjectClassroom) {
-            throw new Error("Subject Classroom not found")
-        }
         return subjectClassroom
     }
 
@@ -36,10 +32,6 @@ class SubjectClassroomService {
             where: { teachers_id: teacherId },
             relations: ["classroom", "school_subject", "school", "teacher"]
         })
-
-        if (!subjectClassroom) {
-            throw new Error("Subject Classroom not found")
-        }
         return subjectClassroom
     }
 
@@ -48,15 +40,6 @@ class SubjectClassroomService {
 
         const subjectClassroom = await this.repository.find({ where: { school_subjects_id: subjectId } })
         return subjectClassroom
-    }
-
-    getSubjectByClass(classId: number) {
-        this.repository = connection.getRepository(SubjectClassroom)
-
-        return this.repository.find({
-            where: { classrooms_id: classId },
-            relations: ["school_subject"]
-        })
     }
 
 }

@@ -18,7 +18,6 @@ class ClassroomController {
                 classroomData.push({
                     id: classroom.id,
                     name: classroom.name,
-                    students: classroom.students,
                     metrics
                 })
             }
