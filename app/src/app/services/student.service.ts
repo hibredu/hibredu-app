@@ -14,7 +14,8 @@ class StudentService {
         const classes = await teacherService.getClassesByTeacher(teacherID);
 
         const students = await this.repository.find({ where: { classrooms_id: In(classes) }, order: { name: "ASC" } });
-
+        console.log("========================= students =========================")
+        console.log(students)
         return await Promise.all(students.map(async (student) => {
             return {
                 ...student,

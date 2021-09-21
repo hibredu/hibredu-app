@@ -9,6 +9,8 @@ class StudentController {
         const studentsData = []
 
         const allStudents = await studentService.getAll(teacherID)
+        console.log("========================= All Students =========================")
+        console.log(allStudents)
 
         for (const student of allStudents) {
             const metrics = await this.getMetrics(student.id)
