@@ -83,7 +83,7 @@ class AttendanceController {
             await fileService.normalizeHeaders(body.file_id, body.columns)
             const attendanceId: number = await attendanceService.insert(teacherId, body)
             await studentService.insertIfNotExists(body.file_id, body.classroom_id);
-            await attendanceStudentsService.insert(attendanceId);            
+            await attendanceStudentsService.insert(attendanceId, body.classroom_id);            
             return response.status(201).json()
         } catch(error) {
             response.status(500).json({ error: error.message })

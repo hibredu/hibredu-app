@@ -1,8 +1,9 @@
 import { getConnection, In, Repository } from "typeorm";
 import Attendance from "../entities/attendance.entity";
 import fileService from "./file.service";
-import subject_classroomService from "./subject_classroom.service";
+import subjectClassroomService from "./subject_classroom.service";
 import File from "../entities/file.entity";
+import SubjectClassroom from "../entities/subjects_classrooms.entity";
 
 const connection = getConnection()
 
@@ -31,7 +32,7 @@ class AttendanceService {
     async getByClass(classId: number, options?: Map<String, any>) {
         this.repository = connection.getRepository(Attendance)
 
-        const subject_classroom = await subject_classroomService.getByClass(classId)
+        const subject_classroom = await subjectClassroomService.getByClass(classId)
         const owners_ids = subject_classroom.map(subject_classroom => subject_classroom.id);
 
         const attendance = await this.repository.find({
@@ -51,6 +52,14 @@ class AttendanceService {
 
     async insert(teacherId: string, attendance: any) : Promise<number> {
         const file: File = await fileService.getFile(attendance.file_id)
+        const owner: SubjectClassroom = await subjectClassroomService.getBySubjectClassroomTeacher(
+            attendance.subject_id, 
+            attendance.classroom_id, 
+            parseInt(teacherId));
+
+        if(owner === undefined) {
+            throw ("Ocorreu um erro ao procurar o Owner");
+        }
 
         this.repository = connection.getRepository(Attendance)
 
@@ -59,10 +68,7 @@ class AttendanceService {
         attendanceRegister.description = attendance.description
         attendanceRegister.class_subject = attendance.class_subject
         attendanceRegister.file = file
-        attendanceRegister.owner_id = parseInt(teacherId)
-
-        //TODO: REMOÇÃO TEMPORÁRIA
-        //attendanceRegister.classroom_id = attendance.classroom_id
+        attendanceRegister.owner_id = owner.id 
 
         await this.repository.insert(attendanceRegister)      
         

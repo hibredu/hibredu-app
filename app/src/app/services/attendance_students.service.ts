@@ -11,15 +11,12 @@ const connection = getConnection()
 class AttendanceStudentsService {
     repository: Repository<AttendanceStudent>
 
-    async insert(attendanceId: number) {
+    async insert(attendanceId: number, classroomId: number) {
         this.repository = connection.getRepository(AttendanceStudent)
 
         const attendance: Attendance = await attendanceService.getById(attendanceId);
         const presentStudentsNames: string[] = await fileService.getStudentNames(attendance.files_id);
-        //const allStudents: Student[] = await studentService.getByClass(attendance.classroom_id)
-
-        //TODO: RESOLUÇÃO TEMPORÁRIA
-        const allStudents: Student[] = await studentService.getByClass(1)
+        const allStudents: Student[] = await studentService.getByClass(classroomId)
 
         allStudents.forEach(async student => {
             const attendanceStudent: AttendanceStudent = new AttendanceStudent()

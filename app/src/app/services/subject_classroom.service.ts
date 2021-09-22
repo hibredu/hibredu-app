@@ -50,6 +50,11 @@ class SubjectClassroomService {
         return subjectClassroom
     }
 
+    async getBySubjectClassroomTeacher(subjectId: number, classroomId: number, teacherId: number) {
+        this.repository = connection.getRepository(SubjectClassroom);
+        return await this.repository.findOne({ where: { school_subjects_id: subjectId, classrooms_id: classroomId, teachers_id: teacherId } })
+    }
+
     getSubjectByClass(classId: number) {
         this.repository = connection.getRepository(SubjectClassroom)
 
