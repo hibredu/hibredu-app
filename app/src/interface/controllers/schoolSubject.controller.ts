@@ -10,4 +10,4 @@ class SchoolSubjectController {
     }
 }
 
-export default new SchoolSubjectController(); 
+export default new SchoolSubjectController();

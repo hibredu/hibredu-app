@@ -707,13 +707,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url_base}}/overview/classroom",
+							"raw": "{{url_base}}/overview/alerts",
 							"host": [
 								"{{url_base}}"
 							],
 							"path": [
 								"overview",
-								"classroom"
+								"alerts"
 							]
 						}
 					},
@@ -743,6 +743,28 @@
 								"overview",
 								"attendance",
 								"activities"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SchoolSubjects",
+			"item": [
+				{
+					"name": "GET School Subject",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/subject",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"subject"
 							]
 						}
 					},
