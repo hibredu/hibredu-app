@@ -7,12 +7,14 @@ import classroomRouter from "./classroom.routes"
 import overviewRouter from "./overview.routes"
 import schoolRouter from "./school.routes"
 import studentRouter from "./student.routes"
+import subjectRouter from "./subjects.routes"
 import teacherRouter from "./teacher.routes"
 
 const router = Router()
 
 router.use("/", authRouter)
 router.use("/school", schoolRouter)
+router.use("/subject", subjectRouter)
 
 router.use(authMiddleware);
 

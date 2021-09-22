@@ -1,6 +1,7 @@
 import { getConnection, In, Repository } from "typeorm";
 import Student from "../entities/student.entity";
 import fileService from "./file.service";
+import subject_classroomService from "./subject_classroom.service";
 import teacherService from "./teacher.service";
 
 const connection = getConnection()
@@ -13,8 +14,15 @@ class StudentService {
 
         const classes = await teacherService.getClassesByTeacher(teacherID);
 
-        const students = await this.repository.find({ where: { classroom: In(classes) }, order: { name: "ASC" } });
-        return students
+        const students = await this.repository.find({ where: { classrooms_id: In(classes) }, order: { name: "ASC" } });
+        console.log("========================= students =========================")
+        console.log(students)
+        return await Promise.all(students.map(async (student) => {
+            return {
+                ...student,
+                subjects: await subject_classroomService.getSubjectByClass(student.classrooms_id)
+            }
+        }))
     }
 
     async getById(id: number) {

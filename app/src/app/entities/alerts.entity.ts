@@ -18,7 +18,7 @@ export default class Alert {
 
     @Column()
     value: string;
-    
+
     @Column()
     level: string;
 
