@@ -3,8 +3,7 @@ import schoolService from '../../app/services/school.service'
 
 class SchoolController {
 
-    async getAll(request: Request, response: Response) {
-
+    async getAll(_: Request, response: Response) {
         try {
             const schools = await schoolService.getAll()
 
