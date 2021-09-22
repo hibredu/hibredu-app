@@ -62,7 +62,7 @@ class AttendanceController {
     }
 
     async sendSpreadsheet(request: Request, response: Response) {
-        const file: Express.Multer.File = request.file
+        const file = request.file
 
         try {
             const fileId: number = await fileService.insertFile(file)
