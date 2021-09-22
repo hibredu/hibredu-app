@@ -8,7 +8,7 @@ import studentService from "./student.service"
 
 const connection = getConnection()
 
-class AttendanceStudentService {
+class AttendanceStudentsService {
     repository: Repository<AttendanceStudent>
 
     async insert(attendanceId: number) {
@@ -16,7 +16,10 @@ class AttendanceStudentService {
 
         const attendance: Attendance = await attendanceService.getById(attendanceId);
         const presentStudentsNames: string[] = await fileService.getStudentNames(attendance.files_id);
-        const allStudents: Student[] = await studentService.getByClass(attendance.classroom_id)
+        //const allStudents: Student[] = await studentService.getByClass(attendance.classroom_id)
+
+        //TODO: RESOLUÇÃO TEMPORÁRIA
+        const allStudents: Student[] = await studentService.getByClass(1)
 
         allStudents.forEach(async student => {
             const attendanceStudent: AttendanceStudent = new AttendanceStudent()
@@ -34,4 +37,4 @@ class AttendanceStudentService {
     }
 }
 
-export default new AttendanceStudentService()
+export default new AttendanceStudentsService()

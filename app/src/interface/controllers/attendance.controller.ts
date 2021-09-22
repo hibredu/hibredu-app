@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
 import { Between, LessThanOrEqual, MoreThanOrEqual } from 'typeorm'
 import attendanceService from '../../app/services/attendance.service'
-import attendanceStudentsService from '../../app/services/attendance_students.service'
 import fileService from '../../app/services/file.service'
 import studentService from '../../app/services/student.service'
 import cleanDate from '../../app/shared/utils/cleanData'
+import attendanceStudentsService from '../../app/services/attendance_students.service'
 
 class AttendanceController {
 

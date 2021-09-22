@@ -28,9 +28,6 @@ export default class Attendance {
     owner_id?: number;
 
     @Column()
-    classroom_id: number;
-
-    @Column()
     files_id: number;
 
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
@@ -43,10 +40,6 @@ export default class Attendance {
     @ManyToOne(() => File, (file) => file.attendances, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'files_id' })
     file: File
-
-    @ManyToOne(() => Classroom, (classroom) => classroom.id, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'classroom_id' })
-    classroom: Classroom
 
     @OneToMany(() => AttendanceStudent, (attendance_student) => attendance_student.attendance)
     attendanceStudents: AttendanceStudent[];
