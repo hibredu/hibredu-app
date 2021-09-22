@@ -1,5 +1,6 @@
-import { getConnection, Repository } from "typeorm";
+import { getConnection, In, Repository } from "typeorm";
 import SchoolSubjects from "../entities/school_subjects.entity";
+import SubjectClassroom from "../entities/subjects_classrooms.entity";
 
 
 
@@ -19,6 +20,28 @@ class SchoolSubjectService {
         return subjectClassroom
     }
 
+    async getByTeacherId(teacherId: number) {
+        this.repository = connection.getRepository(SchoolSubjects)
+        const subjectClassroomRepository = connection.getRepository(SubjectClassroom)
+
+        const subjectClassroom = await subjectClassroomRepository.find({
+            where: {
+                teachers_id: teacherId
+            }
+        })
+
+        const schoolSubjects = await this.repository.find({
+            where: {
+                id: In(subjectClassroom.map(subject => subject.school_subjects_id))
+            }
+        })
+
+        if (!schoolSubjects) {
+            throw new Error("School Subject not found")
+        }
+        return schoolSubjects
+    }
+
 }
 
-export default new SchoolSubjectService() 
+export default new SchoolSubjectService()

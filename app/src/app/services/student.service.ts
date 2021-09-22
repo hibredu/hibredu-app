@@ -28,7 +28,12 @@ class StudentService {
     async getById(id: number) {
         this.repository = connection.getRepository(Student)
 
-        return await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents", "alerts"] });
+        let student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents", "alerts"] })
+
+        return {
+            ...student,
+            subject_classroom: await subject_classroomService.getSubjectByClass(student.classrooms_id)
+        }
     }
 
     async getByClass(id: number) {
@@ -43,7 +48,7 @@ class StudentService {
         const student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"] });
         const totalActivities = student.activitiesToStudents?.length;
         const totalActivitiesDelivered = student.activitiesToStudents?.filter((activity) => activity.delivered == true).length;
-        return (totalActivitiesDelivered / totalActivities) * 100;
+        return (totalActivitiesDelivered / totalActivities);
     }
 
     async getDeliveredActivities(id: number) {
@@ -76,8 +81,8 @@ class StudentService {
 
         const studentNames: string[] = await fileService.getStudentNames(fileId);
         studentNames.forEach(async (studentName) => {
-            const studentRegistry: Student = await this.repository.findOne({ where: { classrooms_id: classroomId, name: studentName }})
-            if(studentRegistry == undefined) {
+            const studentRegistry: Student = await this.repository.findOne({ where: { classrooms_id: classroomId, name: studentName } })
+            if (studentRegistry == undefined) {
                 const student = new Student()
                 student.name = studentName;
                 student.classrooms_id = classroomId;
