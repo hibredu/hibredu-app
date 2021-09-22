@@ -6,4 +6,3 @@ const subjectRouter = Router();
 subjectRouter.get('/', schoolSubjectController.getAll);
 
 export default subjectRouter;
-

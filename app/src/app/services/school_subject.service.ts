@@ -21,4 +21,4 @@ class SchoolSubjectService {
 
 }
 
-export default new SchoolSubjectService()
+export default new SchoolSubjectService() 
