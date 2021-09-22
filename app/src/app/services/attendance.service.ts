@@ -60,7 +60,9 @@ class AttendanceService {
         attendanceRegister.class_subject = attendance.class_subject
         attendanceRegister.file = file
         attendanceRegister.owner_id = parseInt(teacherId)
-        attendanceRegister.classroom_id = attendance.classroom_id
+
+        //TODO: REMOÇÃO TEMPORÁRIA
+        //attendanceRegister.classroom_id = attendance.classroom_id
 
         await this.repository.insert(attendanceRegister)      
         
