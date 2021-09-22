@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "dea12699-e950-42bd-8b09-ad1637d26ac7",
+		"_postman_id": "591f6da7-7cb7-4548-956d-18f0caf3b9b6",
 		"name": "Hibredu",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -743,6 +743,56 @@
 								"overview",
 								"attendance",
 								"activities"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SchoolSubjects",
+			"item": [
+				{
+					"name": "GET School Subject",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/subject",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"subject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET School Subject by Teacher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/teacher/school_subjects",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"teacher",
+								"school_subjects"
 							]
 						}
 					},

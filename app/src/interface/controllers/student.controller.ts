@@ -28,7 +28,7 @@ class StudentController {
 
     async findOne(request: Request, response: Response) {
         const { id } = request.params
-        let student: Student
+        let student
         let studentData: any
 
         try {
@@ -38,9 +38,10 @@ class StudentController {
             studentData = {
                 id: student.id,
                 name: student.name,
+                metrics,
+                school_subjects: student.subject_classroom.map(subject => subject.school_subject),
                 activities: student.activitiesToStudents,
-                alerts: student.alerts,
-                metrics
+                alerts: student.alerts
             }
         } catch (error) {
             response.status(500).json({ error: error.message })
