@@ -26,6 +26,11 @@ services:
             - USERNAME_DB=user_hibredu
             - PASSWORD_DB=123456
             - DATABASE_DB=hibredu_db
+            - STORAGE_TYPE=s3
+            - BUCKET_NAME=hibredufiles
+            - AWS_ACCESS_KEY_ID=AKIAX4RQYOMP2O24J64E
+            - AWS_SECRET_ACCESS_KEY=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
+            - AWS_DEFAULT_REGION=sa-east-1
         command: sh -c "cd /var/app/ && npm run dev"
         volumes: 
             - ./app/src:/var/app/src

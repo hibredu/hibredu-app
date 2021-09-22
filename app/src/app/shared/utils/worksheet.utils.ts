@@ -48,9 +48,9 @@ class WorksheetUtils {
         return columnSuggestions
     }
 
-    async getWorksheet(path: string, type: string) : Promise<Worksheet> {
+    async getWorksheet(stream, type) : Promise<Worksheet> {
         if(type === this.TYPE_XLSX) {
-            const fileWorkbook: Workbook = await new exceljs.Workbook().xlsx.readFile(path)
+            const fileWorkbook: Workbook = await new exceljs.Workbook().xlsx.read(stream)
             return fileWorkbook.getWorksheet(1)
         }
     }
