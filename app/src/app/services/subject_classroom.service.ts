@@ -64,6 +64,20 @@ class SubjectClassroomService {
         })
     }
 
+    async getByStudent(studentId: number) {
+        this.repository = connection.getRepository(SubjectClassroom)
+
+        const subjectClassroom = await this.repository.find({
+            where: { students_id: studentId },
+            relations: ["school_subject", "classroom"]
+        })
+
+        if (!subjectClassroom) {
+            throw new Error("Subject Classroom not found")
+        }
+        return subjectClassroom
+    }
+
 }
 
 export default new SubjectClassroomService()

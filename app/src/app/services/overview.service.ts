@@ -2,8 +2,10 @@ import { getConnection, Repository } from "typeorm";
 import Activity from "../entities/activity.entity";
 import ActivityToStudent from "../entities/activityToStudent.entity";
 import Attendance from "../entities/attendance.entity";
+import AttendanceStudent from "../entities/attendancesStudents.entity";
 import { Classroom } from "../entities/classroom.entity";
 import Student from "../entities/student.entity";
+import classroomService from "./classroom.service";
 import studentService from "./student.service";
 import subject_classroomService from "./subject_classroom.service";
 
@@ -173,6 +175,29 @@ class OverviewService {
         }
 
         return attendance_delivered
+    }
+
+    async getDeliveredActivitiesByStudent(studentId: number) {
+        const repositoryActivities = connection.getRepository(ActivityToStudent)
+
+        const activities: ActivityToStudent[] = await repositoryActivities.find({ where: { student: studentId, delivered: true } })
+
+        return activities;
+    }
+
+    async getAttendanceByStudent(teacherId: number, studentId: number) {
+        let attendances: Attendance[] = []
+        const RepositoryAttendanceStudent = connection.getRepository(AttendanceStudent)
+
+        const attendances_students: AttendanceStudent[] = await RepositoryAttendanceStudent.find({ relations: ["attendance"], where: { students_id: studentId } })
+
+        attendances = attendances_students.map(a => {
+            let attendance: Attendance = a.attendance
+            attendance.attendanceStudents = [a]
+            return attendance
+        })
+
+        return attendances
     }
 }
 

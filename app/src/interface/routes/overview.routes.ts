@@ -8,5 +8,6 @@ overviewRouter.get("/attendance", overviewController.getAttendance.bind(overview
 overviewRouter.get("/activities", overviewController.getActivities.bind(overviewController));
 overviewRouter.get("/alerts", overviewController.getAlerts.bind(overviewController));
 overviewRouter.get("/attendance/activities", overviewController.getAttendanceActivities.bind(overviewController));
+overviewRouter.get("/student/attendance/activities/:id", overviewController.getStudentAttendanceActivities.bind(overviewController));
 
 export default overviewRouter;
