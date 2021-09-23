@@ -123,7 +123,7 @@ class FileService {
         for (var _i = 1; _i <= columnNames.length; _i++){
             console.log(worksheet.getColumn(_i).values)
             if(columnNames[_i - 1] === WorksheetUtils.COLUMN_NAME){
-                studentNames = worksheet.getColumn(_i).values.map((cell) => cell.toString().toUpperCase())
+                studentNames = worksheet.getColumn(_i).values.map((cell) => cell.toString())
                 break;
             }
         }

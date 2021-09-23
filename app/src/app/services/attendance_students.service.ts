@@ -23,9 +23,10 @@ class AttendanceStudentsService {
             attendanceStudent.students_id = student.id;
             attendanceStudent.attendances_id = attendance.id;
             attendanceStudent.present = false;
+            const presentStudentsNamesUpperCase = presentStudentsNames.map(name => name.toUpperCase());
     
-            //POR ENQUANTO ELE DA PRESENÇA PARA TODOS OS ALUNOS QUE ESTIVERAM NA AULA EM ALGUM MOMENTO
-            if(presentStudentsNames.includes(student.name)) {
+            // TODO: POR ENQUANTO ELE DA PRESENÇA PARA TODOS OS ALUNOS QUE ESTIVERAM NA AULA EM ALGUM MOMENTO
+            if(presentStudentsNamesUpperCase.includes(student.name)) {
                 attendanceStudent.present = true;
             }
 
