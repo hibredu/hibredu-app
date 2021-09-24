@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import ActivityToStudent from "./activityToStudent.entity";
+import ActivityStudent from "./activity_student.entity";
 import Alert from "./alerts.entity";
-import AttendanceStudent from "./attendancesStudents.entity";
+import AttendanceStudent from "./attendances_student.entity";
 import { Classroom } from "./classroom.entity";
 
 export interface IStudent {
@@ -12,7 +12,7 @@ export interface IStudent {
     password: string;
     created_at: Date;
     updated_at: Date;
-    activitiesToStudents: ActivityToStudent[];
+    activitiesToStudents: ActivityStudent[];
 }
 
 @Entity('students')
@@ -39,8 +39,8 @@ export default class Student {
     @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
     updated_at: Date;
 
-    @OneToMany(() => ActivityToStudent, (activityToStudent) => activityToStudent.student, { eager: false })
-    activitiesToStudents: ActivityToStudent[];
+    @OneToMany(() => ActivityStudent, (activityToStudent) => activityToStudent.student, { eager: false })
+    activitiesToStudents: ActivityStudent[];
 
     @OneToMany(() => AttendanceStudent, (attendance_student) => attendance_student.student)
     attendanceStudents: AttendanceStudent[];

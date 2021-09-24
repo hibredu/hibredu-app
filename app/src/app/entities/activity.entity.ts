@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import ActivityToStudent from "./activityToStudent.entity";
+import ActivityStudent from "./activity_student.entity";
 import File from "./file.entity";
 import SubjectClassroom from "./subjects_classrooms.entity";
 
@@ -23,6 +23,9 @@ export default class Activity {
     @Column()
     owner_id?: number;
 
+    @Column()
+    files_id: number;
+
     @ManyToOne(() => SubjectClassroom, subject_classroom => subject_classroom.activities, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'owner_id' })
     subject_classroom: SubjectClassroom;
@@ -37,6 +40,6 @@ export default class Activity {
     @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
     updated_at: Date;
 
-    @OneToMany(() => ActivityToStudent, (activityToStudent) => activityToStudent.activity)
-    activitiesToStudents: ActivityToStudent[];
+    @OneToMany(() => ActivityStudent, (activityToStudent) => activityToStudent.activity)
+    activitiesToStudents: ActivityStudent[];
 }

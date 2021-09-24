@@ -1,6 +1,9 @@
 import exceljs, { CellValue, Workbook, Worksheet } from "exceljs"
+import aws from 'aws-sdk'
+import fileStream from 'fs'
+import File from "../../entities/file.entity";
 
-class WorksheetUtils {
+class SpreadsheetUtils {
     //TYPES
     TYPE_XLSX: string
     TYPE_CSV: string
@@ -9,6 +12,8 @@ class WorksheetUtils {
     COLUMN_NAME: string
     COLUMN_ACTIVITY: string
     COLUMN_TIME_CONTROL: string
+    COLUMN_EMAIL: string
+    COLUMN_GRADE: string
 
     constructor() {
         //TYPES
@@ -19,6 +24,8 @@ class WorksheetUtils {
         this.COLUMN_NAME = "Nome"
         this.COLUMN_ACTIVITY = "Atividade"
         this.COLUMN_TIME_CONTROL = "Controle de horário"
+        this.COLUMN_EMAIL = "Email"
+        this.COLUMN_GRADE = "Nota"
     }
 
     async getColumnNames(worksheet: Worksheet) : Promise<CellValue[]> {
@@ -48,10 +55,25 @@ class WorksheetUtils {
         return columnSuggestions
     }
 
-    async getWorksheet(stream, type) : Promise<Worksheet> {
-        if(type === this.TYPE_XLSX) {
-            const fileWorkbook: Workbook = await new exceljs.Workbook().xlsx.read(stream)
+    async getWorksheet(file: File) : Promise<Worksheet> {
+        if(file.type === this.TYPE_XLSX) {
+            const fileWorkbook: Workbook = await new exceljs.Workbook().xlsx.read(this.getSpreadsheetStream(file))
             return fileWorkbook.getWorksheet(1)
+        }
+    }
+
+    getSpreadsheetStream(file: File) {
+        if(process.env.STORAGE_TYPE === 's3') {
+            const s3 = new aws.S3();
+            const params = {
+                Bucket: process.env.BUCKET_NAME, 
+                Key: file.content
+            }
+            const s3file = s3.getObject(params)
+            return s3file.createReadStream()
+        }
+        else if (process.env.STORAGE_TYPE === 'local') {
+            return fileStream.createReadStream(file.content);
         }
     }
 
@@ -60,8 +82,14 @@ class WorksheetUtils {
         if(columnLowerCase.includes("nome")){
             return this.COLUMN_NAME
         }
+        else if(columnLowerCase.includes("email")){
+            return this.COLUMN_EMAIL
+        }
         else if(columnLowerCase.includes("atividade")){
             return this.COLUMN_ACTIVITY
+        }
+        else if(columnLowerCase.includes("total de pontos")){
+            return this.COLUMN_GRADE
         }
         else if(columnLowerCase.includes("data") || columnLowerCase.includes("hora")) {
             return this.COLUMN_TIME_CONTROL
@@ -72,4 +100,4 @@ class WorksheetUtils {
     }
 }
 
-export default new WorksheetUtils()
+export default new SpreadsheetUtils()

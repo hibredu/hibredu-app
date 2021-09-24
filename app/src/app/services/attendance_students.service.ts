@@ -1,9 +1,8 @@
 import { getConnection, Repository } from "typeorm"
 import Attendance from "../entities/attendance.entity"
-import AttendanceStudent from "../entities/attendancesStudents.entity"
+import AttendanceStudent from "../entities/attendances_student.entity"
 import Student from "../entities/student.entity"
 import attendanceService from "./attendance.service"
-import fileService from "./file.service"
 import studentService from "./student.service"
 
 const connection = getConnection()
@@ -15,7 +14,7 @@ class AttendanceStudentsService {
         this.repository = connection.getRepository(AttendanceStudent)
 
         const attendance: Attendance = await attendanceService.getById(attendanceId);
-        const presentStudentsNames: string[] = await fileService.getStudentNames(attendance.files_id);
+        const presentStudentsNames: string[] = await studentService.getStudentNames(attendance.files_id);
         const allStudents: Student[] = await studentService.getByClass(classroomId)
 
         allStudents.forEach(async student => {
