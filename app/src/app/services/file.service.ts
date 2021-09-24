@@ -94,7 +94,7 @@ class FileService {
                 }
             })
             row.commit()
-            await this.storageOrReplaceWorkbook(workbook, file)
+            this.storageOrReplaceWorkbook(workbook, file)
         }
     }
     

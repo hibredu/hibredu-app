@@ -81,15 +81,16 @@ class StudentService {
 
     async insertIfNotExists(fileId: number, classroomId: number) {
         this.repository = connection.getRepository(Student);
+        const students: Student[] = await this.repository.find({ where: { classrooms_id: classroomId }})
 
         const studentNames: string[] = await this.getStudentNames(fileId);
-        studentNames.forEach(async (studentName) => {
-            const studentRegistry: Student = await this.repository.findOne({ where: { classrooms_id: classroomId, name: studentName } })
+        studentNames.forEach((studentName) => {
+            const studentRegistry: Student = students.find((student) => student.name.toLowerCase() === studentName.toLowerCase())
             if (studentRegistry == undefined) {
                 const student = new Student()
                 student.name = studentName;
                 student.classrooms_id = classroomId;
-                await this.repository.insert(student)
+                this.repository.insert(student)
             }
         });
     }

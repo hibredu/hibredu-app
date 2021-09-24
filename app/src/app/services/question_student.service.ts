@@ -35,7 +35,7 @@ class QuestionStudentService {
                     const question: Question = questions.find((qt) => qt.description.toLowerCase() === answer.question.toLowerCase())
                     const student: Student = students.find((st) => st.name.toLowerCase() === answer.student_name.toLowerCase())
                     const activityStudent: ActivityStudent = await activityStudentService.findByStudentAndActivity(student.id, activityId)
-                    await this.insert(question.id, answer.answer, answer.points, activityStudent.id)
+                    this.insert(question.id, answer.answer, answer.points, activityStudent.id)
                 })
             }
         }
