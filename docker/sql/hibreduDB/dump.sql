@@ -898,12 +898,15 @@ INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES (
 INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa', 'yellow', '2021-09-07 01:53:36', 2, 2);
 INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso', 'red', '2021-09-07 01:53:36', 2, 3);
 INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa', 'yellow', '2021-09-07 01:53:36', 2, 5);
-INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa a tempos', 'yellow', '2021-09-07 01:53:36', 2, 4);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa a tempos', 'red', '2021-09-07 01:53:36', 2, 4);
 INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso', 'red', '2021-09-07 01:53:36', 3, 2);
-INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa', 'green', '2021-09-07 01:53:36', 4, 2);
-INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso', 'green', '2021-09-07 01:53:36', 5, 2);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com ótimo desempenho', 'green', '2021-09-07 01:53:36', 4, 2);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com ótimo desempenho', 'green', '2021-09-07 01:53:36', 2, 2);
 INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa', 'yellow', '2021-09-07 01:53:36', 6, 2);
-INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso', 'yellow', '2021-09-07 01:53:36', 7, 1);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso', 'yellow', '2021-09-07 01:53:36', 3, 1);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa', 'yellow', '2021-09-07 01:53:36', 2, 1);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com nota baixa e falta em excesso', 'red', '2021-09-07 01:53:36', 2, 1);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('Aluno com ótimo desempenho', 'green', '2021-09-07 01:53:36', 2, 1);
 
 COMMIT;
 

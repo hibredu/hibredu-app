@@ -17,9 +17,8 @@ class StudentService {
 
         const classes = await teacherService.getClassesByTeacher(teacherID);
 
-        const students = await this.repository.find({ where: { classrooms_id: In(classes) }, order: { name: "ASC" } });
-        console.log("========================= students =========================")
-        console.log(students)
+        const students = await this.repository.find({ where: { classrooms_id: In(classes) }, order: { name: "ASC" }, cache: true });
+
         return await Promise.all(students.map(async (student) => {
             return {
                 ...student,
@@ -81,7 +80,7 @@ class StudentService {
 
     async insertIfNotExists(fileId: number, classroomId: number) {
         this.repository = connection.getRepository(Student);
-        const students: Student[] = await this.repository.find({ where: { classrooms_id: classroomId }})
+        const students: Student[] = await this.repository.find({ where: { classrooms_id: classroomId } })
 
         const studentNames: string[] = await this.getStudentNames(fileId);
         studentNames.forEach((studentName) => {
@@ -101,19 +100,19 @@ class StudentService {
 
         const columnNames: CellValue[] = await SpreadsheetUtils.getColumnNames(worksheet)
         let studentNames: string[]
-        for (var _i = 1; _i <= columnNames.length; _i++){
-            if(columnNames[_i - 1] === SpreadsheetUtils.COLUMN_NAME){
+        for (var _i = 1; _i <= columnNames.length; _i++) {
+            if (columnNames[_i - 1] === SpreadsheetUtils.COLUMN_NAME) {
                 studentNames = worksheet.getColumn(_i).values.map((cell) => cell.toString().toUpperCase())
                 break;
             }
         }
-        
+
         //REMOVENDO OS 2 PRIMEIROS ÍNDICES. O PRIMEIRO É UNDEFINED E O OUTRO O NOME DA COLUNA
         studentNames.shift();
         studentNames.shift();
 
         //RETORNANDO APENAS UM DE CADA NOME
-        return [ ...new Set( studentNames ) ];
+        return [...new Set(studentNames)];
     }
 }
 
