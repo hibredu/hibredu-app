@@ -21,7 +21,7 @@ class ClassroomService {
             classrooms_ids.push(subject.classroom.id)
         }
 
-        const classrooms = await this.repository.find({ where: { id: In(classrooms_ids) }, relations: ["students"], cache: true })
+        const classrooms = await this.repository.find({ where: { id: In(classrooms_ids) }, relations: ["students"], cache: 20000 }) // TODO: remove cache
         return classrooms
     }
 
@@ -33,7 +33,7 @@ class ClassroomService {
         const students: Student[] = classroom.students;
 
         for (let student of students) {
-            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id, delivered: true } })
+            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id, delivered: true }, cache: 15000 }) // TODO: remove cache
             activities.push(...activitiesToStudents)
         }
 
@@ -50,7 +50,7 @@ class ClassroomService {
         const students = classroom.students;
 
         for (let student of students) {
-            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id } })
+            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id }, cache: 15000 }) // TODO: remove cache
             activities.push(...activitiesToStudents)
             activities_delived.push(...activitiesToStudents.filter((activity) => activity.delivered == true))
         }
@@ -73,7 +73,7 @@ class ClassroomService {
         const students = classroom.students;
 
         for (let student of students) {
-            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id, delivered: true }, relations: ["activity"] })
+            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id, delivered: true }, relations: ["activity"], cache: 15000 }) // TODO: remove cache
 
             activities_delived.push(...activitiesToStudents)
         }
@@ -96,7 +96,7 @@ class ClassroomService {
 
     async getById(id: number): Promise<Classroom> {
         this.repository = connection.getRepository(Classroom)
-        return await this.repository.findOne({ where: { id }, relations: ["students"] })
+        return await this.repository.findOne({ where: { id }, relations: ["students"], cache: 15000 }) // TODO: remove cache
     }
 
     async getBySchool(schoolId: number): Promise<Classroom[]> {
