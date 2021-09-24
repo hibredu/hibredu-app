@@ -51,7 +51,7 @@ class AttendanceService {
     }
 
     async insert(teacherId: string, attendance: any) : Promise<number> {
-        const file: File = await fileService.getFile(attendance.file_id)
+        const file: File = await fileService.findById(attendance.file_id)
         const owner: SubjectClassroom = await subjectClassroomService.getBySubjectClassroomTeacher(
             attendance.subject_id, 
             attendance.classroom_id, 

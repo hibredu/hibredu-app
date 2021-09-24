@@ -61,11 +61,11 @@ class AttendanceController {
         }
     }
 
-    async sendSpreadsheet(request: Request, response: Response) {
+    async sendTeamsSpreadsheet(request: Request, response: Response) {
         const file = request.file
 
         try {
-            const fileId: number = await fileService.insertFile(file)
+            const fileId: number = await fileService.insert(file)
             const columns: any[] = await fileService.getColumnsInfo(fileId)
             return response.status(201).json({
                 file_id: fileId,
@@ -80,7 +80,7 @@ class AttendanceController {
         const teacherId: string = request.userId
         const body: any = request.body
         try {
-            await fileService.normalizeHeaders(body.file_id, body.columns)
+            await fileService.configureHeaders(body.file_id, body.columns)
             const attendanceId: number = await attendanceService.insert(teacherId, body)
             await studentService.insertIfNotExists(body.file_id, body.classroom_id);
             await attendanceStudentsService.insert(attendanceId, body.classroom_id);            

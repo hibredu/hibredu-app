@@ -1,5 +1,6 @@
 import { Router } from "express"
 import authMiddleware from "../../infrastructure/middleware/auth.middleware"
+import activityRouter from "./activity.routes"
 import alertRouter from "./alerts.routes"
 import attendanceRouter from "./attendance.routes"
 import authRouter from "./auth.routes"
@@ -24,5 +25,6 @@ router.use("/attendance", attendanceRouter)
 router.use("/classroom", classroomRouter)
 router.use("/teacher", teacherRouter)
 router.use("/overview", overviewRouter)
+router.use("/activity", activityRouter)
 
 export default router

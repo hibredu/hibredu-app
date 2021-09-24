@@ -1,5 +1,5 @@
 import { getConnection, In, Repository } from "typeorm";
-import ActivityToStudent from "../entities/activityToStudent.entity";
+import ActivityStudent from "../entities/activity_student.entity";
 import { Classroom } from "../entities/classroom.entity";
 import Student from "../entities/student.entity";
 import subject_classroomService from "./subject_classroom.service";
@@ -26,9 +26,9 @@ class ClassroomService {
     }
 
     async getDeliveredActivities(id: number) {
-        const activities: ActivityToStudent[] = []
+        const activities: ActivityStudent[] = []
 
-        const repositoryActivities = connection.getRepository(ActivityToStudent)
+        const repositoryActivities = connection.getRepository(ActivityStudent)
         const classroom = await this.getById(id)
         const students: Student[] = classroom.students;
 
@@ -41,10 +41,10 @@ class ClassroomService {
     }
 
     async getDeliveryPercentage(id: number) {
-        const activities_delived: ActivityToStudent[] = []
-        const activities: ActivityToStudent[] = []
+        const activities_delived: ActivityStudent[] = []
+        const activities: ActivityStudent[] = []
 
-        const repositoryActivities = connection.getRepository(ActivityToStudent)
+        const repositoryActivities = connection.getRepository(ActivityStudent)
         const classroom = await this.getById(id)
 
         const students = classroom.students;
@@ -63,11 +63,11 @@ class ClassroomService {
     }
 
     async getHitRate(id: number) {
-        const activities_delived: ActivityToStudent[] = []
+        const activities_delived: ActivityStudent[] = []
         let hitRate = 0
         let hitRateTotal = 0
 
-        const repositoryActivities = connection.getRepository(ActivityToStudent)
+        const repositoryActivities = connection.getRepository(ActivityStudent)
         const classroom = await this.getById(id)
 
         const students = classroom.students;

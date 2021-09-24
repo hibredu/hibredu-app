@@ -3,7 +3,7 @@ import Activity from "./activity.entity";
 import Student from "./student.entity";
 
 @Entity('activities_students')
-export default class ActivityToStudent {
+export default class ActivityStudent {
     [x: string]: any;
     @PrimaryGeneratedColumn('increment')
     id: number;
@@ -17,14 +17,17 @@ export default class ActivityToStudent {
     @Column()
     grade: number;
 
+    @Column()
+    students_id: number;
+
+    @Column()
+    activities_id: number;
+
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
     created_at: Date;
 
     @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
     updated_at: Date;
-
-    @Column()
-    activities_id: number;
 
     @ManyToOne(() => Activity, (activity) => activity.activitiesToStudents, { eager: true })
     @JoinColumn({ name: 'activities_id' })

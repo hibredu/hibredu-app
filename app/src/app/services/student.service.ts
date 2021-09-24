@@ -1,8 +1,11 @@
 import { getConnection, In, Repository } from "typeorm";
 import Student from "../entities/student.entity";
+import File from "../entities/file.entity";
 import fileService from "./file.service";
 import subject_classroomService from "./subject_classroom.service";
 import teacherService from "./teacher.service";
+import SpreadsheetUtils from "../shared/utils/spreadsheet.utils";
+import { CellValue } from "exceljs";
 
 const connection = getConnection()
 
@@ -79,7 +82,7 @@ class StudentService {
     async insertIfNotExists(fileId: number, classroomId: number) {
         this.repository = connection.getRepository(Student);
 
-        const studentNames: string[] = await fileService.getStudentNames(fileId);
+        const studentNames: string[] = await this.getStudentNames(fileId);
         studentNames.forEach(async (studentName) => {
             const studentRegistry: Student = await this.repository.findOne({ where: { classrooms_id: classroomId, name: studentName } })
             if (studentRegistry == undefined) {
@@ -89,6 +92,27 @@ class StudentService {
                 await this.repository.insert(student)
             }
         });
+    }
+
+    async getStudentNames(fileId: number): Promise<string[]> {
+        const file: File = await fileService.findById(fileId)
+        const worksheet = await SpreadsheetUtils.getWorksheet(file)
+
+        const columnNames: CellValue[] = await SpreadsheetUtils.getColumnNames(worksheet)
+        let studentNames: string[]
+        for (var _i = 1; _i <= columnNames.length; _i++){
+            if(columnNames[_i - 1] === SpreadsheetUtils.COLUMN_NAME){
+                studentNames = worksheet.getColumn(_i).values.map((cell) => cell.toString().toUpperCase())
+                break;
+            }
+        }
+        
+        //REMOVENDO OS 2 PRIMEIROS ÍNDICES. O PRIMEIRO É UNDEFINED E O OUTRO O NOME DA COLUNA
+        studentNames.shift();
+        studentNames.shift();
+
+        //RETORNANDO APENAS UM DE CADA NOME
+        return [ ...new Set( studentNames ) ];
     }
 }
 

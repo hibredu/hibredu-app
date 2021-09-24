@@ -1,11 +1,10 @@
 import { getConnection, Repository } from "typeorm";
 import Activity from "../entities/activity.entity";
-import ActivityToStudent from "../entities/activityToStudent.entity";
+import ActivityStudent from "../entities/activity_student.entity";
 import Attendance from "../entities/attendance.entity";
-import AttendanceStudent from "../entities/attendancesStudents.entity";
+import AttendanceStudent from "../entities/attendance_student.entity";
 import { Classroom } from "../entities/classroom.entity";
 import Student from "../entities/student.entity";
-import classroomService from "./classroom.service";
 import studentService from "./student.service";
 import subject_classroomService from "./subject_classroom.service";
 
@@ -21,9 +20,9 @@ class OverviewService {
     repository: Repository<Classroom>
 
     async getDeliveredActivitiesByTeacher(teacherId: number) {
-        const activities: ActivityToStudent[] = []
+        const activities: ActivityStudent[] = []
 
-        const repositoryActivities = connection.getRepository(ActivityToStudent)
+        const repositoryActivities = connection.getRepository(ActivityStudent)
 
         const students: Student[] = await studentService.getAll(teacherId)
 
@@ -36,10 +35,10 @@ class OverviewService {
     }
 
     async getDeliveryPercentageByTeacher(teacherId: number) {
-        const activities_delived: ActivityToStudent[] = []
-        const activities: ActivityToStudent[] = []
+        const activities_delived: ActivityStudent[] = []
+        const activities: ActivityStudent[] = []
 
-        const repositoryActivities = connection.getRepository(ActivityToStudent)
+        const repositoryActivities = connection.getRepository(ActivityStudent)
         const students: Student[] = await studentService.getAll(teacherId)
 
         for (let student of students) {
@@ -55,11 +54,11 @@ class OverviewService {
     }
 
     async getHitRateByTeacher(teacherId: number) {
-        const activities_delived: ActivityToStudent[] = []
+        const activities_delived: ActivityStudent[] = []
         let hitRate = 0
         let hitRateTotal = 0
 
-        const repositoryActivities = connection.getRepository(ActivityToStudent)
+        const repositoryActivities = connection.getRepository(ActivityStudent)
         const students: Student[] = await studentService.getAll(teacherId)
 
         for (let student of students) {
@@ -128,7 +127,7 @@ class OverviewService {
         return attendances
     }
 
-    async getAttendanceActivities(deliveredActivities: ActivityToStudent[], attendance: Attendance[]) {
+    async getAttendanceActivities(deliveredActivities: ActivityStudent[], attendance: Attendance[]) {
         let attendance_delivered: IAttendanceDelivery[] = []
 
         const groupedActivities = deliveredActivities.reduce((r, a) => {
@@ -178,9 +177,9 @@ class OverviewService {
     }
 
     async getDeliveredActivitiesByStudent(studentId: number) {
-        const repositoryActivities = connection.getRepository(ActivityToStudent)
+        const repositoryActivities = connection.getRepository(ActivityStudent)
 
-        const activities: ActivityToStudent[] = await repositoryActivities.find({ where: { student: studentId, delivered: true } })
+        const activities: ActivityStudent[] = await repositoryActivities.find({ where: { student: studentId, delivered: true } })
 
         return activities;
     }
