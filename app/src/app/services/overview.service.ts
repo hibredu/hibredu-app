@@ -121,7 +121,7 @@ class OverviewService {
         const subject_classrooms = await subject_classroomService.getByTeacher(teacherId)
 
         for (const subject_classroom of subject_classrooms) {
-            attendances.push(...await RepositoryAttendance.find({ relations: ["file", "attendanceStudents"], where: { owner_id: subject_classroom.id } }))
+            attendances.push(...await RepositoryAttendance.find({ relations: ["file", "attendanceStudents"], where: { owner_id: subject_classroom.id }, cache: 15000 })) // TODO: remove cache
         }
 
         return attendances
@@ -179,7 +179,7 @@ class OverviewService {
     async getDeliveredActivitiesByStudent(studentId: number) {
         const repositoryActivities = connection.getRepository(ActivityStudent)
 
-        const activities: ActivityStudent[] = await repositoryActivities.find({ where: { students_id: studentId, delivered: true } })
+        const activities: ActivityStudent[] = await repositoryActivities.find({ where: { students_id: studentId, delivered: true }, cache: 20000 }) // TODO: remove cache
 
         return activities;
     }
@@ -188,7 +188,7 @@ class OverviewService {
         let attendances: Attendance[] = []
         const RepositoryAttendanceStudent = connection.getRepository(AttendanceStudent)
 
-        const attendances_students: AttendanceStudent[] = await RepositoryAttendanceStudent.find({ relations: ["attendance"], where: { students_id: studentId } })
+        const attendances_students: AttendanceStudent[] = await RepositoryAttendanceStudent.find({ relations: ["attendance"], where: { students_id: studentId }, cache: 20000 }) // TODO: remove cache
 
         attendances = attendances_students.map(a => {
             let attendance: Attendance = a.attendance

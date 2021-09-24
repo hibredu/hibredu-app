@@ -21,7 +21,7 @@ class ClassroomService {
             classrooms_ids.push(subject.classroom.id)
         }
 
-        const classrooms = await this.repository.find({ where: { id: In(classrooms_ids) }, relations: ["students"], cache: 20000 }) // TODO: remove cache
+        const classrooms = await this.repository.find({ where: { id: In(classrooms_ids) }, relations: ["students"], cache: 200000 }) // TODO: remove cache
         return classrooms
     }
 
