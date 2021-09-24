@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "591f6da7-7cb7-4548-956d-18f0caf3b9b6",
+		"_postman_id": "0d73eee2-9251-44f4-997d-086975ae29bd",
 		"name": "Hibredu",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -8,34 +8,6 @@
 		{
 			"name": "Teacher",
 			"item": [
-				{
-					"name": "GET All Teachers",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url_base}}/teacher/",
-							"host": [
-								"{{url_base}}"
-							],
-							"path": [
-								"teacher",
-								""
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "CREATE Teacher",
 					"request": {
@@ -64,7 +36,7 @@
 					"response": []
 				},
 				{
-					"name": "UPDATE Teacher",
+					"name": "GET All Teachers",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -76,25 +48,16 @@
 								}
 							]
 						},
-						"method": "PATCH",
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Jean Jacques12312312\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{url_base}}/teacher/2",
+							"raw": "{{url_base}}/teacher/",
 							"host": [
 								"{{url_base}}"
 							],
 							"path": [
 								"teacher",
-								"2"
+								""
 							]
 						}
 					},
@@ -434,18 +397,19 @@
 								{
 									"key": "attendance",
 									"type": "file",
-									"src": "/C:/Users/Felipe/Desktop/meetingAttendanceList (633).xlsx"
+									"src": "/C:/Users/Felipe/Desktop/Hibredu/meetingAttendanceList (633).xlsx"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{url_base}}/attendance/spreadsheet",
+							"raw": "{{url_base}}/attendance/spreadsheet/teams",
 							"host": [
 								"{{url_base}}"
 							],
 							"path": [
 								"attendance",
-								"spreadsheet"
+								"spreadsheet",
+								"teams"
 							]
 						}
 					},
@@ -468,7 +432,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"classroom\": 1,\r\n    \"class_subject\": \"Botânica\",\r\n    \"description\": \"Aula sobre APIs\",\r\n    \"datetime\": \"2018-01-01\",\r\n    \"file_id\": 7,\r\n    \"columns\": [\r\n        {\r\n            \"field_name\": \"Data e hora\",\r\n            \"final_field\": \"Controle de horário\"\r\n        },\r\n        {\r\n            \"field_name\": \"Atividade\",\r\n            \"final_field\": \"Atividade\"\r\n        },\r\n        {\r\n            \"field_name\": \"Nome Completo\",\r\n            \"final_field\": \"Nome\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"classroom_id\": 1,\r\n    \"subject_id\": 1,\r\n    \"file_id\": 22,\r\n    \"description\": \"Aula sobre APIs\",\r\n    \"datetime\": \"2018-01-01\",\r\n    \"columns\": [\r\n        {\r\n            \"field_name\": \"Data e hora\",\r\n            \"final_field\": \"Controle de horário\"\r\n        },\r\n        {\r\n            \"field_name\": \"Atividade\",\r\n            \"final_field\": \"Atividade\"\r\n        },\r\n        {\r\n            \"field_name\": \"Nome Completo\",\r\n            \"final_field\": \"Nome\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -476,12 +440,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url_base}}/attendance",
+							"raw": "{{url_base}}/attendance/",
 							"host": [
 								"{{url_base}}"
 							],
 							"path": [
-								"attendance"
+								"attendance",
+								""
 							]
 						}
 					},
@@ -571,44 +536,14 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "GET Classrooms By SchoolID",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url_base}}/school/1/classrooms/",
-							"host": [
-								"{{url_base}}"
-							],
-							"path": [
-								"school",
-								"1",
-								"classrooms",
-								""
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
 		{
-			"name": "Overview",
+			"name": "Activity",
 			"item": [
 				{
-					"name": "GET Overview Attendance",
+					"name": "POST Send Spreadsheet",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -620,23 +555,34 @@
 								}
 							]
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "activity",
+									"type": "file",
+									"src": "/C:/Users/Felipe/Desktop/Hibredu/AVALIAÇÃO TRIMESTRAL OBRIGATÓRIA DE QUÍMICA - 2° TRIMESTRE (2021_BELVAL_INF3AM)(1-32).xlsx"
+								}
+							]
+						},
 						"url": {
-							"raw": "{{url_base}}/overview/attendance",
+							"raw": "{{url_base}}/activity/teams/spreadsheet",
 							"host": [
 								"{{url_base}}"
 							],
 							"path": [
-								"overview",
-								"attendance"
+								"activity",
+								"teams",
+								"spreadsheet"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "GET Overview Activites",
+					"name": "POST Send Activity",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -648,151 +594,25 @@
 								}
 							]
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [],
-						"url": {
-							"raw": "{{url_base}}/overview/activities",
-							"host": [
-								"{{url_base}}"
-							],
-							"path": [
-								"overview",
-								"activities"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET Overview Classroom",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"file_id\": 21,\r\n    \"classroom_id\": 2,\r\n    \"subject_id\": 2,\r\n    \"number_questions\": 12,\r\n    \"subject_name\": \"Matemática\",\r\n    \"name\": \"Atividade Teste\",\r\n    \"max_note\": 10,\r\n    \"columns\": [\r\n         {\r\n            \"field_name\": \"Email\",\r\n            \"final_field\": \"Email\"\r\n        },\r\n        {\r\n            \"field_name\": \"Nome\",\r\n            \"final_field\": \"Nome\"\r\n        },\r\n        {\r\n            \"field_name\": \"Total de pontos\",\r\n            \"final_field\": \"Nota\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
-						"method": "GET",
-						"header": [],
 						"url": {
-							"raw": "{{url_base}}/overview/classroom",
+							"raw": "{{url_base}}/activity/teams",
 							"host": [
 								"{{url_base}}"
 							],
 							"path": [
-								"overview",
-								"classroom"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET Overview Alerts",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url_base}}/overview/classroom",
-							"host": [
-								"{{url_base}}"
-							],
-							"path": [
-								"overview",
-								"classroom"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET Overview Attendance Activities",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url_base}}/overview/attendance/activities",
-							"host": [
-								"{{url_base}}"
-							],
-							"path": [
-								"overview",
-								"attendance",
-								"activities"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "SchoolSubjects",
-			"item": [
-				{
-					"name": "GET School Subject",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url_base}}/subject",
-							"host": [
-								"{{url_base}}"
-							],
-							"path": [
-								"subject"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET School Subject by Teacher",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url_base}}/teacher/school_subjects",
-							"host": [
-								"{{url_base}}"
-							],
-							"path": [
-								"teacher",
-								"school_subjects"
+								"activity",
+								"teams"
 							]
 						}
 					},

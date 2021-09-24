@@ -24,14 +24,14 @@ class ActivityStudentService {
         activityStudentRegister.delivered = delivered 
         activityStudentRegister.status = delivered ? "Entregue" : "Não entregue"
 
-        await this.repository.insert(activityStudentRegister)
+        this.repository.insert(activityStudentRegister)
     }
 
     async insertManyTeams(activityId: number, classroomId: number) {
         const grades: any[] = await this.getClassroomGradesTeams(activityId, classroomId);
 
         grades.forEach(async (grade) => {
-            await this.insert(grade.grade, grade.student_id, grade.delivered, activityId)
+            this.insert(grade.grade, grade.student_id, grade.delivered, activityId)
         });
     }
 

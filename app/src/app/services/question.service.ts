@@ -12,7 +12,7 @@ class QuestionService {
 
     async insertManyTeams(activityId: number, fileId: number, totalQuestions: number) {
         for(let _i = 1; _i <= totalQuestions; _i++) {
-            await this.insertTeams(activityId, fileId, _i)
+            this.insertTeams(activityId, fileId, _i)
         }
     }
 
@@ -27,7 +27,7 @@ class QuestionService {
             questionRegister.total_points = 1
             questionRegister.activities_id = activityId
 
-            await this.repository.insert(questionRegister)
+            this.repository.insert(questionRegister)
         }
     }
 
@@ -62,7 +62,6 @@ class QuestionService {
             
         const question: string = worksheet.getRow(1).getCell(columnQuestionAnswer).value.toString()
         worksheet.eachRow((row) => {
-            console.log(row.getCell(columnQuestionAnswer).value.toString())
             if(row.number > 1) {
                 answer.push({
                     student_name: row.getCell(columnName).value.toString(),
