@@ -1,6 +1,6 @@
 import { getConnection, Repository } from "typeorm"
 import Attendance from "../entities/attendance.entity"
-import AttendanceStudent from "../entities/attendances_student.entity"
+import AttendanceStudent from "../entities/attendance_student.entity"
 import Student from "../entities/student.entity"
 import attendanceService from "./attendance.service"
 import studentService from "./student.service"

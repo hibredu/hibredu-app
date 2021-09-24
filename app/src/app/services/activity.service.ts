@@ -28,14 +28,17 @@ class ActivityService {
 
         let activityRegister = new Activity()
         activityRegister.name = activity.name
-        //TODO: Pegar apenas o id da matéria
         activityRegister.subject = activity.subject_name
         activityRegister.description = activity.description
-        //TODO: Pegar a data de criação da atividade
-        //activity.date = body.date 
         activityRegister.max_note = activity.max_note
         activityRegister.files_id = activity.file_id
         activityRegister.owner_id = owner.id
+
+        //TODO: Pegar apenas o id da matéria
+        //activityRegister.subject_id = activity.subject_id
+
+        //TODO: Pegar a data de criação da atividade
+        //activity.date = body.date 
 
         await this.repository.insert(activityRegister)
 

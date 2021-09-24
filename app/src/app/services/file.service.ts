@@ -1,7 +1,7 @@
 import { getConnection, getRepository, Repository } from "typeorm"
 import File from "../entities/file.entity";
 import exceljs, { Cell, CellValue, Row, Workbook } from 'exceljs';
-import SpreadsheetUtils from "../shared/utils/spreadsheet.utils";
+import spreadsheetUtils from "../shared/utils/spreadsheet.utils";
 import aws from 'aws-sdk'
 import Stream from 'stream';
 
@@ -26,7 +26,7 @@ class FileService {
         const stream = new Stream.PassThrough();
 
         if(process.env.STORAGE_TYPE === 's3') {
-            if (file.type === SpreadsheetUtils.TYPE_XLSX) {
+            if (file.type === spreadsheetUtils.TYPE_XLSX) {
                 await workbook.xlsx.write(stream)
                     .then(() => {
                         const s3 = new aws.S3();
@@ -46,7 +46,7 @@ class FileService {
             }   
         }
         else if (process.env.STORAGE_TYPE === 'local') {
-            if(file.type === SpreadsheetUtils.TYPE_XLSX) {
+            if(file.type === spreadsheetUtils.TYPE_XLSX) {
                 return workbook.xlsx.writeFile(file.content);
             }
         }
@@ -59,11 +59,11 @@ class FileService {
 
     async getColumnsInfo(fileId: number): Promise<any[]> {
         const file: File = await this.findById(fileId)
-        const worksheet = await SpreadsheetUtils.getWorksheet(file)
+        const worksheet = await spreadsheetUtils.getWorksheet(file)
 
-        const columnNames: CellValue[] = await SpreadsheetUtils.getColumnNames(worksheet)
-        const columnExamples: CellValue[] = await SpreadsheetUtils.getColumnExamples(worksheet)
-        const columnSuggestions: CellValue[] = await SpreadsheetUtils.getColumnSuggestions(worksheet)
+        const columnNames: CellValue[] = await spreadsheetUtils.getColumnNames(worksheet)
+        const columnExamples: CellValue[] = await spreadsheetUtils.getColumnExamples(worksheet)
+        const columnSuggestions: CellValue[] = await spreadsheetUtils.getColumnSuggestions(worksheet)
 
         let columns: any[] = []
         for (var _i = 0; _i < columnNames.length; _i++) {
@@ -81,8 +81,8 @@ class FileService {
         this.repository = getRepository(File)
         const file: File = await this.repository.findOne(fileId)
 
-        if(file.type === SpreadsheetUtils.TYPE_XLSX) {
-            let workbook: Workbook = await new exceljs.Workbook().xlsx.read(SpreadsheetUtils.getSpreadsheetStream(file))
+        if(file.type === spreadsheetUtils.TYPE_XLSX) {
+            let workbook: Workbook = await new exceljs.Workbook().xlsx.read(spreadsheetUtils.getSpreadsheetStream(file))
             const row: Row = workbook.getWorksheet(1).getRow(1)
             columns.forEach((column) => {
                 for (var _i = 1; _i <= columns.length; _i++){
@@ -100,13 +100,12 @@ class FileService {
     
     async getStudentNames(fileId: number): Promise<string[]> {
         const file: File = await this.findById(fileId)
-        const worksheet = await SpreadsheetUtils.getWorksheet(file)
+        const worksheet = await spreadsheetUtils.getWorksheet(file)
 
-        const columnNames: CellValue[] = await SpreadsheetUtils.getColumnNames(worksheet)
+        const columnNames: CellValue[] = await spreadsheetUtils.getColumnNames(worksheet)
         let studentNames: string[]
         for (var _i = 1; _i <= columnNames.length; _i++){
-            console.log(worksheet.getColumn(_i).values)
-            if(columnNames[_i - 1] === SpreadsheetUtils.COLUMN_NAME){
+            if(columnNames[_i - 1] === spreadsheetUtils.COLUMN_NAME){
                 studentNames = worksheet.getColumn(_i).values.map((cell) => cell.toString())
                 break;
             }

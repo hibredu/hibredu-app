@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import ActivityStudent from "./activity_student.entity";
 import Alert from "./alerts.entity";
-import AttendanceStudent from "./attendances_student.entity";
+import AttendanceStudent from "./attendance_student.entity";
 import { Classroom } from "./classroom.entity";
 
 export interface IStudent {

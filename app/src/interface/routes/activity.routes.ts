@@ -6,8 +6,8 @@ import activityController from "../controllers/activity.controller";
 const activityRouter = Router();
 const upload = multer(multerConfig)
 
-activityRouter.post('/spreadsheet/teams', upload.single("activity"), activityController.sendTeamsSpreadsheet)
-activityRouter.post('/', activityController.insertActivity)
+activityRouter.post('/teams/spreadsheet', upload.single("activity"), activityController.sendTeamsSpreadsheet)
+activityRouter.post('/teams', activityController.insertTeamsActivity)
 
 export default activityRouter;
 

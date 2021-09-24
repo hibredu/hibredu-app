@@ -14,7 +14,7 @@ const connection = getConnection()
 class ActivityStudentService {
     repository: Repository<ActivityStudent>
 
-    async insert(grade: number, activityId: number, studentId: number, delivered: boolean) {
+    async insert(grade: number, studentId: number, delivered: boolean, activityId: number) {
         this.repository = connection.getRepository(ActivityStudent)
 
         let activityStudentRegister = new ActivityStudent()
@@ -22,6 +22,7 @@ class ActivityStudentService {
         activityStudentRegister.activities_id = activityId
         activityStudentRegister.students_id = studentId
         activityStudentRegister.delivered = delivered 
+        activityStudentRegister.status = delivered ? "Entregue" : "Não entregue"
 
         await this.repository.insert(activityStudentRegister)
     }
@@ -29,12 +30,14 @@ class ActivityStudentService {
     async insertManyTeams(activityId: number, classroomId: number) {
         const grades: any[] = await this.getClassroomGradesTeams(activityId, classroomId);
 
-        grades.forEach(async (gradeInfo) => {
-            await this.insert(gradeInfo.number, activityId, gradeInfo.student_id, gradeInfo.delivered)
+        grades.forEach(async (grade) => {
+            await this.insert(grade.grade, grade.student_id, grade.delivered, activityId)
         });
     }
 
-    async getClassroomGradesTeams(activityId: number, classroomId: number) : Promise<any[]>{        
+    async getClassroomGradesTeams(activityId: number, classroomId: number) : Promise<any[]>{   
+        let grades: any[] = []    
+
         const activity: Activity = await activityService.findById(activityId)
         const file: File = await fileService.findById(activity.files_id)
         const worksheet: Worksheet = await spreadsheetUtils.getWorksheet(file)
@@ -43,15 +46,13 @@ class ActivityStudentService {
         const gradesColumn: Column = worksheet.getColumn(gradesColumnNumber)
 
         const studentNamesColumnNumber: number = 5
-        const studentNamesLower: string[] = worksheet.getColumn(studentNamesColumnNumber).values
-            .map((studentName) => studentName.toString().toLowerCase())
+        const studentNamesColumn: Column = worksheet.getColumn(studentNamesColumnNumber)
 
         const students: Student[] = await studentService.getByClass(classroomId)
 
-        let grades: any[] = []    
         students.forEach((student) => {
-            const indexStudent: number = studentNamesLower.indexOf(student.name.toLowerCase())
-            const student_id: number = student.id
+            const indexStudent: number = studentNamesColumn.values.map((studentName) => studentName.toString().toLowerCase()).indexOf(student.name.toLowerCase())
+            const studentId: number = student.id
             let grade: number = 0
             let delivered: boolean = false
 
@@ -61,7 +62,7 @@ class ActivityStudentService {
             }
             
             grades.push({
-                student_id: student_id,
+                student_id: studentId,
                 grade: grade,
                 delivered: delivered
             })

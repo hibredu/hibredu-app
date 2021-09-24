@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import AttendanceStudent from "./attendances_student.entity";
+import AttendanceStudent from "./attendance_student.entity";
 import File from "./file.entity";
 import SubjectClassroom from "./subjects_classrooms.entity";
 

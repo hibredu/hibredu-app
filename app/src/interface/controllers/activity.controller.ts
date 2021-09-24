@@ -22,7 +22,7 @@ class ActivityController {
         }
     }
 
-    async insertActivity(request: Request, response: Response) {
+    async insertTeamsActivity(request: Request, response: Response) {
         const teacherId: string = request.userId
         const body: any = request.body
 
@@ -30,9 +30,10 @@ class ActivityController {
             await fileService.configureHeaders(body.file_id, body.columns)
             const activityId = await activityService.insert(teacherId, body)
             await questionService.insertManyTeams(activityId, body.file_id, body.number_questions)
+            //TODO: Retirar este método. Futuramente os alunos devem ser inseridos em um endpoint separado
             await studentService.insertIfNotExists(body.file_id, body.classroom_id);
             await activityStudentService.insertManyTeams(activityId, body.classroom_id)
-            //await questionStudentService.insertManyTeams(body.file_id, activityId, body.classroom_id)
+            await questionStudentService.insertManyTeams(body.file_id, activityId, body.classroom_id, body.number_questions)
             return response.status(201).json()
         } catch (error) {
             response.status(500).json({ error: error.message })

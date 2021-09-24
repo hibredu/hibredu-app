@@ -3,25 +3,27 @@ import Question from "../entities/question.entity"
 import File from "../entities/file.entity"
 import fileService from "./file.service"
 import spreadsheetUtils from "../shared/utils/spreadsheet.utils"
+import { Worksheet } from "exceljs"
 
 const connection = getConnection()
 
 class QuestionService {
     repository: Repository<Question>
 
-    async insertManyTeams(activityId: number, fileId: number, numberQuestions: number) {
-        for(let _i = 1; _i <= numberQuestions; _i++) {
-            this.insertTeams(activityId, fileId, _i)
+    async insertManyTeams(activityId: number, fileId: number, totalQuestions: number) {
+        for(let _i = 1; _i <= totalQuestions; _i++) {
+            await this.insertTeams(activityId, fileId, _i)
         }
     }
 
-    async insertTeams(activityId: number, fileId: number, numberQuestions: number) {
+    async insertTeams(activityId: number, fileId: number, questionNumber: number) {
         this.repository = connection.getRepository(Question)
-        const question: string = await this.getQuestionNameTeams(fileId, numberQuestions)
+        const question: string = await this.getQuestionNameTeams(fileId, questionNumber)
 
         if(question != null) {
             const questionRegister = new Question()
             questionRegister.description = question
+            //Por enquanto será sempre 1. Estamos contando apenas com alternativas
             questionRegister.total_points = 1
             questionRegister.activities_id = activityId
 
@@ -31,8 +33,7 @@ class QuestionService {
 
     async getQuestionNameTeams(fileId: number, questionNumber: number) : Promise<string> {
         const file: File = await fileService.findById(fileId)
-
-        const worksheet = await spreadsheetUtils.getWorksheet(file)
+        const worksheet: Worksheet = await spreadsheetUtils.getWorksheet(file)
 
         const defaultColumns: number = 8
         const columnQuestionDescription: number = defaultColumns + 1 + ((questionNumber - 1) * 3)
@@ -44,31 +45,35 @@ class QuestionService {
         return isValidQuestion ? question : null
     }
 
-    async getAnswerTeamsStudents(fileId: number, questionNumber: number) : Promise<any[]> {
+    async getAnswerQuestionTeams(fileId: number, questionNumber: number) : Promise<any[]> {
+        let answer: any[] = []
+        
         const file: File = await fileService.findById(fileId)
-
-        const worksheet = await spreadsheetUtils.getWorksheet(file)
+        const worksheet: Worksheet = await spreadsheetUtils.getWorksheet(file)
 
         const defaultColumns: number = 8
         const columnName: number = 5
         const columnQuestionAnswer: number = defaultColumns + 1 + ((questionNumber - 1) * 3)
         const columnQuestionPoints: number = defaultColumns + 2 + ((questionNumber - 1) * 3)
-  
-        let questionStudent: any[] = []
+        
+        const isValidQuestion = worksheet.getRow(2).getCell(columnQuestionPoints).value != null
+        if(!isValidQuestion)
+            return null;
+            
+        const question: string = worksheet.getRow(1).getCell(columnQuestionAnswer).value.toString()
         worksheet.eachRow((row) => {
-            if(row.number > 1 && row.getCell(columnQuestionPoints).value != null) {
-                console.log(row.getCell(columnName).value)
-                console.log(row.getCell(columnQuestionAnswer).value)
-                console.log(row.getCell(columnQuestionPoints).value)
-                questionStudent.push({
-                    name: row.getCell(columnName).value.toString(),
+            console.log(row.getCell(columnQuestionAnswer).value.toString())
+            if(row.number > 1) {
+                answer.push({
+                    student_name: row.getCell(columnName).value.toString(),
+                    question: question,
                     answer: row.getCell(columnQuestionAnswer).value.toString(),
                     points: row.getCell(columnQuestionPoints).value.toString()
                 })
             }
         })
 
-        return questionStudent
+        return answer
     } 
 
     async getByActivityId(id: number) {

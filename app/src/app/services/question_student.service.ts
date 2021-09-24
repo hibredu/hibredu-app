@@ -21,28 +21,25 @@ class QuestionStudentService {
         questionStudentRegister.points = points
         questionStudentRegister.activities_students_id = activitiesStudentsId
 
-        this.repository.insert(questionStudentRegister)
+        await this.repository.insert(questionStudentRegister)
     }
 
-    async insertManyTeams(fileId: number, activityId: number, classroomId: number) {
+    async insertManyTeams(fileId: number, activityId: number, classroomId: number, totalQuestions: number) {
         const questions: Question[] = await questionService.getByActivityId(activityId)
         const students: Student[] = await studentService.getByClass(classroomId)
 
-        for(let _i = 1; _i <= questions.length; _i++) {
-            const question: Question = questions[_i]
-            const answers: any[] = await questionService.getAnswerTeamsStudents(fileId, _i)
-            if(answers !== null) {
-                answers.forEach(async (answer) => {
-                    const student: Student = students.find((st) => st.name.toLowerCase() === answer.name.toLowerCase())
+        for(let _i = 1; _i <= totalQuestions; _i++) {
+            const answersQuestion: any[] = await questionService.getAnswerQuestionTeams(fileId, _i)
+            if(answersQuestion !== null) {
+                answersQuestion.forEach(async (answer) => {
+                    const question: Question = questions.find((qt) => qt.description.toLowerCase() === answer.question.toLowerCase())
+                    const student: Student = students.find((st) => st.name.toLowerCase() === answer.student_name.toLowerCase())
                     const activityStudent: ActivityStudent = await activityStudentService.findByStudentAndActivity(student.id, activityId)
-                    if(activityStudent !== null)
-                        this.insert(question.id, answer.answer, answer.points, activityStudent.id)
+                    await this.insert(question.id, answer.answer, answer.points, activityStudent.id)
                 })
             }
         }
     }
-
-
 }
 
 export default new QuestionStudentService()
