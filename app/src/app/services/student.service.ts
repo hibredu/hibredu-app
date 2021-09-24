@@ -17,7 +17,7 @@ class StudentService {
 
         const classes = await teacherService.getClassesByTeacher(teacherID);
 
-        const students = await this.repository.find({ where: { classrooms_id: In(classes) }, order: { name: "ASC" }, cache: true });
+        const students = await this.repository.find({ where: { classrooms_id: In(classes) }, order: { name: "ASC" }, cache: 15000 }); // TODO: remove cache
 
         return await Promise.all(students.map(async (student) => {
             return {
@@ -30,7 +30,7 @@ class StudentService {
     async getById(id: number) {
         this.repository = connection.getRepository(Student)
 
-        let student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents", "alerts"] })
+        let student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents", "alerts"], cache: 15000 }); // TODO: remove cache
 
         return {
             ...student,
@@ -47,7 +47,7 @@ class StudentService {
     async getDeliveryPercentage(id: number) {
         this.repository = connection.getRepository(Student)
 
-        const student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"] });
+        const student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"], cache: 15000 }); // TODO: remove cache
         const totalActivities = student.activitiesToStudents?.length;
         const totalActivitiesDelivered = student.activitiesToStudents?.filter((activity) => activity.delivered == true).length;
         return (totalActivitiesDelivered / totalActivities);
@@ -56,7 +56,7 @@ class StudentService {
     async getDeliveredActivities(id: number) {
         this.repository = connection.getRepository(Student)
 
-        const student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"] });
+        const student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"], cache: 15000 }); // TODO: remove cache
         const totalActivitiesDelivered = student.activitiesToStudents?.filter((activity) => activity.delivered == true).length;
 
         return totalActivitiesDelivered;
@@ -66,7 +66,7 @@ class StudentService {
         let hitRate = 0
         let hitRateTotal = 0
 
-        const student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"] });
+        const student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"], cache: 15000 }); // TODO: remove cache
 
         const activitiesDelivered = student.activitiesToStudents?.filter((activity) => activity.delivered == true);
 

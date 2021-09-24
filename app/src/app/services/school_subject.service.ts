@@ -27,7 +27,8 @@ class SchoolSubjectService {
         const subjectClassroom = await subjectClassroomRepository.find({
             where: {
                 teachers_id: teacherId
-            }
+            },
+            cache: true
         })
 
         const schoolSubjects = await this.repository.find({
