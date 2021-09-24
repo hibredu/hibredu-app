@@ -34,9 +34,6 @@ class ActivityService {
         activityRegister.files_id = activity.file_id
         activityRegister.owner_id = owner.id
 
-        //TODO: Pegar apenas o id da matéria
-        //activityRegister.subject_id = activity.subject_id
-
         //TODO: Pegar a data de criação da atividade
         //activity.date = body.date 
 
