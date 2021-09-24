@@ -96,7 +96,29 @@ class FileService {
             row.commit()
             await this.storageOrReplaceWorkbook(workbook, file)
         }
-    }    
+    }
+    
+    async getStudentNames(fileId: number): Promise<string[]> {
+        const file: File = await this.findById(fileId)
+        const worksheet = await SpreadsheetUtils.getWorksheet(file)
+
+        const columnNames: CellValue[] = await SpreadsheetUtils.getColumnNames(worksheet)
+        let studentNames: string[]
+        for (var _i = 1; _i <= columnNames.length; _i++){
+            console.log(worksheet.getColumn(_i).values)
+            if(columnNames[_i - 1] === SpreadsheetUtils.COLUMN_NAME){
+                studentNames = worksheet.getColumn(_i).values.map((cell) => cell.toString())
+                break;
+            }
+        }
+        
+        //REMOVENDO OS 2 PRIMEIROS ÍNDICES. O PRIMEIRO É UNDEFINED E O OUTRO O NOME DA COLUNA
+        studentNames.shift();
+        studentNames.shift();
+
+        //RETORNANDO APENAS UM DE CADA NOME
+        return [ ...new Set( studentNames ) ];
+    }
 }
 
 export default new FileService()
