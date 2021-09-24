@@ -13,7 +13,7 @@ class TeacherService {
     async getAll() {
         this.repository = connection.getRepository(Teacher)
 
-        let teachers: Teacher[] = await this.repository.find()
+        let teachers: Teacher[] = await this.repository.find({ cache: 100000 }) // remove cache
 
         return teachers.map(teacher => {
             delete teacher.password
@@ -66,7 +66,8 @@ class TeacherService {
         this.repository = connection.getRepository(Teacher)
 
         let userExists = await this.repository.findOne({
-            where: { id }
+            where: { id },
+            cache: 15000 // TODO: remove cache
         })
 
         if (!userExists) {

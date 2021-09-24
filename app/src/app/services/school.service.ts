@@ -11,13 +11,13 @@ class SchoolService {
     async getAll(): Promise<School[]> {
         this.repository = connection.getRepository(School)
 
-        const schools = await this.repository.find({})
+        const schools = await this.repository.find({ cache: 300000 }) // TODO: remove cache
         return schools
     }
 
     async getById(id: number): Promise<School> {
         this.repository = connection.getRepository(School)
-        return await this.repository.findOne({ where: { id }, relations: ["teachers"] })
+        return await this.repository.findOne({ where: { id }, relations: ["teachers"], cache: 200000 }) // TODO: remove cache
     }
 
     async getSchoolClassrooms(id: number) {
@@ -25,7 +25,7 @@ class SchoolService {
 
         const classrooms = []
         const classrooms_ids = []
-        const schools: School[] = await this.repository.find({ where: { id }, relations: ["subjects_classrooms"] })
+        const schools: School[] = await this.repository.find({ where: { id }, relations: ["subjects_classrooms"], cache: 200000 }) // TODO: remove cache
 
         for (let index = 0; index < schools.length; index++) {
             const school = schools[index];
