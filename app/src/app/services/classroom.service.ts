@@ -33,7 +33,7 @@ class ClassroomService {
         const students: Student[] = classroom.students;
 
         for (let student of students) {
-            const activitiesToStudents = await repositoryActivities.find({ where: { student: student.id, delivered: true } })
+            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id, delivered: true } })
             activities.push(...activitiesToStudents)
         }
 
@@ -50,7 +50,7 @@ class ClassroomService {
         const students = classroom.students;
 
         for (let student of students) {
-            const activitiesToStudents = await repositoryActivities.find({ where: { student: student.id } })
+            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id } })
             activities.push(...activitiesToStudents)
             activities_delived.push(...activitiesToStudents.filter((activity) => activity.delivered == true))
         }
@@ -73,7 +73,7 @@ class ClassroomService {
         const students = classroom.students;
 
         for (let student of students) {
-            const activitiesToStudents = await repositoryActivities.find({ where: { student: student.id, delivered: true }, relations: ["activity"] })
+            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id, delivered: true }, relations: ["activity"] })
 
             activities_delived.push(...activitiesToStudents)
         }

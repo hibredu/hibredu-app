@@ -27,7 +27,7 @@ class OverviewService {
         const students: Student[] = await studentService.getAll(teacherId)
 
         for (let student of students) {
-            const activitiesToStudents = await repositoryActivities.find({ where: { student: student.id, delivered: true } })
+            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id, delivered: true } })
             activities.push(...activitiesToStudents)
         }
 
@@ -42,7 +42,7 @@ class OverviewService {
         const students: Student[] = await studentService.getAll(teacherId)
 
         for (let student of students) {
-            const activitiesToStudents = await repositoryActivities.find({ where: { student: student.id } })
+            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id } })
             activities.push(...activitiesToStudents)
             activities_delived.push(...activitiesToStudents.filter((activity) => activity.delivered == true))
         }
@@ -62,7 +62,7 @@ class OverviewService {
         const students: Student[] = await studentService.getAll(teacherId)
 
         for (let student of students) {
-            const activitiesToStudents = await repositoryActivities.find({ where: { student: student.id, delivered: true }, relations: ["activity"] })
+            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id, delivered: true }, relations: ["activity"] })
 
             activities_delived.push(...activitiesToStudents)
         }
@@ -179,7 +179,7 @@ class OverviewService {
     async getDeliveredActivitiesByStudent(studentId: number) {
         const repositoryActivities = connection.getRepository(ActivityStudent)
 
-        const activities: ActivityStudent[] = await repositoryActivities.find({ where: { student: studentId, delivered: true } })
+        const activities: ActivityStudent[] = await repositoryActivities.find({ where: { students_id: studentId, delivered: true } })
 
         return activities;
     }
