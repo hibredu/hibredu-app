@@ -382,12 +382,12 @@ INSERT INTO school_subjects (name) values('Música');
 INSERT INTO school_subjects (name) values('Química');
 INSERT INTO school_subjects (name) values('Geografia');
 
-INSERT INTO teachers (id, name, email, password, phone, schools_id) VALUES (2, 'Jean Jacques', 'jean@hibredu.com.br', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581190', 1);
-INSERT INTO teachers (name, email, password, phone, schools_id) VALUES ('Felipe Toscano', 'felipe@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581192', 1);
-INSERT INTO teachers (name, email, password, phone, schools_id) VALUES ('Vinicius Mota', 'vinicius@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581193', 2);
-INSERT INTO teachers (name, email, password, phone, schools_id) VALUES ('Gabriel Petillo', 'gspetillo@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195456783', 2);
-INSERT INTO teachers (name, email, password, phone, schools_id) VALUES ('Giovanna Godoy', 'giovanna@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195456783', 1);
-INSERT INTO teachers (name, email, password, phone, schools_id) VALUES ('Patricia', 'patricia@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195456783', 1);
+INSERT INTO teachers (id, name, email, password, phone, schools_id) VALUES (2, 'Paulo Freire', 'teste@hibredu.com.br', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581190', 1);
+INSERT INTO teachers (id, name, email, password, phone, schools_id) VALUES (3, 'Jean Jacques', 'jean@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581192', 1);
+INSERT INTO teachers (id, name, email, password, phone, schools_id) VALUES (4, 'Vinicius Mota', 'vinicius@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581193', 2);
+INSERT INTO teachers (id, name, email, password, phone, schools_id) VALUES (5, 'Gabriel Petillo', 'gspetillo@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195456783', 2);
+INSERT INTO teachers (id, name, email, password, phone, schools_id) VALUES (6, 'Giovanna Godoy', 'giovanna@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195456783', 1);
+INSERT INTO teachers (id, name, email, password, phone, schools_id) VALUES (7, 'Patricia', 'patricia@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195456783', 1);
 
 INSERT INTO classrooms (name) VALUES ('3A-2021');
 INSERT INTO classrooms (name) VALUES ('3B-2021');
