@@ -19,9 +19,9 @@ class TeacherController {
         let teacher = request.body
 
         try {
-            teacher = await teacherService.create(teacher)
-
-            return response.status(200).json({ 'message': 'user created', 'data': teacher })
+            const data = await teacherService.create(teacher)
+            console.log(data)
+            return response.status(200).json({ 'message': 'user created', 'data': data })
         } catch (error) {
             return response.status(500).json({
                 message: error.message

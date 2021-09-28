@@ -56,7 +56,7 @@ class TeacherService {
             for (let index = 0; index < teacher.subjects.length; index++) {
                 const subject_id = teacher.subjects[index].id
 
-                subjectClassrooms.push(await this.repositorySubjectClassroom.create({
+                subjectClassrooms.push(await this.repositorySubjectClassroom.save({
                     classrooms_id: classroom.id,
                     teachers_id: teacherCreated.id,
                     school_subjects_id: subject_id
