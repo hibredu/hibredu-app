@@ -59,7 +59,8 @@ class TeacherService {
                 subjectClassrooms.push(await this.repositorySubjectClassroom.save({
                     classrooms_id: classroom.id,
                     teachers_id: teacherCreated.id,
-                    school_subjects_id: subject_id
+                    school_subjects_id: subject_id,
+                    schools_id: teacherEntity.school.id
                 }))
             }
         }
