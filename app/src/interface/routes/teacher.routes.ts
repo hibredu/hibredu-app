@@ -5,6 +5,7 @@ import teacherController from "../controllers/teacher.controller";
 const teacherRouter = Router();
 
 teacherRouter.get('/', teacherController.getAll)
+teacherRouter.get('/:id', teacherController.getById)
 teacherRouter.post('/', teacherController.create)
 teacherRouter.patch('/:id', teacherController.update)
 teacherRouter.get('/school_subjects', schoolSubjectController.getByTeacher)

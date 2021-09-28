@@ -72,7 +72,11 @@ class TeacherService {
     async getById(id: number) {
         this.repository = connection.getRepository(Teacher)
 
-        return await this.repository.findOne({ where: { id } })
+        const teacher = await this.repository.findOne({ where: { id }, relations: ["school"], cache: 15000 }) // TODO: remove cache
+        if (!teacher) {
+            throw new Error("teacher not found");
+        }
+        return teacher
     }
 
     async getClassesByTeacher(id: number) {
