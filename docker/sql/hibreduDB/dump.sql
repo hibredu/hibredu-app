@@ -381,6 +381,8 @@ INSERT INTO school_subjects (name) values('História');
 INSERT INTO school_subjects (name) values('Música');
 INSERT INTO school_subjects (name) values('Química');
 INSERT INTO school_subjects (name) values('Geografia');
+INSERT INTO school_subjects (name) values('Filosofia');
+INSERT INTO school_subjects (name) values('Sociologia');
 
 INSERT INTO teachers (id, name, email, password, phone, schools_id) VALUES (2, 'Paulo Freire', 'teste@hibredu.com.br', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581190', 1);
 INSERT INTO teachers (id, name, email, password, phone, schools_id) VALUES (3, 'Jean Jacques', 'jean@gmail.com', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581192', 1);
@@ -396,12 +398,18 @@ INSERT INTO classrooms (name) VALUES ('3A-2020');
 INSERT INTO classrooms (name) VALUES ('3B-2020');
 INSERT INTO classrooms (name) VALUES ('5A-2021');
 INSERT INTO classrooms (name) VALUES ('5B-2021');
+INSERT INTO classrooms (name) VALUES ('5C-2021');
 
 INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(1, 1, 2, 1);
 INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(2, 2, 2, 1);
 INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(2, 3, 2, 1);
 INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(3, 4, 5, 1);
-INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(4, 5, 6, 1);
+INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(4, 5, 3, 2);
+INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(3, 6, 3, 3);
+INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(4, 7, 3, 4);
+INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(5, 5, 4, 2);
+INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(6, 6, 4, 3);
+INSERT INTO subjects_classrooms(school_subjects_id, classrooms_id ,teachers_id, schools_id) VALUES(7, 7, 4, 4);
 
 INSERT INTO students (id, name, email, classrooms_id) VALUES (1, 'Karini Justino dos Santos', 'rm64088@hibredu.school.com.br', 1);
 INSERT INTO students (id, name, email, classrooms_id) VALUES (2, 'Kauã Gusmão dos Santos Moreira', 'rm73651@hibredu.school.com.br', 1);

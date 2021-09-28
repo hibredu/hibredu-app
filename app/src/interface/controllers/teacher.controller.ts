@@ -16,20 +16,12 @@ class TeacherController {
     }
 
     async create(request: Request, response: Response) {
-        const { name, email, password, phone, school_id } = request.body
-
-        let teacher: ITeacher = {
-            name,
-            email,
-            password,
-            phone,
-            school_id
-        }
+        let teacher = request.body
 
         try {
             teacher = await teacherService.create(teacher)
-            delete teacher.password
-            return response.status(200).json({ 'message': 'user created', 'teacher': teacher })
+
+            return response.status(200).json({ 'message': 'user created', 'data': teacher })
         } catch (error) {
             return response.status(500).json({
                 message: error.message
