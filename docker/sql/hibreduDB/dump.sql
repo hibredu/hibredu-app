@@ -906,7 +906,7 @@ INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES (
 INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('está com nota baixa', 'yellow', '2021-09-07 01:53:36', 2, 2);
 INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('está com nota baixa e falta em excesso', 'red', '2021-09-07 01:53:36', 2, 3);
 INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('está com nota baixa', 'yellow', '2021-09-07 01:53:36', 2, 5);
-INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('está com nota baixa a tempos', 'red', '2021-09-07 01:53:36', 2, 4);
+INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('está com nota baixa há tempos', 'red', '2021-09-07 01:53:36', 2, 4);
 INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('está com nota baixa e falta em excesso', 'red', '2021-09-07 01:53:36', 3, 2);
 INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('está com ótimo desempenho', 'green', '2021-09-07 01:53:36', 4, 2);
 INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('está com ótimo desempenho', 'green', '2021-09-07 01:53:36', 2, 2);
