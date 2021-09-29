@@ -28,7 +28,7 @@ class SchoolSubjectService {
             where: {
                 teachers_id: teacherId
             },
-            cache: true
+            cache: 10000
         })
 
         const schoolSubjects = await this.repository.find({
