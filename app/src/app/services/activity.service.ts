@@ -11,16 +11,16 @@ class ActivityService {
 
     async findById(id: number) {
         this.repository = connection.getRepository(Activity)
-        return await this.repository.findOne({ where: { id }})
+        return await this.repository.findOne({ where: { id } })
     }
 
-    async insert(teacherId: string, activity: any) : Promise<number> {
+    async insert(teacherId: string, activity: any): Promise<number> {
         const owner: SubjectClassroom = await subjectClassroomService.getBySubjectClassroomTeacher(
-            activity.subject_id, 
-            activity.classroom_id, 
+            activity.subject_id,
+            activity.classroom_id,
             parseInt(teacherId));
 
-        if(owner === undefined) {
+        if (owner === undefined) {
             throw ("Ocorreu um erro ao procurar o Owner");
         }
 
@@ -42,9 +42,9 @@ class ActivityService {
         return activityRegister.id
     }
 
-    async getTeamsActivityMainColumnsInfo(fileId: number) : Promise<string[]> {
+    async getTeamsActivityMainColumnsInfo(fileId: number): Promise<string[]> {
         const columns = await fileService.getColumnsInfo(fileId);
-        let mainColumns: string[] = []; 
+        let mainColumns: string[] = [];
 
         //Colunas principais no padrão teams
         mainColumns.push(columns[3]) // Email
@@ -52,6 +52,21 @@ class ActivityService {
         mainColumns.push(columns[5]) // Total de pontos
 
         return mainColumns;
+    }
+
+    async getByClassroom(classroomId: number) {
+        this.repository = connection.getRepository(Activity)
+
+        const subjectClassrooms = await subjectClassroomService.getSubjectByClass(classroomId);
+
+        let activities: Activity[] = [];
+
+        for (let i = 0; i < subjectClassrooms.length; i++) {
+            const activitiesBySubject = await this.repository.find({ where: { owner_id: subjectClassrooms[i].id }, relations: ["file"] });
+            activities = activities.concat(activitiesBySubject)
+        }
+
+        return activities;
     }
 }
 

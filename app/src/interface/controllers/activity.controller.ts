@@ -41,6 +41,17 @@ class ActivityController {
             response.status(500).json({ error: error.message })
         }
     }
+
+    async getByClassroom(request: Request, response: Response) {
+        const classroomId: number = parseInt(request.params.classroom_id)
+
+        try {
+            const activities = await activityService.getByClassroom(classroomId)
+            return response.status(200).json(activities)
+        } catch (error) {
+            return response.status(500).json({ error: error.message })
+        }
+    }
 }
 
 export default new ActivityController()
