@@ -916,6 +916,10 @@ INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES (
 INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('está com nota baixa e falta em excesso', 'red', '2021-09-07 01:53:36', 2, 1);
 INSERT INTO alerts (value, level, created_at, teachers_id, students_id) VALUES ('está com ótimo desempenho', 'green', '2021-09-07 01:53:36', 2, 1);
 
+INSERT INTO hibredu_rewards (point, teachers_id) VALUES (450, 2);
+INSERT INTO hibredu_rewards (point, teachers_id) VALUES (540, 3);
+INSERT INTO hibredu_rewards (point, teachers_id) VALUES (600, 4);
+
 COMMIT;
 
 

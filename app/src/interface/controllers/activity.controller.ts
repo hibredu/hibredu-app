@@ -5,12 +5,14 @@ import fileService from '../../app/services/file.service'
 import questionService from '../../app/services/question.service'
 import questionStudentService from '../../app/services/question_student.service'
 import studentService from '../../app/services/student.service'
+import hibredu_rewardsService from '../../app/services/hibredu_rewards.service'
 
 class ActivityController {
     async sendTeamsSpreadsheet(request: Request, response: Response) {
         const file = request.file
 
         try {
+            hibredu_rewardsService.insertOrUpdate(request.userId)
             const fileId: number = await fileService.insert(file)
             const columns: any[] = await activityService.getTeamsActivityMainColumnsInfo(fileId)
             return response.status(201).json({
@@ -18,7 +20,7 @@ class ActivityController {
                 columns: columns
             })
         } catch (error) {
-            response.status(500).json({ error: error.message })
+            return response.status(500).json({ error: error.message })
         }
     }
 

@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import { getRepository } from 'typeorm'
 import Teacher from '../../app/entities/teacher.entity'
+import hibredu_rewardsService from '../../app/services/hibredu_rewards.service'
 
 class AuthController {
     async authenticate(request: Request, response: Response) {
@@ -31,6 +32,7 @@ class AuthController {
 
         delete teacher.password
 
+        hibredu_rewardsService.insertOrUpdate(teacher.id)
         return response.status(200).json({ 'message': 'token created', 'teacher': { id: teacher.id, name: teacher.name }, 'token': token })
     }
 }
