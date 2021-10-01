@@ -14,7 +14,7 @@ export default class Activity {
     @Column()
     subject: string;
 
-    @Column()
+    @Column({ default: '' })
     description: string;
 
     @Column()
