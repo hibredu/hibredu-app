@@ -22,7 +22,7 @@ class AlertService {
         const teachers = subject_classroom.map(subject_classroom => subject_classroom.teachers_id);
 
         for (const teacher of teachers) {
-            const alert = await this.repository.find({ where: { teachers_id: teacher } })
+            const alert = await this.repository.find({ where: { teachers_id: teacher }, cache: 30000 }) // TODO: remove cache
             alerts.push(...alert)
         }
 
@@ -32,7 +32,7 @@ class AlertService {
     async getByStudent(studentId: number) {
         this.repository = connection.getRepository(Alert)
 
-        const alerts: Alert[] = await this.repository.find({ where: { student: studentId } })
+        const alerts: Alert[] = await this.repository.find({ where: { student: studentId }, cache: 30000 }) // TODO: remove cache
 
         return alerts
     }
@@ -40,7 +40,7 @@ class AlertService {
     async getByTeacher(teacherId: number) {
         this.repository = connection.getRepository(Alert)
 
-        const alerts: Alert[] = await this.repository.find({ where: { teachers_id: teacherId } })
+        const alerts: Alert[] = await this.repository.find({ where: { teachers_id: teacherId }, cache: 30000 }) // TODO: remove cache
 
         return alerts
     }

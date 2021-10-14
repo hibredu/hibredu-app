@@ -3,6 +3,7 @@ import bcryptjs from 'bcryptjs'
 import School from "./school.entity";
 import SubjectsClassrooms from "./subjects_classrooms.entity";
 import Alert from "./alerts.entity";
+import HibreduRewards from "./hibredu_rewards.entity";
 
 export interface ITeacher {
     id?: number;
@@ -47,6 +48,9 @@ export default class Teacher {
 
     @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
     updated_at: Date;
+
+    @OneToMany(() => HibreduRewards, (hibredu_rewards) => hibredu_rewards.teacher, { eager: false })
+    hibredu_rewards: HibreduRewards[];
 
     @OneToMany(() => Alert, (alert) => alert.teacher, { eager: false })
     alerts: Alert[];

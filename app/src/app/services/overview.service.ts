@@ -27,7 +27,7 @@ class OverviewService {
         const students: Student[] = await studentService.getAll(teacherId)
 
         for (let student of students) {
-            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id, delivered: true } })
+            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id, delivered: true }, cache: 15000 }); // TODO: remove cache
             activities.push(...activitiesToStudents)
         }
 
@@ -42,7 +42,7 @@ class OverviewService {
         const students: Student[] = await studentService.getAll(teacherId)
 
         for (let student of students) {
-            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id } })
+            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id }, cache: 15000 }); // TODO: remove cache
             activities.push(...activitiesToStudents)
             activities_delived.push(...activitiesToStudents.filter((activity) => activity.delivered == true))
         }
@@ -62,7 +62,7 @@ class OverviewService {
         const students: Student[] = await studentService.getAll(teacherId)
 
         for (let student of students) {
-            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id, delivered: true }, relations: ["activity"] })
+            const activitiesToStudents = await repositoryActivities.find({ where: { students_id: student.id, delivered: true }, relations: ["activity"], cache: 15000 }); // TODO: remove cache
 
             activities_delived.push(...activitiesToStudents)
         }
@@ -82,7 +82,7 @@ class OverviewService {
         const repositoryAttendances = connection.getRepository(Attendance)
 
         for (const subject_classroom of subject_classrooms) {
-            attendances.push(...await repositoryAttendances.find({ relations: ["file", "attendanceStudents"], where: { owner_id: subject_classroom.id } }))
+            attendances.push(...await repositoryAttendances.find({ relations: ["file", "attendanceStudents"], where: { owner_id: subject_classroom.id }, cache: 15000 })) // TODO: remove cache
         }
 
         return attendances
@@ -95,7 +95,7 @@ class OverviewService {
         const subject_classrooms = await subject_classroomService.getByTeacher(teacherId)
 
         for (const subject_classroom of subject_classrooms) {
-            activities.push(...await RepositoryActivity.find({ relations: ["file", "activitiesToStudents"], where: { owner_id: subject_classroom.id } }))
+            activities.push(...await RepositoryActivity.find({ relations: ["file", "activitiesToStudents"], where: { owner_id: subject_classroom.id }, cache: 15000 })) // TODO: remove cache
         }
 
         return activities
@@ -108,7 +108,7 @@ class OverviewService {
         const subject_classrooms = await subject_classroomService.getByTeacher(teacherId)
 
         for (const subject_classroom of subject_classrooms) {
-            activities.push(...await RepositoryActivity.find({ relations: ["file", "activitiesToStudents"], where: { owner_id: subject_classroom.id, type: "attendance" } }))
+            activities.push(...await RepositoryActivity.find({ relations: ["file", "activitiesToStudents"], where: { owner_id: subject_classroom.id, type: "attendance" }, cache: 15000 })) // TODO: remove cache
         }
 
         return activities
@@ -121,7 +121,7 @@ class OverviewService {
         const subject_classrooms = await subject_classroomService.getByTeacher(teacherId)
 
         for (const subject_classroom of subject_classrooms) {
-            attendances.push(...await RepositoryAttendance.find({ relations: ["file", "attendanceStudents"], where: { owner_id: subject_classroom.id } }))
+            attendances.push(...await RepositoryAttendance.find({ relations: ["file", "attendanceStudents"], where: { owner_id: subject_classroom.id }, cache: 15000 })) // TODO: remove cache
         }
 
         return attendances
@@ -179,7 +179,7 @@ class OverviewService {
     async getDeliveredActivitiesByStudent(studentId: number) {
         const repositoryActivities = connection.getRepository(ActivityStudent)
 
-        const activities: ActivityStudent[] = await repositoryActivities.find({ where: { students_id: studentId, delivered: true } })
+        const activities: ActivityStudent[] = await repositoryActivities.find({ where: { students_id: studentId, delivered: true }, cache: 20000 }) // TODO: remove cache
 
         return activities;
     }
@@ -188,7 +188,7 @@ class OverviewService {
         let attendances: Attendance[] = []
         const RepositoryAttendanceStudent = connection.getRepository(AttendanceStudent)
 
-        const attendances_students: AttendanceStudent[] = await RepositoryAttendanceStudent.find({ relations: ["attendance"], where: { students_id: studentId } })
+        const attendances_students: AttendanceStudent[] = await RepositoryAttendanceStudent.find({ relations: ["attendance"], where: { students_id: studentId }, cache: 20000 }) // TODO: remove cache
 
         attendances = attendances_students.map(a => {
             let attendance: Attendance = a.attendance

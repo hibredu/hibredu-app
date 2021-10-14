@@ -17,9 +17,8 @@ class StudentService {
 
         const classes = await teacherService.getClassesByTeacher(teacherID);
 
-        const students = await this.repository.find({ where: { classrooms_id: In(classes) }, order: { name: "ASC" } });
-        console.log("========================= students =========================")
-        console.log(students)
+        const students = await this.repository.find({ where: { classrooms_id: In(classes) }, order: { name: "ASC" }, cache: 15000 }); // TODO: remove cache
+
         return await Promise.all(students.map(async (student) => {
             return {
                 ...student,
@@ -31,7 +30,7 @@ class StudentService {
     async getById(id: number) {
         this.repository = connection.getRepository(Student)
 
-        let student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents", "alerts"] })
+        let student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents", "alerts"], cache: 15000 }); // TODO: remove cache
 
         return {
             ...student,
@@ -48,7 +47,7 @@ class StudentService {
     async getDeliveryPercentage(id: number) {
         this.repository = connection.getRepository(Student)
 
-        const student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"] });
+        const student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"], cache: 15000 }); // TODO: remove cache
         const totalActivities = student.activitiesToStudents?.length;
         const totalActivitiesDelivered = student.activitiesToStudents?.filter((activity) => activity.delivered == true).length;
         return (totalActivitiesDelivered / totalActivities);
@@ -57,7 +56,7 @@ class StudentService {
     async getDeliveredActivities(id: number) {
         this.repository = connection.getRepository(Student)
 
-        const student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"] });
+        const student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"], cache: 15000 }); // TODO: remove cache
         const totalActivitiesDelivered = student.activitiesToStudents?.filter((activity) => activity.delivered == true).length;
 
         return totalActivitiesDelivered;
@@ -67,7 +66,7 @@ class StudentService {
         let hitRate = 0
         let hitRateTotal = 0
 
-        const student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"] });
+        const student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"], cache: 15000 }); // TODO: remove cache
 
         const activitiesDelivered = student.activitiesToStudents?.filter((activity) => activity.delivered == true);
 
@@ -81,7 +80,7 @@ class StudentService {
 
     async insertIfNotExists(fileId: number, classroomId: number) {
         this.repository = connection.getRepository(Student);
-        const students: Student[] = await this.repository.find({ where: { classrooms_id: classroomId }})
+        const students: Student[] = await this.repository.find({ where: { classrooms_id: classroomId } })
 
         const studentNames: string[] = await this.getStudentNames(fileId);
         studentNames.forEach((studentName) => {
@@ -101,19 +100,19 @@ class StudentService {
 
         const columnNames: CellValue[] = await SpreadsheetUtils.getColumnNames(worksheet)
         let studentNames: string[]
-        for (var _i = 1; _i <= columnNames.length; _i++){
-            if(columnNames[_i - 1] === SpreadsheetUtils.COLUMN_NAME){
+        for (var _i = 1; _i <= columnNames.length; _i++) {
+            if (columnNames[_i - 1] === SpreadsheetUtils.COLUMN_NAME) {
                 studentNames = worksheet.getColumn(_i).values.map((cell) => cell.toString().toUpperCase())
                 break;
             }
         }
-        
+
         //REMOVENDO OS 2 PRIMEIROS ÍNDICES. O PRIMEIRO É UNDEFINED E O OUTRO O NOME DA COLUNA
         studentNames.shift();
         studentNames.shift();
 
         //RETORNANDO APENAS UM DE CADA NOME
-        return [ ...new Set( studentNames ) ];
+        return [...new Set(studentNames)];
     }
 }
 

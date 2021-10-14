@@ -5,6 +5,7 @@ import fileService from '../../app/services/file.service'
 import studentService from '../../app/services/student.service'
 import cleanDate from '../../app/shared/utils/cleanData'
 import attendanceStudentsService from '../../app/services/attendance_students.service'
+import hibredu_rewardsService from '../../app/services/hibredu_rewards.service'
 
 class AttendanceController {
 
@@ -65,6 +66,7 @@ class AttendanceController {
         const file = request.file
 
         try {
+            hibredu_rewardsService.insertOrUpdate(request.userId)
             const fileId: number = await fileService.insert(file)
             const columns: any[] = await fileService.getColumnsInfo(fileId)
             return response.status(201).json({
