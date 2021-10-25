@@ -69,6 +69,19 @@ class OverviewController {
 
         response.status(200).json(orderned_by_date)
     }
+    
+    async getClassroomAttendanceActivities(request: Request, response: Response) {
+        const classroomId = parseInt(request.params.id)
+
+        const deliveredActivities = await overviewService.getDeliveredActivitiesByClassroom(classroomId)
+        const attendance = await overviewService.getAttendanceByClassroom(classroomId)
+
+        const attendance_delivered = await overviewService.getAttendanceActivities(deliveredActivities, attendance)
+        const orderned_by_date = attendance_delivered.sort((a, b) => (a.date > b.date) ? 1 : -1)
+
+        response.status(200).json(orderned_by_date)
+    }
+
 }
 
 
