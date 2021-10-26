@@ -234,6 +234,7 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`alerts` (
   `updated_at` DATETIME NULL DEFAULT NULL,
   `teachers_id` BIGINT NOT NULL,
   `students_id` BIGINT NOT NULL,
+  `subject_id` BIGINT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_alerts_teachers1_idx` (`teachers_id` ASC) ,
   INDEX `fk_alerts_students1_idx` (`students_id` ASC) ,
