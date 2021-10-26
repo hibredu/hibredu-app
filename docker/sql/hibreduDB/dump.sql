@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`alerts` (
   `updated_at` DATETIME NULL DEFAULT NULL,
   `teachers_id` BIGINT NOT NULL,
   `students_id` BIGINT NOT NULL,
-  `subject_id` BIGINT NULL,
+  `subjects_id` BIGINT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_alerts_teachers1_idx` (`teachers_id` ASC) ,
   INDEX `fk_alerts_students1_idx` (`students_id` ASC) ,
@@ -246,6 +246,11 @@ CREATE TABLE IF NOT EXISTS `hibredu_db`.`alerts` (
   CONSTRAINT `fk_alerts_students1`
     FOREIGN KEY (`students_id`)
     REFERENCES `hibredu_db`.`students` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_alerts_subjects1`
+    FOREIGN KEY (`subjects_id`)
+    REFERENCES `hibredu_db`.`school_subjects` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
