@@ -379,8 +379,12 @@ INSERT INTO school_subjects (name) values('Física');
 INSERT INTO school_subjects (name) values('Português');
 INSERT INTO school_subjects (name) values('História');
 INSERT INTO school_subjects (name) values('Música');
+INSERT INTO school_subjects (name) values('Química');
+INSERT INTO school_subjects (name) values('Geografia');
+INSERT INTO school_subjects (name) values('Filosofia');
+INSERT INTO school_subjects (name) values('Sociologia');
 
-INSERT INTO teachers (id, name, email, password, phone, schools_id) VALUES (2, 'Paulo Freire', 'teste@hibredu.com.br', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581190', 1);
+INSERT INTO teachers (id, name, email, password, phone, schools_id) VALUES (2, 'Vera Siqueira', 'teste@hibredu.com.br', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581190', 1);
 INSERT INTO teachers (id, name, email, password, phone, schools_id) VALUES (3, 'Jean Jacques', 'jean@hibredu.com.br', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581192', 1);
 INSERT INTO teachers (id, name, email, password, phone, schools_id) VALUES (4, 'Vinicius Mota', 'vinicius@hibredu.com.br', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195581193', 2);
 INSERT INTO teachers (id, name, email, password, phone, schools_id) VALUES (5, 'Gabriel Petillo', 'gspetillo@hibredu.com.br', '$2a$08$QmivfICA/QZdeqxlC0Dv6eM.W2oOkXZCpAreFyW6H4TyU3a8.6742', '1195456783', 2);
@@ -520,10 +524,10 @@ INSERT INTO activities (id, name, subject, max_note, owner_id, files_id, descrip
 INSERT INTO activities (id, name, subject, max_note, owner_id, files_id, description, created_at) VALUES (9, 'Avaliação Trimestral', 'Artes', 10, 1, 1, '', '2021-09-09 01:00:00');
 INSERT INTO activities (id, name, subject, max_note, owner_id, files_id, description, created_at) VALUES (10, 'Atividade complementar', 'Espanhol', 10, 1, 1, '', '2021-09-10 01:00:00');
 INSERT INTO activities (id, name, subject, max_note, owner_id, files_id, description, created_at) VALUES (11, 'Avaliação Trimestral', 'Inglês', 10, 2, 1, '', '2021-09-11 01:00:00');
-INSERT INTO activities (id, name, subject, max_note, owner_id, files_id, description, created_at) VALUES (12, 'Avaliação complementar', 'Inglês', 10, 2, 1, '', '2021-09-12 01:00:00');
-INSERT INTO activities (id, name, subject, max_note, owner_id, files_id, description, created_at) VALUES (13, 'Avaliação complementar', 'Inglês', 10, 2, 1, '', '2021-09-12 01:00:00');
-INSERT INTO activities (id, name, subject, max_note, owner_id, files_id, description, created_at) VALUES (14, 'Avaliação complementar', 'Matemática', 10, 1, 1, '', '2021-09-12 01:00:00');
-INSERT INTO activities (id, name, subject, max_note, owner_id, files_id, description, created_at) VALUES (15, 'Avaliação Trimestral', 'Matemática', 10, 1, 6, '', '2021-09-12 01:00:00');
+INSERT INTO activities (id, name, subject, max_note, owner_id, files_id, description, created_at) VALUES (12, 'Avaliação complementar', 'Inglês', 10, 2, 1, '', '2021-09-09 01:00:00');
+INSERT INTO activities (id, name, subject, max_note, owner_id, files_id, description, created_at) VALUES (13, 'Avaliação complementar', 'Inglês', 10, 2, 1, '', '2021-09-08 01:00:00');
+INSERT INTO activities (id, name, subject, max_note, owner_id, files_id, description, created_at) VALUES (14, 'Avaliação complementar', 'Matemática', 10, 1, 1, '', '2021-09-09 01:00:00');
+INSERT INTO activities (id, name, subject, max_note, owner_id, files_id, description, created_at) VALUES (15, 'Avaliação Trimestral', 'Matemática', 10, 1, 6, '', '2021-09-09 01:00:00');
 INSERT INTO activities (id, name, subject, max_note, owner_id, files_id, description, created_at) VALUES (16, 'Atividade 16', 'Português', 10, 1, 1, '', '2021-09-13 01:00:00');
 INSERT INTO activities (id, name, subject, max_note, owner_id, files_id, description, created_at) VALUES (17, 'Avaliação Trimestral', 'Português', 10, 1, 4, '', '2021-09-14 01:00:00');
 INSERT INTO activities (id, name, subject, max_note, owner_id, files_id, description, created_at) VALUES (18, 'Avaliação Trimestral', 'Português', 10, 1, 3, '', '2021-09-14 01:00:00');
@@ -569,7 +573,7 @@ INSERT INTO activities_students (students_id, activities_id, delivered, status, 
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (3, 9, 1, 'entregue', 1, '2021-09-09 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (3, 10, 1, 'entregue', 1, '2021-09-10 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (3, 11, 1, 'entregue', 4, '2021-09-11 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (3, 12, 1, 'entregue', 1, '2021-09-12 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (3, 12, 1, 'entregue', 1, '2021-09-08 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (4, 1, 0, 'não entregue', 0, '2021-09-01 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (4, 2, 1, 'entregue', 10, '2021-09-02 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (4, 3, 1, 'entregue', 7, '2021-09-03 01:00:00');
@@ -593,7 +597,7 @@ INSERT INTO activities_students (students_id, activities_id, delivered, status, 
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (5, 9, 1, 'entregue', 9, '2021-09-09 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (5, 10, 1, 'entregue', 6, '2021-09-10 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (5, 11, 1, 'entregue', 6, '2021-09-11 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (5, 12, 1, 'entregue', 6, '2021-09-12 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (5, 12, 1, 'entregue', 6, '2021-09-11 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (6, 1, 1, 'entregue', 7, '2021-09-01 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (6, 2, 1, 'entregue', 8, '2021-09-02 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (6, 3, 1, 'entregue', 9, '2021-09-03 01:00:00');
@@ -605,7 +609,7 @@ INSERT INTO activities_students (students_id, activities_id, delivered, status, 
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (6, 9, 1, 'entregue', 5, '2021-09-09 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (6, 10, 1, 'entregue', 6, '2021-09-10 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (6, 11, 1, 'entregue', 6, '2021-09-11 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (6, 12, 1, 'entregue', 6, '2021-09-12 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (6, 12, 1, 'entregue', 6, '2021-09-11 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (7, 1, 1, 'entregue', 7, '2021-09-01 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (7, 2, 1, 'entregue', 8, '2021-09-02 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (7, 3, 1, 'entregue', 9, '2021-09-03 01:00:00');
@@ -617,7 +621,7 @@ INSERT INTO activities_students (students_id, activities_id, delivered, status, 
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (7, 9, 1, 'entregue', 5, '2021-09-09 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (7, 10, 1, 'entregue', 6, '2021-09-10 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (7, 11, 1, 'entregue', 6, '2021-09-11 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (7, 12, 1, 'entregue', 6, '2021-09-12 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (7, 12, 1, 'entregue', 6, '2021-09-11 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (8, 1, 1, 'entregue', 7, '2021-09-01 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (8, 2, 1, 'entregue', 8, '2021-09-02 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (8, 3, 1, 'entregue', 9, '2021-09-03 01:00:00');
@@ -629,7 +633,7 @@ INSERT INTO activities_students (students_id, activities_id, delivered, status, 
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (8, 9, 1, 'entregue', 5, '2021-09-09 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (8, 10, 1, 'entregue', 6, '2021-09-10 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (8, 11, 1, 'entregue', 6, '2021-09-11 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (8, 12, 1, 'entregue', 6, '2021-09-12 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (8, 12, 1, 'entregue', 6, '2021-09-11 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (9, 1, 1, 'entregue', 7, '2021-09-01 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (9, 2, 1, 'entregue', 8, '2021-09-02 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (9, 3, 1, 'entregue', 9, '2021-09-03 01:00:00');
@@ -641,7 +645,7 @@ INSERT INTO activities_students (students_id, activities_id, delivered, status, 
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (9, 9, 1, 'entregue', 5, '2021-09-09 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (9, 10, 1, 'entregue', 6, '2021-09-10 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (9, 11, 1, 'entregue', 6, '2021-09-11 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (9, 12, 1, 'entregue', 6, '2021-09-12 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (9, 12, 1, 'entregue', 6, '2021-09-08 01:00:00');
 
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (30, 1, 1, 'entregue', 7, '2021-09-01 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (30, 2, 1, 'entregue', 8, '2021-09-02 01:00:00');
@@ -654,7 +658,7 @@ INSERT INTO activities_students (students_id, activities_id, delivered, status, 
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (30, 9, 1, 'entregue', 5, '2021-09-09 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (30, 10, 1, 'entregue', 6, '2021-09-10 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (30, 11, 1, 'entregue', 6, '2021-09-11 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (30, 12, 1, 'entregue', 6, '2021-09-12 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (30, 12, 1, 'entregue', 6, '2021-09-08 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (31, 1, 1, 'entregue', 7, '2021-09-01 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (31, 2, 1, 'entregue', 8, '2021-09-02 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (31, 3, 1, 'entregue', 9, '2021-09-03 01:00:00');
@@ -666,7 +670,7 @@ INSERT INTO activities_students (students_id, activities_id, delivered, status, 
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (31, 9, 1, 'entregue', 5, '2021-09-09 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (31, 10, 1, 'entregue', 6, '2021-09-10 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (31, 11, 1, 'entregue', 6, '2021-09-11 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (31, 12, 1, 'entregue', 6, '2021-09-12 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (31, 12, 1, 'entregue', 6, '2021-09-08 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (32, 1, 1, 'entregue', 7, '2021-09-01 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (32, 2, 1, 'entregue', 8, '2021-09-02 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (32, 3, 1, 'entregue', 9, '2021-09-03 01:00:00');
@@ -678,7 +682,7 @@ INSERT INTO activities_students (students_id, activities_id, delivered, status, 
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (32, 9, 1, 'entregue', 5, '2021-09-09 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (32, 10, 1, 'entregue', 6, '2021-09-10 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (32, 11, 1, 'entregue', 6, '2021-09-11 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (32, 12, 1, 'entregue', 6, '2021-09-12 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (32, 12, 1, 'entregue', 6, '2021-09-08 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (34, 1, 1, 'entregue', 7, '2021-09-01 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (33, 2, 1, 'entregue', 8, '2021-09-02 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (33, 3, 1, 'entregue', 9, '2021-09-03 01:00:00');
@@ -690,7 +694,7 @@ INSERT INTO activities_students (students_id, activities_id, delivered, status, 
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (33, 9, 1, 'entregue', 5, '2021-09-09 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (33, 10, 1, 'entregue', 6, '2021-09-10 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (33, 11, 1, 'entregue', 6, '2021-09-11 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (33, 12, 1, 'entregue', 6, '2021-09-12 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (33, 12, 1, 'entregue', 6, '2021-09-08 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (35, 1, 1, 'entregue', 7, '2021-09-01 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (34, 2, 1, 'entregue', 8, '2021-09-02 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (34, 3, 1, 'entregue', 9, '2021-09-03 01:00:00');
@@ -712,7 +716,7 @@ INSERT INTO activities_students (students_id, activities_id, delivered, status, 
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (69, 9, 1, 'entregue', 5, '2021-09-09 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (69, 10, 1, 'entregue', 6, '2021-09-10 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (69, 11, 1, 'entregue', 6, '2021-09-11 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (69, 12, 1, 'entregue', 6, '2021-09-12 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (69, 12, 1, 'entregue', 6, '2021-09-05 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (71, 1, 1, 'entregue', 7, '2021-09-01 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (70, 2, 1, 'entregue', 8, '2021-09-02 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (70, 3, 1, 'entregue', 9, '2021-09-03 01:00:00');
@@ -724,7 +728,7 @@ INSERT INTO activities_students (students_id, activities_id, delivered, status, 
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (70, 9, 1, 'entregue', 5, '2021-09-09 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (70, 10, 1, 'entregue', 6, '2021-09-10 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (70, 11, 1, 'entregue', 6, '2021-09-11 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (70, 12, 1, 'entregue', 6, '2021-09-12 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (70, 12, 1, 'entregue', 6, '2021-09-05 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (72, 1, 1, 'entregue', 7, '2021-09-01 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (72, 2, 1, 'entregue', 8, '2021-09-02 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (72, 3, 1, 'entregue', 9, '2021-09-03 01:00:00');
@@ -736,17 +740,17 @@ INSERT INTO activities_students (students_id, activities_id, delivered, status, 
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (72, 9, 1, 'entregue', 5, '2021-09-09 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (72, 10, 1, 'entregue', 6, '2021-09-10 01:00:00');
 INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (72, 11, 1, 'entregue', 6, '2021-09-11 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (72, 12, 1, 'entregue', 6, '2021-09-12 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (1, 30, 1, 'entregue', 10, '2021-09-12 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (1, 31, 1, 'entregue', 9, '2021-09-12 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (1, 32, 1, 'entregue', 10, '2021-09-12 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (1, 33, 1, 'entregue', 9, '2021-09-12 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (1, 34, 1, 'entregue', 10, '2021-09-12 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (2, 35, 1, 'entregue', 1, '2021-09-12 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (2, 36, 1, 'entregue', 1, '2021-09-12 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (2, 37, 1, 'entregue', 1, '2021-09-12 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (2, 38, 1, 'entregue', 1, '2021-09-12 01:00:00');
-INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (2, 39, 1, 'entregue', 1, '2021-09-12 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (72, 12, 1, 'entregue', 6, '2021-09-05 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (1, 30, 1, 'entregue', 10, '2021-09-05 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (1, 31, 1, 'entregue', 9, '2021-09-05 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (1, 32, 1, 'entregue', 10, '2021-09-05 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (1, 33, 1, 'entregue', 9, '2021-09-05 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (1, 34, 1, 'entregue', 10, '2021-09-05 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (2, 35, 1, 'entregue', 1, '2021-09-05 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (2, 36, 1, 'entregue', 1, '2021-09-10 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (2, 37, 1, 'entregue', 1, '2021-09-10 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (2, 38, 1, 'entregue', 1, '2021-09-10 01:00:00');
+INSERT INTO activities_students (students_id, activities_id, delivered, status, grade, created_at) VALUES (2, 39, 1, 'entregue', 1, '2021-09-10 01:00:00');
 
 INSERT INTO questions (activities_id, description) VALUES (1, 'Qual o nome do seu primeiro animal de estimação?');
 INSERT INTO questions (activities_id, description) VALUES (1, 'Quais seus filmes favoritos?');
@@ -937,9 +941,14 @@ INSERT INTO hibredu_rewards (point, teachers_id) VALUES (600, 4);
 
 COMMIT;
 
+SET SQL_SAFE_UPDATES = 0;
+UPDATE hibredu_db.activities SET description = "Gramática I" WHERE subject = "Português";
+UPDATE hibredu_db.activities SET description = "Algebra Linear" WHERE subject = "Matemática";
+UPDATE hibredu_db.activities SET description = "Modal Verbs - Should, Must and Can" WHERE subject = "Inglês";
+UPDATE hibredu_db.activities SET description = "Cubismo" WHERE subject = "Artes";
+UPDATE hibredu_db.activities SET description = "Cognados Falsos" WHERE subject = "Espanhol";
+SET SQL_SAFE_UPDATES = 1;
 
-
-
-
+COMMIT;
 
 

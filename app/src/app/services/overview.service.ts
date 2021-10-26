@@ -184,7 +184,7 @@ class OverviewService {
         return activities;
     }
 
-    async getAttendanceByStudent(teacherId: number, studentId: number) {
+    async getAttendanceByStudent(_: number, studentId: number) {
         let attendances: Attendance[] = []
         const RepositoryAttendanceStudent = connection.getRepository(AttendanceStudent)
 
@@ -195,6 +195,34 @@ class OverviewService {
             attendance.attendanceStudents = [a]
             return attendance
         })
+
+        return attendances
+    }
+
+    async getDeliveredActivitiesByClassroom(classroomId: number) {
+        const repositoryActivities = connection.getRepository(ActivityStudent)
+
+        const studentsByClassroom = await studentService.getByClass(classroomId);
+
+        const activities: ActivityStudent[] = []
+
+        for (let student of studentsByClassroom) {
+            const studentAtivities: ActivityStudent[] = await repositoryActivities.find({ where: { students_id: student.id, delivered: true }, cache: 20000 }) // TODO: remove cache
+            activities.push(...studentAtivities)
+        }
+        return activities;
+    }
+
+    async getAttendanceByClassroom(classroomId: number) {
+        let attendances: Attendance[] = []
+        const RepositoryAttendanceStudent = connection.getRepository(AttendanceStudent)
+
+        const studentsByClassroom = await studentService.getByClass(classroomId);
+
+        for (let student of studentsByClassroom) {
+            const attendance_student = await this.getAttendanceByStudent(null, student.id)
+            attendances.push(...attendance_student)
+        }
 
         return attendances
     }
