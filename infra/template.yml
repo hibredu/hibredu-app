@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Aplicacao backend hibredu
+
+Parameters:
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+
+
+Resources: 
+  HibreduSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: My SG with port 22, 8080 and 80 inbound
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: 0.0.0.0/0
+
+
+  HibreduInstance:
+    Type: AWS::EC2::Instance               
+    Properties:
+      ImageId: ami-0eeb03e72075b9bcc
+      InstanceType: t2.micro
+      KeyName: !Ref KeyName
+      SecurityGroups:
+        - !Ref HibreduSecurityGroup
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          yum update -y
+          curl -sL https://rpm.nodesource.com/setup_lts.x | bash -
+
+          yum install nodejs -y
+
+          cd /app
+
+          npm config set strict-ssl false
+          npm install -g typescript
+          npm i ts-node-dev -g
+          npm i
+
+          npm run start
