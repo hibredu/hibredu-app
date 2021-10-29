@@ -20,7 +20,7 @@ class ActivityController {
                 columns: columns
             })
         } catch (error) {
-            return response.status(500).json({ error: error.message })
+            return response.status(500).json({ error: error?.message || error })
         }
     }
 
@@ -38,7 +38,7 @@ class ActivityController {
             await questionStudentService.insertManyTeams(body.file_id, activityId, body.classroom_id, body.number_questions)
             return response.status(201).json()
         } catch (error) {
-            response.status(500).json({ error: error.message })
+            response.status(500).json({ error: error?.message || error })
         }
     }
 
@@ -49,7 +49,7 @@ class ActivityController {
             const activities = await activityService.getByClassroom(classroomId)
             return response.status(200).json(activities)
         } catch (error) {
-            return response.status(500).json({ error: error.message })
+            return response.status(500).json({ error: error?.message || error })
         }
     }
 }
