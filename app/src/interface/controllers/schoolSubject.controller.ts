@@ -15,6 +15,14 @@ class SchoolSubjectController {
 
         return response.status(200).json(subjects);
     }
+
+    async getByTeacherbyClass(request: Request, response: Response) {
+        const teacher_id = request.userId
+        const class_id = request.params.id
+        const subjects = await school_subjectService.getByTeacherIdbyClass(parseInt(teacher_id), parseInt(class_id));
+
+        return response.status(200).json(subjects);
+    }
 }
 
 export default new SchoolSubjectController();

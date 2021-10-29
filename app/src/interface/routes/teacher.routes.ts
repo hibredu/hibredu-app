@@ -6,6 +6,7 @@ const teacherRouter = Router();
 
 teacherRouter.get('/', teacherController.getAll)
 teacherRouter.get('/school_subjects', schoolSubjectController.getByTeacher)
+teacherRouter.get('/school_subjects/:id', schoolSubjectController.getByTeacherbyClass)
 teacherRouter.get('/:id', teacherController.getById)
 teacherRouter.post('/', teacherController.create)
 teacherRouter.patch('/:id', teacherController.update)
