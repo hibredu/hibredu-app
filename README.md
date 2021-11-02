@@ -9,6 +9,8 @@ Interface de programação de aplicativo para o backend da aplicação Hibredu
 - Docker
 - MySQL
 
+<img src="./docs/Hibredu_Archicture_AWS.drawio.png" alt="Arquitetura Hibredu">
+
 ## Get Started
 
 Para rodar o projeto basta rodar estes comandos:
