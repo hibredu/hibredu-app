@@ -1,4 +1,6 @@
 import express from 'express'
+import cors from 'cors'
+import morgan from 'morgan'
 import routes from '../../interface/routes/routes'
 
 class AppController {
@@ -12,8 +14,10 @@ class AppController {
     }
 
     middlewares() {
+        this.app.use(cors())
         this.app.use(express.json())
         this.app.use(express.urlencoded({ extended: true }))
+        this.app.use(morgan('dev'))
     }
 
     routes() {

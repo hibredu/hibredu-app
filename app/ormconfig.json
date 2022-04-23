@@ -1,0 +1,21 @@
+{
+   "name": "default",
+   "type": "mysql",
+   "host": "localhost",
+   "port": 3306,
+   "username": "user_hibredu",
+   "password": "123456",
+   "database": "hibredu_db",
+   "synchronize": false,
+   "logging": false,
+   "entities": [
+      "src/app/entities/*.entity{.js,.ts}"
+   ],
+   "migrations": [
+      "src/infrastructure/database/migration/*.ts"
+   ],
+   "cli": {
+      "entitiesDir": "src/app/entities",
+      "migrationsDir": "src/infrastructure/database/migration"
+   }
+}

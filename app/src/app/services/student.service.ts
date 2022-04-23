@@ -1,25 +1,119 @@
-import { getRepository, Repository } from "typeorm";
+import { getConnection, In, Repository } from "typeorm";
 import Student from "../entities/student.entity";
+import File from "../entities/file.entity";
+import fileService from "./file.service";
+import subject_classroomService from "./subject_classroom.service";
+import teacherService from "./teacher.service";
+import SpreadsheetUtils from "../shared/utils/spreadsheet.utils";
+import { CellValue } from "exceljs";
+
+const connection = getConnection()
 
 class StudentService {
-
     repository: Repository<Student>
 
-    constructor() {
-        (async () => {
-            this.repository = await getRepository(Student);
-        })();
+    async getAll(teacherID) {
+        this.repository = connection.getRepository(Student)
+
+        const classes = await teacherService.getClassesByTeacher(teacherID);
+
+        const students = await this.repository.find({ where: { classrooms_id: In(classes) }, order: { name: "ASC" }, cache: 15000 }); // TODO: remove cache
+
+        return await Promise.all(students.map(async (student) => {
+            return {
+                ...student,
+                subjects: await subject_classroomService.getSubjectByClass(student.classrooms_id)
+            }
+        }))
     }
 
-    async getAll() {
-        const student = await this.repository.find({})
-        return student
+    async getById(id: number) {
+        this.repository = connection.getRepository(Student)
+
+        let student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents", "alerts"], cache: 15000 }); // TODO: remove cache
+
+        return {
+            ...student,
+            subject_classroom: await subject_classroomService.getSubjectByClass(student.classrooms_id)
+        }
     }
 
-    async getOne(id: number) {
-        return await this.repository.findOne({ id });
+    async getByClass(id: number) {
+        this.repository = connection.getRepository(Student)
+
+        return await this.repository.find({ where: { classrooms_id: id } });
     }
 
+    async getDeliveryPercentage(id: number) {
+        this.repository = connection.getRepository(Student)
+
+        const student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"], cache: 15000 }); // TODO: remove cache
+        const totalActivities = student.activitiesToStudents?.length;
+        const totalActivitiesDelivered = student.activitiesToStudents?.filter((activity) => activity.delivered == true).length;
+        return (totalActivitiesDelivered / totalActivities);
+    }
+
+    async getDeliveredActivities(id: number) {
+        this.repository = connection.getRepository(Student)
+
+        const student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"], cache: 15000 }); // TODO: remove cache
+        const totalActivitiesDelivered = student.activitiesToStudents?.filter((activity) => activity.delivered == true).length;
+
+        return totalActivitiesDelivered;
+    }
+
+    async getHitRate(id: number) {
+        let hitRate = 0
+        let hitRateTotal = 0
+
+        const student = await this.repository.findOne({ where: { id }, relations: ["activitiesToStudents"], cache: 15000 }); // TODO: remove cache
+
+        const activitiesDelivered = student.activitiesToStudents?.filter((activity) => activity.delivered == true);
+
+        for (let activity of activitiesDelivered) {
+            hitRateTotal += activity.activity.max_note
+            hitRate += activity.grade
+        }
+
+        return (hitRate / hitRateTotal);
+    }
+
+    async insertIfNotExists(fileId: number, classroomId: number) {
+        this.repository = connection.getRepository(Student);
+        const students: Student[] = await this.repository.find({ where: { classrooms_id: classroomId } })
+
+        const studentNames: string[] = await this.getStudentNames(fileId);
+        studentNames.forEach((studentName) => {
+            const studentRegistry: Student = students.find((student) => student.name.toLowerCase() === studentName.toLowerCase())
+            if (studentRegistry == undefined) {
+                const student = new Student()
+                student.name = studentName;
+                student.classrooms_id = classroomId;
+                this.repository.insert(student)
+            }
+        });
+    }
+
+    async getStudentNames(fileId: number): Promise<string[]> {
+        const file: File = await fileService.findById(fileId)
+        const worksheet = await SpreadsheetUtils.getWorksheet(file)
+
+        const columnNames: CellValue[] = await SpreadsheetUtils.getColumnNames(worksheet)
+        let studentNames: string[]
+        for (var _i = 1; _i <= columnNames.length; _i++) {
+            if (columnNames[_i - 1] === SpreadsheetUtils.COLUMN_NAME) {
+                studentNames = worksheet.getColumn(_i).values.map((cell) => cell.toString().toUpperCase())
+                break;
+            }
+        }
+
+        //REMOVENDO OS 2 PRIMEIROS ÍNDICES. O PRIMEIRO É UNDEFINED E O OUTRO O NOME DA COLUNA
+        studentNames.shift();
+        studentNames.shift();
+
+        //RETORNANDO APENAS UM DE CADA NOME
+        return [...new Set(studentNames)];
+    }
 }
 
 export default new StudentService()

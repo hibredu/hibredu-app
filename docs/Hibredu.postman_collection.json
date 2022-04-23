@@ -1,0 +1,987 @@
+{
+	"info": {
+		"_postman_id": "591f6da7-7cb7-4548-956d-18f0caf3b9b6",
+		"name": "Hibredu",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Teacher",
+			"item": [
+				{
+					"name": "GET All Teachers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/teacher/",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"teacher",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE Teacher",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Jean Jacques\",\r\n    \"email\": \"jean2@hibredu.com.br\",\r\n    \"phone\": \"55-988-0808\",\r\n    \"password\": \"12345678\",\r\n    \"school_id\": 1,\r\n    \"classrooms\": [\r\n        {\r\n            \"id\": 1,\r\n            \"name\": \"3ºA\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}/teacher/",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"teacher",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Teacher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Jean Jacques12312312\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}/teacher/2",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"teacher",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET All Teachers Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/teacher/2",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"teacher",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Hibredu Rewards",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/hibredu_rewards",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"hibredu_rewards"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "GET Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = pm.response.json()\r",
+									"pm.environment.set(\"token\", res.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"jean@hibredu.com.br\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}/auth/",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"auth",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "GET All Students",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/student/",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"student",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Student by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/student/1",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"student",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Delivery Percentage",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/student/4/delivery",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"student",
+								"4",
+								"delivery"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Classroom",
+			"item": [
+				{
+					"name": "GET All Classroom",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_base}}/classroom/",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"classroom",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Classroom by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/classroom/1",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"classroom",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Attendance",
+			"item": [
+				{
+					"name": "GET Attendance Class",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/attendance/class/1",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"attendance",
+								"class",
+								"1"
+							],
+							"query": [
+								{
+									"key": "after",
+									"value": "2021-09-01",
+									"description": "Filtrar por chamadas depois desta data",
+									"disabled": true
+								},
+								{
+									"key": "before",
+									"value": "2021-09-10",
+									"description": "Filtrar por chamadas antes desta data",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Attendance By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/attendance/1",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"attendance",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Attendance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/attendance/2",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"attendance",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Send Spreadsheet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "attendance",
+									"type": "file",
+									"src": "/C:/Users/Felipe/Desktop/meetingAttendanceList (633).xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_base}}/attendance/spreadsheet",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"attendance",
+								"spreadsheet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Send Attendances",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"classroom\": 1,\r\n    \"class_subject\": \"Botânica\",\r\n    \"description\": \"Aula sobre APIs\",\r\n    \"datetime\": \"2018-01-01\",\r\n    \"file_id\": 7,\r\n    \"columns\": [\r\n        {\r\n            \"field_name\": \"Data e hora\",\r\n            \"final_field\": \"Controle de horário\"\r\n        },\r\n        {\r\n            \"field_name\": \"Atividade\",\r\n            \"final_field\": \"Atividade\"\r\n        },\r\n        {\r\n            \"field_name\": \"Nome Completo\",\r\n            \"final_field\": \"Nome\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}/attendance",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"attendance"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Alert",
+			"item": [
+				{
+					"name": "GET Alert Class",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/alert/class/1",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"alert",
+								"class",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Alert Student",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/alert/student/1",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"alert",
+								"student",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "School",
+			"item": [
+				{
+					"name": "GET Schools",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/school",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"school"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Classrooms By SchoolID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/school/1/classrooms/",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"school",
+								"1",
+								"classrooms",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Overview",
+			"item": [
+				{
+					"name": "GET Overview Attendance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/overview/attendance",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"overview",
+								"attendance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Overview Activites",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/overview/activities",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"overview",
+								"activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Overview Classroom",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/overview/classroom",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"overview",
+								"classroom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Overview Alerts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/overview/classroom",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"overview",
+								"classroom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Overview Students Attendance Activities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/overview/student/attendance/activities/1",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"overview",
+								"student",
+								"attendance",
+								"activities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Overview Alerts Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/overview/classroom",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"overview",
+								"classroom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Overview Classroom Attendance Activities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/overview/classroom/attendance/activities/1",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"overview",
+								"classroom",
+								"attendance",
+								"activities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SchoolSubjects",
+			"item": [
+				{
+					"name": "GET School Subject",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/subject",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"subject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET School Subject by Teacher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/teacher/school_subjects",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"teacher",
+								"school_subjects"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subjects",
+			"item": [
+				{
+					"name": "GET All Subjects",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/student/",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"student",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Activities",
+			"item": [
+				{
+					"name": "GET Activities by Class",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_base}}/activity/classroom/2",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"activity",
+								"classroom",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

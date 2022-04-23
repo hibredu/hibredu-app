@@ -5,7 +5,11 @@ Interface de programação de aplicativo para o backend da aplicação Hibredu
 ## Tecnologias 
 
 - NodeJS
+- TypeScript
+- Docker
 - MySQL
+
+<img src="./docs/Hibredu_Archicture_AWS.drawio.png" alt="Arquitetura Hibredu">
 
 ## Get Started
 
@@ -21,7 +25,7 @@ npm run dev
 
 Para rodar com docker:
 ``` shell
-docker-compose up --build
+sh ./start.sh
 ```
 
 ## Estrutura de Pastas
@@ -34,4 +38,9 @@ docker-compose up --build
         └ interface             → Arquivos que fazem comunicação com usuário ou outras aplicações (Controllers, Rotas)
 └ docker                        → Arquivos e pastas relacionadas ao Docker
     └ sql                       → Pastas com arquivos dump.sql utilizados para popular o banco de dados criado pelo docker
+└ docs                          → Documentação no Postman
  ```
+
+ ## Documentação
+
+ Você pode encontrar as Collections na pasta [docs](./docs), lá também se encontra o Enviroment para se trabalhar com a autenticação

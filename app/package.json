@@ -2,23 +2,41 @@
   "name": "hibredu-app",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "commonjs",
   "repository": "https://github.com/hibredu/hibredu-app.git",
   "author": "jjeanjacques10 <jjean.jacques10@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "yarn build && node dist/index.js",
+    "start": "node dist/index.js",
     "start:dev": "ts-node src/index.ts",
     "dev": "ts-node-dev --respawn src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "postinstall": "npm run build"
   },
   "dependencies": {
+    "aws-sdk": "^2.992.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
+    "exceljs": "^4.3.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.3",
+    "multer-s3": "^2.9.0",
+    "mysql": "^2.18.1",
+    "pino": "^6.13.2",
+    "pino-pretty": "^6.0.0",
     "ts-node": "^10.1.0",
     "typeorm": "^0.2.37"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.5",
+    "@types/multer": "^1.4.7",
+    "@types/multer-s3": "^2.7.10",
+    "@types/pino": "^6.3.11",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.3.5"
   }
